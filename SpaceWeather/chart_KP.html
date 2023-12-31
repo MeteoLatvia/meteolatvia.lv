@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #container {
+            width: 400px;
+            height: 300px;
+            background-color: transparent;
+        }
+
+        .gauge-title {
+            color: rgb(250, 252, 255);
+        }
+
+        .gauge-value {
+            font-size: 25px;
+            color: black;
+        }
+
+        .info-button-container-KP {
+            position: relative;
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -290px;
+            /* Adjust this value to control vertical positioning */
+            margin-right: 20px;
+            /* Adjust this value to control horizontal positioning */
+        }
+
+        .info-button-KP {
+            background-color: rgb(0, 128, 255);
+            /* Button background color */
+            color: rgb(255, 255, 255);
+            /* Button text color */
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            /* Adjust button size as needed */
+            height: 30px;
+            /* Adjust button size as needed */
+            font-size: 20px;
+            /* Adjust font size as needed */
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            /* Add a glow effect */
+            transition: box-shadow 0.3s ease-in-out;
+            /* Add transition for the glow effect */
+        }
+
+        .info-button-KP:hover {
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.9);
+            /* Add this style for the glow effect */
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+            overflow: auto;
+        }
+
+        .lightbox-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            position: relative;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .close-button:hover {
+            color: red;
+        }
+    </style>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script>
+        // Get the info button element
+        const infoButton = document.querySelector('.info-button-KP');
+
+        // Get the lightbox and close button elements using class names
+        const lightbox = document.querySelector('.lightbox');
+        const closeButton = document.querySelector('.close-button');
+
+        // Add a click event listener to the info button
+        infoButton.addEventListener('click', function () {
+            lightbox.style.display = 'block';
+        });
+
+        // Add a click event listener to the close button
+        closeButton.addEventListener('click', function () {
+            lightbox.style.display = 'none';
+        });
+
+        // Close the lightbox if the user clicks outside of it
+        window.addEventListener('click', function (event) {
+            if (event.target === lightbox) {
+                lightbox.style.display = 'none';
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the info button element
+            const infoButton = document.querySelector('.info-button-KP');
+
+            // Get the lightbox and close button elements using class names
+            const lightbox = document.querySelector('.lightbox');
+            const closeButton = document.querySelector('.close-button');
+
+            // Add a click event listener to the info button
+            if (infoButton) {
+                infoButton.addEventListener('click', function () {
+                    if (lightbox) {
+                        lightbox.style.display = 'block';
+                    }
+                });
+            }
+
+            // Add a click event listener to the close button
+            if (closeButton) {
+                closeButton.addEventListener('click', function () {
+                    if (lightbox) {
+                        lightbox.style.display = 'none';
+                    }
+                });
+            }
+
+            // Close the lightbox if the user clicks outside of it
+            window.addEventListener('click', function (event) {
+                if (lightbox && event.target === lightbox) {
+                    lightbox.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    <script>
+        // URL of the JSON data
+        const dataUrl = 'https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json';
+
+        // Fetch the data from the URL
+        fetch(dataUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Extract the latest KP index value
+                const latestData = data[data.length - 1];
+                const latestKPIndex = parseFloat(latestData[1]);
+
+                // Determine the color based on KP index value ranges
+                let gaugeColor;
+                if (latestKPIndex < 0) {
+                    gaugeColor = 'rgb(146, 208, 80)';
+                } else if (latestKPIndex < 1) {
+                    gaugeColor = 'rgb(146, 208, 80)';
+                } else if (latestKPIndex < 2) {
+                    gaugeColor = 'rgb(146, 208, 80)';
+                } else if (latestKPIndex < 3) {
+                    gaugeColor = 'rgb(146, 208, 80)';
+                } else if (latestKPIndex < 4) {
+                    gaugeColor = 'rgb(146, 208, 80)';
+                } else if (latestKPIndex < 5) {
+                    gaugeColor = 'rgb(146, 208, 80)';
+                } else if (latestKPIndex < 6) {
+                    gaugeColor = 'rgb(246, 235, 20)';
+                } else if (latestKPIndex < 7) {
+                    gaugeColor = 'rgb(255, 200, 0)';
+                } else if (latestKPIndex < 8) {
+                    gaugeColor = 'rgb(255, 150, 0)';
+                } else if (latestKPIndex < 9) {
+                    gaugeColor = 'rgb(255, 0, 0)';
+                } else {
+                    gaugeColor = 'rgb(200, 0, 0)';
+                }
+
+                // Create a Highcharts solid gauge chart with the latest KP index value
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'solidgauge',
+                        backgroundColor: "rgb(57, 57, 77)", // Transparent background
+                    },
+                    title: {
+                        text: 'KP indekss',
+                        style: {
+                            color: 'rgb(255, 255, 255)',
+                        },
+                    },
+                    pane: {
+                        center: ['50%', '85%'],
+                        size: '140%',
+                        startAngle: -90,
+                        endAngle: 90,
+                        background: {
+                            backgroundColor: 'rgba(255,255,255,0)',
+                            innerRadius: '60%',
+                            outerRadius: '100%',
+                            shape: 'arc'
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        max: 9,
+                        minorTickInterval: '1',
+                        minorTickWidth: 1,
+                        minorTickLength: 10,
+                        minorTickPosition: 'inside',
+                        minorTickColor: 'rgb(250, 252, 255)',
+                        tickPixelInterval: 30,
+                        tickWidth: 2,
+                        tickPosition: 'inside',
+                        tickLength: 10,
+                        tickColor: 'rgb(250, 252, 255)',
+                        labels: {
+                            step: 1,
+                            rotation: 'auto',
+                            style: {
+                                color: 'white' // Set text color to white
+                            }
+                        },
+                        title: {
+                            text: '',
+                            style: {
+                                color: 'rgb(255, 255, 255)', // Set title color to white
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Value',
+                        data: [{
+                            y: latestKPIndex,
+                            color: gaugeColor
+                        }],
+                        dataLabels: {
+                            format: '<div style="text-align:center" class="gauge-value">KP <span>{y}</span></div',
+                            borderWidth: 0, // Remove border
+                            y: -40, // Adjust vertical position
+                        }
+                    }]
+                });
+            })
+            .catch(error => {
+                console.error('Failed to fetch data: ' + error);
+            });
+    </script>
+</body>
+
+</html>

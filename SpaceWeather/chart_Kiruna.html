@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiruna Magnetometer Data</title>
+    <style>
+        #kiruna-chart-container {
+            width: 100%;
+            height: 100%;
+            /* Set the desired height */
+            background-color: rgb(43, 43, 51);
+            color: rgb(250, 252, 255);
+        }
+    </style>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+</head>
+
+<body>
+    <div id="kiruna-chart-container"></div>
+    <script>
+        // Function to format time as HH:MM
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            const hours = date.getUTCHours().toString().padStart(2, '0');
+            const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+            return hours + ':' + minutes;
+        }
+
+        // Function to fetch and process the data
+        function fetchDataAndCreateChart() {
+            fetch('https://www2.irf.se/maggraphs/rt_iaga.txt')
+                .then(response => response.text())
+                .then(data => {
+                    // Split the data into lines and skip the header
+                    const lines = data.split('\n').slice(16); // Start from line 16 for the data
+
+                    // Initialize arrays for time and deflection
+                    const timeArray = [];
+                    const deflectionArray = [];
+
+                    lines.forEach(line => {
+                        const lineData = line.trim().split(/\s+/);
+                        const datetime = Date.parse(lineData[0] + 'T' + lineData[1] + 'Z');
+                        const kirx = parseFloat(lineData[3]) - 10650; // Subtract the quiet level
+                        timeArray.push(datetime);
+                        deflectionArray.push(kirx);
+                    });
+
+                    // Create the Highcharts chart with colored background zones
+                    Highcharts.stockChart('kiruna-chart-container', {
+                        chart: {
+                            backgroundColor: "rgb(57, 57, 77)",
+                        },
+                        title: {
+                            text: 'Kirunas magnetometrs',
+                            style: {
+                                color: "rgb(250, 252, 255)",
+                            },
+                        },
+                        xAxis: {
+                            type: 'datetime',
+                            title: {
+                                text: 'Time',
+                                style: {
+                                    color: "rgb(250, 252, 255)",
+                                },
+                            },
+                            labels: {
+                                style: {
+                                    color: "rgb(250, 252, 255)",
+                                },
+                                formatter: function () {
+                                    return formatTime(this.value); // Format the time
+                                },
+                            },
+                        },
+                        yAxis: {
+                            title: {
+                                text: '(nT)',
+                                style: {
+                                    color: "rgb(250, 252, 255)",
+                                },
+                            },
+                            labels: {
+                                style: {
+                                    color: "rgb(250, 252, 255)",
+                                },
+                            },
+                            plotBands: [
+                                {
+                                    from: -1500,
+                                    to: -990,
+                                    color: 'rgba(255, 0, 0, 0.8)',
+                                    label: {
+                                        text: '',
+                                    },
+                                },
+                                {
+                                    from: -990,
+                                    to: -600,
+                                    color: 'rgba(255, 150, 0, 0.8)',
+                                    label: {
+                                        text: '',
+                                    },
+                                },
+                                {
+                                    from: -600,
+                                    to: -360,
+                                    color: 'rgba(255, 200, 0, 0.8)',
+                                    label: {
+                                        text: '',
+                                    },
+                                },
+                                {
+                                    from: -360,
+                                    to: -210,
+                                    color: 'rgba(246, 235, 20, 0.8)',
+                                    label: {
+                                        text: '',
+                                    },
+                                },
+                                {
+                                    from: -210,
+                                    to: 0,
+                                    color: 'rgba(146, 208, 80, 0.8)',
+                                    label: {
+                                        text: '',
+                                    },
+                                },
+                            ],
+                        },
+                        plotOptions: {
+                            line: {
+                                shadow: {
+                                    color: 'rgba(0, 0, 0, 0.8)', // Shadow color and opacity
+                                    offsetY: 2, // Vertical shadow offset
+                                    opacity: 0.8, // Shadow opacity (0 to 1)
+                                    width: 2, // Shadow width
+                                }
+                            }
+                        },
+                        tooltip: {
+                            headerFormat: '<span style="font-size: 10px">{point.key}</span><br>',
+                            pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.2f}</b><br/>',
+                        },
+                        navigator: {
+                            enabled: true,
+                        },
+                        scrollbar: {
+                            enabled: true,
+                        },
+                        rangeSelector: {
+                            buttons: [
+                                {
+                                    type: 'minute',
+                                    count: 1,
+                                    text: '1m'
+                                },
+                                {
+                                    type: 'minute',
+                                    count: 3,
+                                    text: '3m'
+                                },
+                                {
+                                    type: 'minute',
+                                    count: 6,
+                                    text: '6m'
+                                },
+                                {
+                                    type: 'ytd',
+                                    text: 'YTD'
+                                },
+                                {
+                                    type: 'year',
+                                    count: 1,
+                                    text: '1g'
+                                },
+                                {
+                                    type: 'all',
+                                    text: 'Visi'
+                                }
+                            ],
+                            selected: 5, // Index of the default selected button (All in this case)
+                            inputEnabled: false // Do not display input box
+                        },
+                        series: [{
+                            name: 'nT',
+                            data: deflectionArray,
+                            lineWidth: 2,
+                            marker: {
+                                enabled: false,
+                            },
+                            color: 'rgb(250, 252, 255)', // Set line color
+                        }],
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Call the function to create the chart
+        fetchDataAndCreateChart();
+    </script>
+</body>
+
+</html>

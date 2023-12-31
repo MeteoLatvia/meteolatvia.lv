@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Solar Wind Data Visualization</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/coloraxis.js"></script>
+</head>
+
+<body>
+  <div class="chart-container">
+    <div id="chart"></div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      // Step 1: Retrieve JSON data from the provided URL
+      $.getJSON(
+        "https://services.swpc.noaa.gov/products/solar-wind/plasma-2-hour.json",
+        function (data) {
+          // Step 2: Parse the JSON data
+          var jsonData = data;
+
+          // Step 3: Create arrays to store data for the chart
+          var timestamps = [];
+          var speedValues = [];
+
+          // Process the JSON data
+          for (var i = 0; i < jsonData.length; i++) {
+            var observation = jsonData[i];
+            var timeTag = observation[0]; // "time_tag"
+            var speed = parseFloat(observation[2]); // Parse "speed" value as a float
+
+            // Step 4: Add data to the arrays
+            timestamps.push(timeTag);
+            speedValues.push(speed); // Only pass the numeric value of "speed"
+          }
+
+          // Get the latest speed value
+          var latestSpeed = speedValues[speedValues.length - 1];
+
+          // Create the Highcharts chart
+          Highcharts.chart("chart", {
+            chart: {
+              type: "area",
+              backgroundColor: "rgb(57, 57, 77)", // Transparent background
+              zoomType: "x", // Enable zooming along the x-axis
+              credits: {
+                text: "Source: NOAA Space Weather Prediction Center",
+                style: {
+                  color: "rgb(250, 252, 255)", // Set credits text color
+                },
+              },
+            },
+            title: {
+              text: "Saules vēja ātrums (km/s)",
+              style: {
+                color: "rgb(250, 252, 255)", // Change the text color
+              },
+            },
+            xAxis: {
+              categories: timestamps,
+              tickInterval: 31,
+              labels: {
+                rotation: 0,
+                style: {
+                  color: "rgb(250, 252, 255)", // Set the text color
+                },
+                formatter: function () {
+                  var parts = this.value.split(" ");
+                  if (parts.length >= 2) {
+                    return parts[1].substr(0, 5);
+                  } else {
+                    return this.value;
+                  }
+                },
+              },
+              gridLineColor: "rgba(255, 255, 255, 0.5)", // Add grid lines
+            },
+            yAxis: {
+              title: {
+                text: '(nT)',
+                style: {
+                  color: "rgb(250, 252, 255)",
+                },
+              },
+              labels: {
+                style: {
+                  color: "rgb(250, 252, 255)",
+                },
+              },
+              min: 0, // Set the minimum value of the Y-axis to 0
+              tickInterval: 100, // Set the tick interval to your desired value
+              gridLineColor: "rgba(255, 255, 255, 0.5)", // Add grid lines
+            },
+            legend: {
+              itemStyle: {
+                color: "rgb(250, 252, 255)", // Set legend text color
+              },
+            },
+            plotOptions: {
+              area: {
+                smooth: true, // Smooth the area
+                marker: {
+                  symbol: 'circle', // Marker symbol
+                  radius: 0,
+                },
+                color: {
+                  linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+                  stops: [
+                    [0, 'rgba(0, 255, 0, 0.8)'], // Green for lower values
+                    [0.5, 'rgba(255, 255, 0, 0.8)'], // Yellow for mid values
+                    [1, 'rgba(255, 0, 0, 0.8)'], // Red for higher values
+                  ],
+                },
+                fillOpacity: 0.2, // Set the opacity for the area fill
+                zones: [
+                  {
+                    value: 0,
+                    color: 'rgba(0, 255, 0, 1.0)', // Green for values 0
+                  },
+                  {
+                    value: 400,
+                    color: 'rgba(0, 255, 0, 1.0)', // Yellow for values 0-150
+                  },
+                  {
+                    value: 500,
+                    color: 'rgba(255, 255, 0, 1.0)', // Orange for values 150-300
+                  },
+                  {
+                    value: 600,
+                    color: 'rgba(255, 128, 0, 1.0)', // Orange for values 300-450
+                  },
+                  {
+                    value: 700,
+                    color: 'rgba(255, 0, 0, 1.0)', // Orange for values 450-600
+                  },
+                  {
+                    value: 800,
+                    color: 'rgba(128, 0, 0, 1.0)', // Orange for values 600-750
+                  },
+                  {
+                    color: 'rgba(128, 0, 0, 1.0)', // Red for values above >750
+                  },
+                ],
+              },
+            },
+            tooltip: {
+              headerFormat: '<span style="font-size: 10px">{point.key}</span><br>',
+              pointFormat: '<span style="color:{point.color}">\u25CF</span> Ātrums: <b>{point.y:.2f}</b> {series.name}<br/>',
+            },
+            exporting: {
+              enabled: true,
+              buttons: {
+                contextButton: {
+                  menuItems: [
+                    "downloadPNG",
+                    "downloadJPEG",
+                    "downloadPDF",
+                    "downloadSVG",
+                  ],
+                },
+              },
+            },
+            annotations: [{
+              labelOptions: {
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                verticalAlign: 'top',
+                y: 15,
+              },
+              labels: [{
+                point: {
+                  xAxis: 0,
+                  yAxis: 0,
+                  x: timestamps.indexOf('5'),
+                  y: 5,
+                },
+                text: 'Northern Lights Visible',
+              }],
+            }],
+            series: [{
+              name: 'km/s',
+              data: speedValues,
+              lineWidth: 2,
+              marker: {
+                enabled: true,
+              },
+            }],
+          });
+          // Get the latest speed value
+          var latestSpeed = speedValues[speedValues.length - 1];
+
+          // Update the chart title with the latest speed value
+          var chartTitle = "Saules vēja ātrums: <br> " + latestSpeed + " (km/s)"
+          document.title = chartTitle;
+
+          // Set the updated chart title
+          Highcharts.charts[0].setTitle({ text: chartTitle });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    })
+  </script>
+</body>
+
+</html>

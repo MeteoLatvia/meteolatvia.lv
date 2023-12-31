@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: transparent;
+            /* Dark background color for dark mode */
+            color: #ffffff;
+            /* Text color for dark mode */
+            font-family: Kumbh Sans, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #333;
+            /* Table border color */
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #333;
+            /* Cell border color */
+        }
+
+        th:nth-child(10),
+        td:nth-child(10) {
+            font-weight: bold;
+        }
+
+        thead {
+            background-color: #333;
+            /* Header background color */
+            color: #ffffff;
+            /* Header text color */
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #444;
+            /* Odd row background color */
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #333;
+            /* Even row background color */
+        }
+
+        /* Define background colors for each cell in columns G0 to G5 */
+        .cell-G0 {
+            background-color: rgba(146, 208, 80);
+            color: #000000;
+        }
+
+        .cell-G1 {
+            background-color: rgba(246, 235, 20);
+            color: #000000;
+        }
+
+        .cell-G2 {
+            background-color: rgba(255, 200, 0);
+            color: #000000;
+        }
+
+        .cell-G3 {
+            background-color: rgba(255, 150, 0);
+            color: #000000;
+        }
+
+        .cell-G4 {
+            background-color: rgba(255, 0, 0);
+            color: #000000;
+        }
+
+        .cell-G5 {
+            background-color: rgba(200, 0, 0);
+            color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <table border="1">
+        <tr>
+            <th>Indekss</th>
+            <th>Vērtība</th>
+            <th>Intensitāte</th>
+            <th>Ietekme</th>
+            <th>Vidējā regularatāte<br>
+                (1 cikls = 11 gadi)</th>
+        </tr>
+        <tr>
+            <td class="cell-G0">G0</td>
+            <td class="cell-G0">KP4</td>
+            <td class="cell-G0">Nav</td>
+            <td class="cell-G0">Ziemeļblāzmas aktivitāte nav vai ir ļoti neliela.</td>
+            <td class="cell-G0">Pastāvīgi</td>
+        </tr>
+        <tr>
+            <td class="cell-G1">G1</td>
+            <td class="cell-G1">KP5</td>
+            <td class="cell-G1">Neliela</td>
+            <td class="cell-G1">Ziemeļblāzmas aktivitāte ir palielināta.</td>
+            <td class="cell-G1">900 dienas ciklā</td>
+        </tr>
+        <tr>
+            <td class="cell-G2">G2</td>
+            <td class="cell-G2">KP6</td>
+            <td class="cell-G2">Mērena</td>
+            <td class="cell-G2">Ziemeļblāzmas aktivitāte ir augsta.</td>
+            <td class="cell-G2">360 dienas ciklā</td>
+        </tr>
+        <tr>
+            <td class="cell-G3">G3</td>
+            <td class="cell-G3">KP7</td>
+            <td class="cell-G3">Spēcīga</td>
+            <td class="cell-G3">Ziemeļblāzmas aktivitāte ir ļoti augsta.</td>
+            <td class="cell-G3">130 dienas ciklā</td>
+        </tr>
+        <tr>
+            <td class="cell-G4">G4</td>
+            <td class="cell-G4">KP8</td>
+            <td class="cell-G4">Ļoti spēcīga</td>
+            <td class="cell-G4">Ziemeļblāzmas aktivitāte ir īpaši augsta.</td>
+            <td class="cell-G4">60 dienas ciklā</td>
+        </tr>
+        <tr>
+            <td class="cell-G5">G5</td>
+            <td class="cell-G5">KP9</td>
+            <td class="cell-G5">Ekstremāla</td>
+            <td class="cell-G5">Ziemeļblāzmas aktivitāte ir ekstremāla.</td>
+            <td class="cell-G5">4 dienas ciklā</td>
+        </tr>
+    </table>
+
+</body>
+
+</html>

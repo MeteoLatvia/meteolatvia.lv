@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+
+<body>
+    <div id="container"></div>
+
+    <script>
+        // URL of the ASCII data
+        const dataUrl = 'https://services.swpc.noaa.gov/text/aurora-nowcast-hemi-power.txt';
+
+        // Fetch the data from the URL
+        fetch(dataUrl)
+            .then(response => response.text())
+            .then(asciiData => {
+                // Split the data into lines and extract the relevant data
+                const lines = asciiData.split('\n');
+                const dataPoints = [];
+
+                lines.forEach(line => {
+                    if (line.startsWith('#') || line.trim() === '') {
+                        return; // Skip comment lines and empty lines
+                    }
+
+                    const dataParts = line.trim().split(/\s+/);
+                    if (dataParts.length >= 3) {
+                        const timestamp = new Date(dataParts[0].replace('_', ' ')).getTime();
+                        const value = parseFloat(dataParts[2]);
+                        dataPoints.push([timestamp, value]);
+                    }
+                });
+
+                // Create a Highcharts area chart with the data points
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'line',
+                        backgroundColor: "rgb(57, 57, 77)",
+                    },
+                    title: {
+                        text: "Enerģijas daudzums",
+                        style: {
+                            color: "rgb(250, 252, 255)",
+                        },
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        labels: {
+                            format: '{value: %H:%M}',
+                            style: {
+                                color: "rgb(250, 252, 255)",
+                            },
+                        },
+                        title: {
+                            style: {
+                                color: "rgb(250, 252, 255)",
+                            },
+                        },
+                    },
+                    yAxis: {
+                        title: {
+                            text: '(nT)',
+                            style: {
+                                color: "rgb(250, 252, 255)",
+                            },
+                        },
+                        labels: {
+                            style: {
+                                color: "rgb(250, 252, 255)",
+                            },
+                        },
+                        min: 0, // Set the minimum value of the Y-axis to 0
+                        plotBands: [
+                            {
+                                from: 200,
+                                to: 150,
+                                color: 'rgba(128, 0, 0, 0.8)',
+                                label: {
+                                    text: '',
+                                },
+                            },
+                            {
+                                from: 150,
+                                to: 100,
+                                color: 'rgba(255, 0, 0, 0.8)',
+                                label: {
+                                    text: '',
+                                },
+                            },
+                            {
+                                from: 100,
+                                to: 75,
+                                color: 'rgba(255, 150, 0, 0.8)',
+                                label: {
+                                    text: '',
+                                },
+                            },
+                            {
+                                from: 75,
+                                to: 50,
+                                color: 'rgba(255, 200, 0, 0.8)',
+                                label: {
+                                    text: '',
+                                },
+                            },
+                            {
+                                from: 50,
+                                to: 25,
+                                color: 'rgba(246, 235, 20, 0.8)',
+                                label: {
+                                    text: '',
+                                },
+                            },
+                            {
+                                from: 25,
+                                to: 0,
+                                color: 'rgba(146, 208, 80, 0.8)',
+                                label: {
+                                    text: '',
+                                },
+                            },
+                        ],
+                    },
+                    plotOptions: {
+                        line: {
+                            shadow: {
+                                color: 'rgba(0, 0, 0, 0.5)', // Shadow color and opacity
+                                offsetY: 2, // Vertical shadow offset
+                                opacity: 0.8, // Shadow opacity (0 to 1)
+                                width: 2, // Shadow width
+                            }
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<span style="font-size: 10px">{point.key}</span><br>',
+                        pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.0f}</b><br/>',
+                    },
+                    series: [{
+                        name: 'nT',
+                        data: dataPoints,
+                        lineWidth: 2,
+                        marker: {
+                            enabled: false,
+                        },
+                        color: 'rgb(250, 252, 255)', // Set line color
+                    }],
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+        // Call the function to create the chart
+        fetchDataAndCreateChart();
+    </script>
+</body>
+
+</html>

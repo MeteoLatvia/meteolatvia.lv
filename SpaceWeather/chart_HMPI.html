@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #container {
+            width: 400px;
+            height: 300px;
+        }
+
+        .gauge-title {
+            color: rgb(250, 252, 255);
+        }
+
+        .gauge-value {
+            font-size: 25px;
+            color: white;
+            /* Set text color to white */
+        }
+
+        .giga-watts {
+            font-size: 25px;
+            color: silver;
+            /* Set text color to silver */
+        }
+    </style>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+</head>
+
+<body>
+    <div id="container"></div>
+
+    <script>
+        // URL of the ASCII data
+        const dataUrl = 'https://services.swpc.noaa.gov/text/aurora-nowcast-hemi-power.txt';
+
+        // Fetch the data from the URL
+        fetch(dataUrl)
+            .then(response => response.text())
+            .then(asciiData => {
+                // Split the data into lines and extract the latest line
+                const lines = asciiData.split('\n');
+                const latestDataLine = lines[lines.length - 2]; // The last line with actual data
+
+                // Split the latest data line by whitespace and extract the value (North-Hemispheric-Power-Index)
+                const dataParts = latestDataLine.trim().split(/\s+/);
+                const latestValue = parseFloat(dataParts[2]);
+
+                // Determine the color based on value ranges
+                let gaugeColor;
+                if (latestValue >= 0 && latestValue <= 25) {
+                    gaugeColor = 'rgba(146, 208, 80, 1.0)'; // Green
+                } else if (latestValue > 25 && latestValue <= 50) {
+                    gaugeColor = 'rgba(246, 235, 20, 1.0)'; // Yellow
+                } else if (latestValue > 50 && latestValue <= 75) {
+                    gaugeColor = 'rgba(255, 200, 0, 1.0)'; // Dark yellow
+                } else if (latestValue > 75 && latestValue <= 100) {
+                    gaugeColor = 'rgba(255, 150, 0, 1.0)'; // Orange
+                } else if (latestValue > 100 && latestValue <= 150) {
+                    gaugeColor = 'rgba(255, 0, 0, 1.0)'; // Red
+                } else {
+                    gaugeColor = 'rgba(128, 0, 0, 1.0)'; // Dark Red
+                }
+
+                // Create a Highcharts solid gauge chart with the latest value and conditional series color
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'solidgauge',
+                        backgroundColor: "rgb(57, 57, 77)", // Transparent background
+                    },
+                    title: {
+                        text: 'Enerģijas daudzums',
+                        style: {
+                            color: 'rgb(255, 255, 255)',
+                            // Add any other title styling here
+                        },
+                    },
+                    pane: {
+                        center: ['50%', '85%'],
+                        size: '140%',
+                        startAngle: -90,
+                        endAngle: 90,
+                        background: {
+                            backgroundColor: 'rgba(255,255,255,0)',
+                            innerRadius: '60%',
+                            outerRadius: '100%',
+                            shape: 'arc'
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        max: 200,
+                        minorTickInterval: '10',
+                        minorTickWidth: 1,
+                        minorTickLength: 10,
+                        minorTickPosition: 'inside',
+                        minorTickColor: 'rgb(250, 252, 255)',
+                        tickPixelInterval: 30,
+                        tickWidth: 2,
+                        tickPosition: 'inside',
+                        tickLength: 10,
+                        tickColor: 'rgb(250, 252, 255)',
+                        labels: {
+                            step: 3,
+                            rotation: 'auto',
+                            style: {
+                                color: 'white' // Set text color to white
+                            }
+                        },
+                        title: {
+                            text: '',
+                        }
+                    },
+                    series: [{
+                        name: 'Value',
+                        data: [{
+                            y: latestValue,
+                            color: gaugeColor
+                        }],
+                        dataLabels: {
+                            format: '<div style="text-align:center" class="gauge-value"><span>{y}</span>' +
+                                '<span class="giga-watts"> GW</span></div',
+                            borderWidth: 0, // Remove border
+                            y: -40, // Adjust vertical position
+                        }
+                    }]
+                });
+            })
+            .catch(error => {
+                console.error('Failed to fetch data: ' + error);
+            });
+    </script>
+</body>
+
+</html>

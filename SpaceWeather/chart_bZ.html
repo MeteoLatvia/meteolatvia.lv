@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Solar Wind Data Visualization</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/coloraxis.js"></script>
+</head>
+
+<body>
+  <div class="chart-container">
+    <div id="chart"></div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      // Step 1: Retrieve JSON data from the provided URL
+      $.getJSON(
+        "https://services.swpc.noaa.gov/products/solar-wind/mag-2-hour.json",
+        function (data) {
+          // Step 2: Parse the JSON data
+          var jsonData = data;
+
+          // Step 3: Create arrays to store data for the chart
+          var timestamps = [];
+          var bzValues = [];
+
+          // Process the JSON data
+          for (var i = 0; i < jsonData.length; i++) {
+            var observation = jsonData[i];
+            var timeTag = observation[0]; // "time_tag"
+            var bz = parseFloat(observation[3]); // Parse "bt" value as a float
+
+            // Step 5: Add data to the arrays
+            timestamps.push(timeTag);
+            bzValues.push(bz); // Only pass the numeric value of "bt"
+          }
+
+          // Calculate the maximum absolute value of bz in the dataset
+          var maxBz = Math.max.apply(null, bzValues.map(Math.abs));
+
+          // Create the Highcharts chart
+          Highcharts.chart("chart", {
+            chart: {
+              type: "area",
+              backgroundColor: "rgb(57, 57, 77)", // Transparent background
+              zoomType: "x", // Enable zooming along the x-axis
+              credits: {
+                text: "Source: NOAA Space Weather Prediction Center",
+                style: {
+                  color: "rgb(250, 252, 255)", // Set credits text color
+                },
+              },
+            },
+            title: {
+              text: "Magnētiskā lauka orientācija (bZ)",
+              style: {
+                color: "rgb(250, 252, 255)", // Change the text color
+              },
+            },
+            xAxis: {
+              categories: timestamps,
+              tickInterval: 31,
+              labels: {
+                rotation: 0,
+                style: {
+                  color: "rgb(250, 252, 255)", // Set the text color
+                },
+                formatter: function () {
+                  var parts = this.value.split(" ");
+                  if (parts.length >= 2) {
+                    return parts[1].substr(0, 5);
+                  } else {
+                    return this.value;
+                  }
+                },
+              },
+              gridLineColor: "rgba(255, 255, 255, 0.5)", // Add grid lines
+            },
+            yAxis: {
+              title: {
+                text: '(nT)',
+                style: {
+                  color: "rgb(250, 252, 255)",
+                },
+              },
+              labels: {
+                style: {
+                  color: "rgb(250, 252, 255)",
+                },
+              },
+              gridLineColor: "rgba(255, 255, 255, 0.5)",
+            },
+            legend: {
+              itemStyle: {
+                color: "rgb(250, 252, 255)", // Set legend text color
+              },
+            },
+            plotOptions: {
+              area: {
+                smooth: true, // Smooth the area
+                marker: {
+                  symbol: 'circle', // Marker symbol
+                  radius: 0,
+                },
+                color: {
+
+                },
+                fillOpacity: 0.2,
+                zones: [
+                  { value: 100, color: 'rgba(0, 255, 0, 1.0)' },       // Green for values >= 0
+                  { value: 5, color: 'rgba(0, 255, 0, 1.0)' },       // Green for values >= 0
+                  { value: 0, color: 'rgba(0, 255, 0, 1.0)' },       // Green for values >= 0
+                  { value: -5, color: 'rgba(255, 255, 0, 1.0)' },    // Yellow for values -5 to 0
+                  { value: -10, color: 'rgba(255, 128, 0, 1.0)' },   // Orange for values -10 to -5
+                  { value: -15, color: 'rgba(255, 0, 0, 1.0)' },    // Red for values -15 to -10
+                  { value: -20, color: 'rgba(128, 0, 0, 1.0)' },     // Dark red for values -20 to -15
+                  { value: -100, color: 'rgba(128, 0, 0, 1.0)' },     // Dark red for values -20 to -15
+                ],
+              },
+            },
+            tooltip: {
+              headerFormat: '<span style="font-size: 10px">{point.key}</span><br>',
+              pointFormat: '<span style="color:{point.color}">\u25CF</span> Orientācija: <b>{point.y:.2f}</b> {series.name}<br/>',
+            },
+            exporting: {
+              enabled: true,
+              buttons: {
+                contextButton: {
+                  menuItems: [
+                    "downloadPNG",
+                    "downloadJPEG",
+                    "downloadPDF",
+                    "downloadSVG",
+                  ],
+                },
+              },
+            },
+            annotations: [{
+              labelOptions: {
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                verticalAlign: 'top',
+                y: 15,
+              },
+              labels: [{
+                point: {
+                  xAxis: 0,
+                  yAxis: 0,
+                  x: timestamps.indexOf('5'),
+                  y: 5,
+                },
+                text: 'Northern Lights Visible',
+              }],
+            }],
+            series: [{
+              name: 'bZ',
+              data: bzValues,
+              lineWidth: 2,
+              marker: {
+                enabled: true,
+              },
+            }],
+          });
+          // Get the latest speed value
+          var latestbZ = bzValues[bzValues.length - 1];
+
+          // Update the chart title with the latest speed value
+          var chartTitle = "Magnētiskā lauka orientācija: <br> " + latestbZ + " (nT)"
+          document.title = chartTitle;
+
+          // Set the updated chart title
+          Highcharts.charts[0].setTitle({ text: chartTitle });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    })
+      .catch(error => console.error('Error fetching data:', error));
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: transparent;
+            /* Dark background color for dark mode */
+            color: #ffffff;
+            /* Text color for dark mode */
+            font-family: Kumbh Sans, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #333;
+            /* Table border color */
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #333;
+            /* Cell border color */
+        }
+
+        th:nth-child(10),
+        td:nth-child(10) {
+            font-weight: bold;
+        }
+
+        thead {
+            background-color: #333;
+            /* Header background color */
+            color: #ffffff;
+            /* Header text color */
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #444;
+            /* Odd row background color */
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #333;
+            /* Even row background color */
+        }
+
+        /* Define background colors for each cell in columns G0 to G5 */
+        .cell-G0 {
+            background-color: rgba(0, 255, 0);
+            color: #000000;
+        }
+
+        .cell-G1 {
+            background-color: rgba(255, 255, 0);
+            color: #000000;
+        }
+
+        .cell-G2 {
+            background-color: rgba(255, 0, 0);
+            color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <table border="1">
+        <tr>
+            <th>Magnētiskā klasifikācija</th>
+            <th>Raksturojums</th>
+        </tr>
+        <tr>
+            <td class="cell-G0">Alpha</td>
+            <td class="cell-G0">Saules plankumu grupa ar vienu polaritāti (unipolāra)</td>
+        </tr>
+        <tr>
+            <td class="cell-G0">Beta</td>
+            <td class="cell-G0">Saules plankumu grupa, kurai ir pozitīva un negatīva polaritāte (bipolāra). Polaritātes sadalījums - vienkāršs.</td>
+        </tr>
+        <tr>
+            <td class="cell-G1">Gamma</td>
+            <td class="cell-G1">Komplekss Saules plankumu reģions, kurā pozitīvās un negatīvās polaritātes izvietotas tik neregulāri, ka tās nevar klasificēt kā bipolāru Saules plankumu grupu.</td>
+        </tr>
+        <tr>
+            <td class="cell-G1">Beta-Gamma</td>
+            <td class="cell-G1">Bipolāra Saules plankumu grupa, bet pietiekami sarežģīta, lai starp pretējas polaritātes plankumiem nevarētu novilkt joslu.</td>
+        </tr>
+        <tr>
+            <td class="cell-G2">Delta</td>
+            <td class="cell-G2">Pretējas polaritātes ēna vienā pusēnā.</td>
+        </tr>
+        <tr>
+            <td class="cell-G2">Beta-Delta</td>
+            <td class="cell-G2">Saules plankumu grupa, kurā dominē "Beta" magnētiskā konfigurācija, bet satur arī vienu (vai vairākus) "Delta" Saules plankumus.</td>
+        </tr>
+        <tr>
+            <td class="cell-G2">Beta-Gamma-Delta</td>
+            <td class="cell-G2">Saules plankumu grupa, kurā dominē "Beta-Gamma" magnētiskā konfigurācija, bet satur arī vienu (vai vairākus) "Delta" Saules plankumus.</td>
+        </tr>
+        <tr>
+            <td class="cell-G2">Gamma-Delta</td>
+            <td class="cell-G2">Saules plankumu grupa, kurā dominē "Gamma" magnētiskā konfigurācija, bet satur arī vienu (vai vairākus) "Delta" Saules plankumus.</td>
+        </tr>
+    </table>
+
+</body>
+
+</html>

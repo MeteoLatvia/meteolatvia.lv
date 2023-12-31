@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+
+<body>
+    <div id="container"></div>
+
+    <script>
+        // URL of the JSON data
+        const dataUrl = 'https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json';
+
+        // Fetch the data from the URL
+        fetch(dataUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Extract date and KP index values
+                const dates = data.slice(1).map(entry => entry[0]);
+                const kpValues = data.slice(1).map(entry => parseFloat(entry[1]));
+
+                // Create a function to determine bar color based on KP index value
+                const getBarColor = (kpIndex) => {
+                    if (kpIndex < 0) {
+                        return 'rgb(0,128,0)';
+                    } else if (kpIndex < 1) {
+                        return 'rgb(146, 208, 80)';
+                    } else if (kpIndex < 2) {
+                        return 'rgb(146, 208, 80)';
+                    } else if (kpIndex < 3) {
+                        return 'rgb(146, 208, 80)';
+                    } else if (kpIndex < 4) {
+                        return 'rgb(146, 208, 80)';
+                    } else if (kpIndex < 5) {
+                        return 'rgb(146, 208, 80)';
+                    } else if (kpIndex < 6) {
+                        return 'rgb(246, 235, 20)';
+                    } else if (kpIndex < 7) {
+                        return 'rgb(255, 200, 0)';
+                    } else if (kpIndex < 8) {
+                        return 'rgb(255, 150, 0)';
+                    } else if (kpIndex < 9) {
+                        return 'rgb(255, 0, 0)';
+                    } else {
+                        return 'rgb(200, 0, 0)';
+                    }
+                };
+
+                // Create an array of bar colors based on KP index values
+                const barColors = kpValues.map(getBarColor);
+
+                // Create a Highcharts bar chart with improved styling
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'column',
+                        backgroundColor: 'rgb(57, 57, 77)', // Set the background to transparent
+                    },
+                    title: {
+                        text: 'KP Indekss',
+                        style: {
+                            color: 'rgb(250, 252, 255)', // Title text color
+                        },
+                    },
+                    xAxis: {
+                        categories: dates,
+                        title: {
+                            text: '',
+                            style: {
+                                color: 'rgb(250, 252, 255)', // X-axis title text color
+                            },
+                        },
+                        labels: {
+                            rotation: 0, // Rotate X-axis labels for better readability
+                            style: {
+                                color: 'rgb(250, 252, 255)', // X-axis label text color
+                                fontSize: '12px', // Adjust font size
+                                fontFamily: 'Kumbh Sans, sans-serif', // Specify font family
+                            },
+                            formatter: function () {
+                                const date = new Date(this.value);
+                                const day = date.getDate().toString().padStart(2, '0');
+                                const monthNames = [
+                                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                                ];
+                                const month = monthNames[date.getMonth()];
+                                const hours = date.getHours().toString().padStart(2, '0');
+                                const minutes = date.getMinutes().toString().padStart(2, '0');
+                                return day + ' ' + month + ' ' + hours + ':' + minutes;
+                            },
+                        },
+                        tickInterval: 4, // Set a specific tick interval, e.g., 4 for every 4th label
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'KP Indekss',
+                            style: {
+                                color: 'rgb(250, 252, 255)', // Y-axis text color
+                            },
+                        },
+                        labels: {
+                            style: {
+                                color: 'rgb(250, 252, 255)', // Y-axis label text color
+                            },
+                            formatter: function () {
+                                return this.value; // Display Y-axis values as 0, 1, 2, 3, etc.
+                            },
+                        },
+                    },
+                    series: [{
+                        name: 'KP ',
+                        data: kpValues,
+                        color: 'rgba(0, 0, 0, 0)', // Set bar border color to transparent
+                        dataLabels: {
+                            enabled: false,
+                            color: 'rgb(250, 252, 255)', // Data label text color
+                            formatter: function () {
+                                return this.y; // Display the KP index value on top of the bars
+                            }
+                        },
+                        states: {
+                            hover: {
+                                enabled: false, // Disable hover effect
+                            },
+                            select: {
+                                enabled: false, // Disable selection effect
+                            },
+                        },
+                    }],
+                    plotOptions: {
+                        column: {
+                            colorByPoint: true,
+                            colors: barColors, // Assign bar colors based on the array
+                            borderWidth: 0, // Set the bar border width to 0 (removes the border)
+                            pointWidth: 15, // Adjust the width of the bars as needed
+                        },
+                    },
+                });
+            })
+            .catch(error => {
+                console.error('Failed to fetch data: ' + error);
+            });
+    </script>
+</body>
+
+</html>

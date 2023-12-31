@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Solar Region Summary</title>
+    <style>
+        /* Dark mode styles for the body and table */
+        body {
+            color: #ffffff;
+            font-family: Kumbh Sans, sans-serif;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            width: 98%;
+            height: 100%;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            height: 100%;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #444;
+        }
+
+        th {
+            background-color: #444;
+            color: #ffffff;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: rgb(57, 57, 77);
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: rgb(67, 67, 87);
+        }
+
+        td.alpha {
+            color: rgba(0, 255, 0, 1.0);
+        }
+
+        td.beta {
+            color: rgba(0, 255, 0, 1.0);
+        }
+
+        td.gamma {
+            color: rgba(255, 128, 0, 1.0);
+        }
+
+        td.beta-gamma {
+            color: rgba(255, 128, 0, 1.0);
+        }
+
+        td.delta {
+            color: rgba(255, 0, 0, 1.0);
+        }
+
+        td.beta-delta {
+            color: rgba(255, 0, 0, 1.0);
+        }
+
+        td.beta-gamma-delta {
+            color: rgba(255, 0, 0, 1.0);
+        }
+
+        td.gamma-delta {
+            color: rgba(255, 0, 0, 1.0);
+        }
+    </style>
+</head>
+
+<body>
+    <h1></h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Numurs</th>
+                <th>Magnētiskā klasifikācija</th>
+                <th>Izmērs</th>
+                <th>Plankumu skaits</th>
+            </tr>
+        </thead>
+        <tbody id="solarData">
+            <!-- Table data will be inserted here using JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        function updateSolarData() {
+            fetch('https://services.swpc.noaa.gov/text/srs.txt')
+                .then(response => response.text())
+                .then(data => {
+                    // Split the data by lines
+                    const lines = data.split('\n');
+
+                    // Find the starting and ending lines for the table data
+                    let startIndex = lines.findIndex(line => line.startsWith('I.  Regions with Sunspots'));
+                    let endIndex = lines.findIndex(line => line.startsWith('IA. H-alpha Plages without Spots'));
+
+                    // Extract and format the table data, and filter to show only desired columns
+                    const tableData = lines.slice(startIndex + 1, endIndex)
+                        .map(line => line.split(/\s+/).filter(Boolean))
+                        .slice(1) // Skip the first row
+                        .map(row => {
+                            // Extract only the desired columns
+                            const nmbr = row[0];
+                            const location = row[1];
+                            const area = row[3];
+                            const z = row[4];
+                            const nn = row[6];
+                            const magType = row[7];
+
+                            // Apply conditional styling based on "Mag Type"
+                            const magTypeClass = magType === 'Alpha' ? 'alpha' : magType === 'Beta' ? 'beta' : magType === 'Gamma' ? 'gamma' : magType === 'Beta-Gamma' ? 'beta-gamma' : magType === 'Delta' ? 'delta' : magType === 'Beta-Delta' ? 'beta-delta' : magType === 'Beta-Gamma-Delta' ? 'beta-gamma-delta' : magType === 'Gamma-Delta' ? 'gamma-delta' : '';
+
+                            return `<tr>
+            <td class="${magTypeClass}">${nmbr}</td>
+            <td class="${magTypeClass}">${magType}</td>
+            <td class="${magTypeClass}">${area}</td>
+            <td class="${magTypeClass}">${nn}</td>
+        </tr>`;
+                        })
+                        .join('');
+
+                    // Update the table with the new data
+                    document.getElementById('solarData').innerHTML = tableData;
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Call the update function initially and set up a periodic update
+        updateSolarData();
+        setInterval(updateSolarData, 600000); // Update every 10 minutes (adjust as needed)
+    </script>
+</body>
+
+</html>

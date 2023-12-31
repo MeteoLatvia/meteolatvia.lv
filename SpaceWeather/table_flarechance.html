@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Solar Event Probabilities</title>
+  <style>
+  body {
+            background-color: #1a1a1a; /* Dark background color for dark mode */
+            color: #ffffff; /* Text color for dark mode */
+            font-family: Kumbh Sans, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #333; /* Table border color */
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #333; /* Cell border color */
+        }
+
+        th:nth-child(10), td:nth-child(10) {
+            font-weight: bold;
+        }
+
+        thead {
+            background-color: #333; /* Header background color */
+            color: #ffffff; /* Header text color */
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #444; /* Odd row background color */
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #333; /* Even row background color */
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button {
+            background-color: rgb(0, 128, 255); /* Blue color for buttons */
+            color: #ffffff; /* Text color for buttons */
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: rgb(64, 159, 255); /* Darker blue color on hover */
+        }
+  </style>
+</head>
+<body>
+  <div id="table-container"></div>
+
+  <script>
+    // Fetch the JSON data
+    fetch("https://services.swpc.noaa.gov/json/solar_probabilities.json")
+      .then((response) => response.json())
+      .then((data) => {
+        // Find the data for the latest date (which is the first item in the array)
+        const latestData = data[0];
+        
+        // Process the latest data and generate the HTML table with conditional styling
+        createHTMLTable(latestData);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+
+    function createHTMLTable(data) {
+      // Create a table element
+      const table = document.createElement("table");
+
+      // Create the header row with parameter titles and dates
+      const headerRow = table.insertRow(0);
+      headerRow.insertCell().textContent = "Intensitāte";
+      headerRow.insertCell().textContent = "Rītdiena";
+      headerRow.insertCell().textContent = "Parītdiena";
+      headerRow.insertCell().textContent = "Aizparītdiena";
+
+      // Define conditional styling ranges
+      const stylingRanges = [
+        { min: 0, max: 20, color: "rgb(182, 246, 20)" },
+        { min: 20, max: 40, color: "rgb(246, 235, 20)" },
+        { min: 40, max: 60, color: "rgb(255, 200, 0)" },
+        { min: 60, max: 80, color: "rgb(255, 150, 0)" },
+        { min: 80, max: 100, color: "rgb(255, 0, 0)" },
+      ];
+
+      // Create rows for C, M, and X flare probabilities with conditional styling
+      const flareTypes = ["C_class", "M_class", "X_class"];
+      for (const flareType of flareTypes) {
+        const row = table.insertRow();
+        row.insertCell().textContent = flareType;
+        for (let day = 1; day <= 3; day++) {
+          const cell = row.insertCell();
+          const propName = `${flareType.toLowerCase()}_${day}_day`;
+          const value = data[propName];
+          cell.textContent = value;
+
+          // Apply conditional styling based on the value
+          const styling = getConditionalStyling(value, stylingRanges);
+          cell.style.backgroundColor = styling.color;
+        }
+      }
+
+      // Add the table to your HTML document (e.g., the div with id "table-container")
+      const tableContainer = document.getElementById("table-container");
+      tableContainer.appendChild(table);
+    }
+
+    function getConditionalStyling(value, stylingRanges) {
+      for (const range of stylingRanges) {
+        if (value >= range.min && value <= range.max) {
+          return range;
+        }
+      }
+    }
+  </script>
+</body>
+</html>

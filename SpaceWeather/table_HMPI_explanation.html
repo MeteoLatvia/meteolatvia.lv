@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: transparent;
+            /* Dark background color for dark mode */
+            color: #ffffff;
+            /* Text color for dark mode */
+            font-family: Kumbh Sans, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #333;
+            /* Table border color */
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #333;
+            /* Cell border color */
+        }
+
+        th:nth-child(10),
+        td:nth-child(10) {
+            font-weight: bold;
+        }
+
+        thead {
+            background-color: #333;
+            /* Header background color */
+            color: #ffffff;
+            /* Header text color */
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #444;
+            /* Odd row background color */
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #333;
+            /* Even row background color */
+        }
+
+        /* Define background colors for each cell in columns G0 to G5 */
+        .cell-G0 {
+            background-color: rgb(146, 208, 80);
+            color: #000000;
+        }
+
+        .cell-G1 {
+            background-color: rgb(246, 235, 20);
+            color: #000000;
+        }
+
+        .cell-G2 {
+            background-color: rgb(255, 200, 0);
+            color: #000000;
+        }
+
+        .cell-G3 {
+            background-color: rgb(255, 150, 0);
+            color: #000000;
+        }
+
+        .cell-G4 {
+            background-color: rgb(255, 0, 0);
+            color: #000000;
+        }
+
+        .cell-G5 {
+            background-color: rgb(200, 0, 0);
+            color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <table border="1">
+        <tr>
+            <th>Vērtība</th>
+            <th>Raksturojums</th>
+            <th>Ietekme</th>
+        </tr>
+        <tr>
+            <td class="cell-G0">&lt25 GW</td>
+            <td class="cell-G0">Neliels enerģijas daudzums</td>
+            <td class="cell-G0">
+                Ziemeļblāzma nav novērojama.<br><br>
+            </td>
+        </tr>
+        <tr>
+            <td class="cell-G1">25-50 GW</td>
+            <td class="cell-G1">Vidējs enerģijas daudzums</td>
+            <td class="cell-G1">
+                Vāja ziemeļblāzma.<br><br>
+            </td>
+        </tr>
+        <tr>
+            <td class="cell-G2">50-75 GW</td>
+            <td class="cell-G2">Liels enerģijas daudzums</td>
+            <td class="cell-G2">
+                Mērena ziemeļblāzma.<br><br>
+            </td>
+        </tr>
+        <tr>
+            <td class="cell-G3">75-100 GW</td>
+            <td class="cell-G3">Ļoti liels enerģijas daudzums</td>
+            <td class="cell-G3">
+                Spēcīga ziemeļblāzma.<br><br>
+            </td>
+        </tr>
+        <tr>
+            <td class="cell-G4">100-150 GW</td>
+            <td class="cell-G4">Īpaši liels enerģijas daudzums</td>
+            <td class="cell-G4">
+                Ļoti spēcīga ziemeļblāzma.<br><br>
+            </td>
+        </tr>
+        <tr>
+            <td class="cell-G5">&gt150 GW</td>
+            <td class="cell-G5">Ekstremāli liels enerģijas daudzums</td>
+            <td class="cell-G5">
+                Ekstremāli spēcīga ziemeļblāzma.<br><br>
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>

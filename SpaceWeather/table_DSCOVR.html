@@ -1,0 +1,217 @@
+<script>
+    // Function to fetch the JSON data from the source URL
+    function fetchData(url) {
+      return fetch(url)
+        .then((response) => response.json())
+        .then((data) => data.slice(1)); // Remove the header row
+    }
+
+    // Function to remove specific columns from the data
+    function removeColumns(data, columnsToRemove) {
+      // Filter the data to exclude the specified columns
+      const filteredData = data.map((row) =>
+        row.filter((_, index) => !columnsToRemove.includes(index))
+      );
+
+      return filteredData;
+    }
+
+    // Function to format the time to the desired format (e.g., "26.09.2023. 16:34")
+    function formatTime(rawTime) {
+      const utcDate = new Date(rawTime);
+      utcDate.setHours(utcDate.getHours() + 3); // Adjust for UTC+3
+
+      const day = utcDate.getDate();
+      const month = utcDate.getMonth() + 1; // Months are zero-based
+      const year = utcDate.getFullYear();
+      const hours = utcDate.getHours();
+      const minutes = utcDate.getMinutes();
+
+      const formattedTime = `${day}.${month}.${year}. ${hours}:${minutes}`;
+      return formattedTime;
+    }
+
+    // Function to create an HTML table from the JSON data with specific columns removed and limited to 60 rows
+    function createTable(data) {
+      const reversedData = data.slice().reverse(); // Reverse the entire array
+      const table = document.createElement("table");
+      table.className = "ACE_data";
+
+      // Create a row for manually specified column titles
+      const titleRow = table.insertRow(0);
+      const columnTitles = [
+        "Laiks",
+        "Magnētiskā lauka orientācija (nT)",
+        "Magnētiskā lauka spēks (nT)",
+        "Blīvums (p/cm3)",
+        "Ātrums (km/s)",
+      ]; // Specify the columns you want to display
+      for (const title of columnTitles) {
+        const th = document.createElement("th");
+        th.textContent = title;
+        titleRow.appendChild(th);
+      }
+
+      // Create table rows with data (up to a maximum of 60 rows)
+      for (let i = 0; i < Math.min(reversedData.length, 60); i++) {
+        const rowData = reversedData[i];
+        const row = table.insertRow(i + 1); // Start from index 1 for data rows
+
+        for (let j = 0; j < rowData.length; j++) {
+          const cell = row.insertCell();
+          const cellData = rowData[j];
+
+          // Check if it's the "Laiks" column (assuming it's the first column, adjust if needed)
+          if (j === 0) {
+            cell.textContent = formatTime(cellData);
+          } else {
+            cell.textContent = cellData;
+          }
+
+          // Check if it's the "Bz GSM" column (assuming it's the second column, adjust if needed)
+          if (j === 1) {
+            // Convert the value to a number
+            const bzValue = parseFloat(cellData);
+
+            // Apply CSS classes based on intensity levels
+            if (!isNaN(bzValue)) {
+              if (bzValue > 0) {
+                cell.classList.add("BzLow");
+              } else if (bzValue > -5) {
+                cell.classList.add("BzIncreased");
+              } else if (bzValue > -10) {
+                cell.classList.add("BzModerate");
+              } else if (bzValue > -15) {
+                cell.classList.add("BzHigh");
+              } else {
+                cell.classList.add("BzVeryHigh");
+              }
+            }
+          }
+
+          // Check if it's the "Bt GSM" column (assuming it's the third column, adjust if needed)
+          if (j === 2) {
+            // Convert the value to a number
+            const btValue = parseFloat(cellData);
+
+            // Apply CSS classes based on intensity levels
+            if (!isNaN(btValue)) {
+              if (btValue < 10) {
+                cell.classList.add("BtLow");
+              } else if (btValue < 15) {
+                cell.classList.add("BtIncreased");
+              } else if (btValue < 20) {
+                cell.classList.add("BtModerate");
+              } else if (btValue < 25) {
+                cell.classList.add("BtHigh");
+              } else {
+                cell.classList.add("BtVeryHigh");
+              }
+            }
+          }
+        }
+      }
+
+      return table;
+    }
+
+    // Function to add plasma data to the table
+    function addPlasmaDataToTable(plasmaData, table) {
+      // Extract "density" and "speed" columns from the plasma data
+      const densityColumn = plasmaData.map((row) => row[1]);
+      const speedColumn = plasmaData.map((row) => row[2]);
+
+      // Get all rows in the table (excluding the header row)
+      const dataRows = table.querySelectorAll("tr:not(:first-child)");
+
+      // Loop through the rows and add "density" and "speed" cells
+      dataRows.forEach((row, rowIndex) => {
+        const densityCell = row.insertCell();
+        const speedCell = row.insertCell();
+
+        // Set the text content for "density" and "speed" cells
+        const densityValue = densityColumn[rowIndex];
+        const speedValue = speedColumn[rowIndex];
+
+        densityCell.textContent = densityValue;
+        speedCell.textContent = speedValue;
+
+        // Check if it's the "density" column (assuming it's the first column, adjust if needed)
+        // and apply CSS classes based on density levels
+        if (!isNaN(parseFloat(densityValue))) {
+          applyDensityColoring(densityCell, densityValue);
+        }
+
+        // Check if it's the "speed" column (assuming it's the second column, adjust if needed)
+        // and apply CSS classes based on speed levels
+        if (!isNaN(parseFloat(speedValue))) {
+          applySpeedColoring(speedCell, speedValue);
+        }
+      });
+    }
+
+    // Function to apply CSS classes based on density levels
+    function applyDensityColoring(cell, densityValue) {
+      if (densityValue < 10) {
+        cell.classList.add("DensityLow");
+      } else if (densityValue < 15) {
+        cell.classList.add("DensityIncreased");
+      } else if (densityValue < 20) {
+        cell.classList.add("DensityModerate");
+      } else if (densityValue < 25) {
+        cell.classList.add("DensityHigh");
+      } else {
+        cell.classList.add("DensityVeryHigh");
+      }
+    }
+
+    // Function to apply CSS classes based on speed levels
+    function applySpeedColoring(cell, speedValue) {
+      if (speedValue < 400) {
+        cell.classList.add("SpeedLow");
+      } else if (speedValue < 500) {
+        cell.classList.add("SpeedIncreased");
+      } else if (speedValue < 600) {
+        cell.classList.add("SpeedModerate");
+      } else if (speedValue < 700) {
+        cell.classList.add("SpeedHigh");
+      } else {
+        cell.classList.add("SpeedVeryHigh");
+      }
+    }
+
+    // Function to update the table in the div element
+    function updateTable() {
+      // Fetch magnetic field data and create the table
+      fetchData(
+        "https://services.swpc.noaa.gov/products/solar-wind/mag-2-hour.json"
+      )
+        .then((magData) => {
+          const filteredMagData = removeColumns(magData, [1, 2, 4, 5]);
+          const solarTableDiv = document.getElementById("ACE_data");
+          solarTableDiv.innerHTML = ""; // Clear existing table
+          const table = createTable(filteredMagData);
+
+          // Fetch plasma data and add it to the table
+          fetchData(
+            "https://services.swpc.noaa.gov/products/solar-wind/plasma-2-hour.json"
+          )
+            .then((plasmaData) => {
+              addPlasmaDataToTable(plasmaData, table);
+              solarTableDiv.appendChild(table);
+            })
+            .catch((error) =>
+              console.error("Error fetching plasma data:", error)
+            );
+        })
+        .catch((error) =>
+          console.error("Error fetching magnetic field data:", error)
+        );
+    }
+
+    // Automatically update the table every 5 minutes (adjust as needed)
+    setInterval(updateTable, 300000); // 5 minutes in milliseconds
+
+    // Initial table update
+    updateTable();
+  </script>

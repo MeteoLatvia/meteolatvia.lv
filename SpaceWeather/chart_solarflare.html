@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Highcharts Line Chart</title>
+    <!-- Include the Highcharts library -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <!-- Create a container for the chart -->
+    <div id="chart-container" style="width: 100%; height: 100%;"></div>
+
+    <script>
+        let chartData; // Declare the variable at a broader scope
+
+        // Function to format the time in "DD.MM.YYYY HH:MM" format and adjust for UTC+3
+        function formatTime(timeString) {
+            const date = new Date(timeString);
+            date.setHours(date.getHours() + 0); // Adjust for UTC+3
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear();
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            return `${day}.${month}.${year} ${hours}:${minutes}`;
+        }
+
+        // Function to format the numeric intensity value in the tooltip
+        function formatIntensity(observedFlux) {
+            if (observedFlux < 1e-8) {
+                return 'A' + observedFlux.toExponential(1).replace('e', ' ');
+            } else if (observedFlux < 1e-7) {
+                return 'B' + observedFlux.toExponential(1).replace('e', ' ');
+            } else if (observedFlux < 1e-6) {
+                return 'C' + observedFlux.toExponential(1).replace('e', ' ');
+            } else if (observedFlux < 1e-5) {
+                return 'M' + observedFlux.toExponential(1).replace('e', ' ');
+            } else {
+                return 'X' + observedFlux.toExponential(1).replace('e', ' ');
+            }
+        }
+
+        // Fetch the JSON data and render the chart
+        fetch('https://services.swpc.noaa.gov/json/goes/secondary/xrays-6-hour.json')
+            .then(response => response.json())
+            .then(data => {
+                // Process the data and extract every 2nd data point with a time change
+                chartData = data.filter((entry, index, array) => {
+                    if (index === 0 || entry.time_tag !== array[index - 1].time_tag) {
+                        return true;
+                    }
+                    return false;
+                });
+
+                // Extract "observed_flux" values from the filtered data
+                const fluxData = chartData.map(entry => entry.observed_flux);
+
+                // Call the function to render the Highcharts line chart with custom labels and tooltips
+                renderChart(fluxData);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+        // Function to format the Y-axis labels
+        function formatYAxisLabel(value) {
+            if (value === 1e-8) {
+                return 'B';
+            } else if (value === 1e-7) {
+                return 'C';
+            } else if (value === 1e-6) {
+                return 'M';
+            } else if (value === 1e-5) {
+                return 'X';
+            } else {
+                return value.toExponential(1).replace('e', ' ');
+            }
+        }
+
+        // Function to render the Highcharts line chart with custom labels, tooltips, and conditional line colors
+        function renderChart(data) {
+            Highcharts.chart('chart-container', {
+                chart: {
+                    type: 'area',
+                    backgroundColor: "rgb(57, 57, 77)", // Transparent background
+                    zoomType: 'x', // Enable zooming along the x-axis
+                },
+                title: {
+                    text: 'Solārā starojuma plūsmas intensitāte',
+                    style: {
+                        color: "rgb(250, 252, 255)", // Change the text color
+                    },
+                },
+                xAxis: {
+                    title: {
+                        text: 'Time',
+                    },
+                    categories: chartData.map(entry => entry.time_tag), // Use original time_tag for X-axis labels
+                    labels: {
+                        rotation: 0, // Prevent label rotation
+                        style: {
+                            color: "rgb(250, 252, 255)", // Set the text color
+                        },
+                    },
+                    tickInterval: 50, // Explicitly set tick intervals
+                },
+                yAxis: {
+                    title: {
+                        text: 'Observed Flux',
+                        style: {
+                            color: "rgb(250, 252, 255)", // Change the text color
+                        },
+                    },
+                    type: 'logarithmic', // Set the Y-axis to logarithmic scale
+                    min: 1e-8, // Set a minimum value for the logarithmic scale
+                    labels: {
+                        formatter: function () {
+                            return formatYAxisLabel(this.value);
+                        },
+                        style: {
+                            color: "rgb(250, 252, 255)",
+                        },
+                    },
+                },
+                plotOptions: {
+                    area: {
+                        marker: {
+                            enabled: false, // Disable markers on the line
+                        },
+                        shadow: {
+                            color: 'rgb(0, 0, 0)', // Shadow color and opacity
+                            offsetY: 3, // Vertical shadow offset
+                            opacity: 1.0, // Shadow opacity (0 to 1)
+                            width: 5, // Shadow width
+                        },
+                        color: {  // Specify the gradient and stops for the area chart
+                            linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+                            stops: [
+                                [0, 'rgba(0, 255, 0, 0.8)'], // Green for lower values
+                                [0.5, 'rgba(255, 255, 0, 0.8)'], // Yellow for mid values
+                                [1, 'rgba(255, 0, 0, 0.8)'], // Red for higher values
+                            ],
+                        },
+                        fillOpacity: 0.2, // Set the opacity for the area fill
+                        zones: [
+                            {
+                                value: 1e-9,
+                                color: 'rgba(0, 255, 0, 1.0)', // Green for values 0
+                            },
+                            {
+                                value: 1e-8,
+                                color: 'rgba(0, 255, 0, 1.0)', // Yellow for values 0-5
+                            },
+                            {
+                                value: 1e-7,
+                                color: 'rgba(255, 255, 0, 1.0)', // Orange for values 5-10
+                            },
+                            {
+                                value: 1e-6,
+                                color: 'rgba(255, 128, 0, 1.0)', // Orange for values 10-15
+                            },
+                            {
+                                value: 1e-5,
+                                color: 'rgba(255, 0, 0, 1.0)', // Orange for values 15-20
+                            },
+                            {
+                                value: 1e-4,
+                                color: 'rgba(128, 0, 0, 1.0)', // Orange for values 20-25
+                            },
+                            {
+                                color: 'rgba(128, 0, 0, 1.0)', // Red for values above >30
+                            },
+                        ],
+                    },
+                },
+                series: [
+                    {
+                        name: 'Intensitāte',
+                        data: data,
+                        color: 'rgb(250, 252, 255)', // Set line color
+                        tooltip: {
+                            pointFormatter: function () {
+                                const observedFlux = this.y;
+                                const intensityClass = formatIntensity(observedFlux);
+                                const letterAndNumbers = intensityClass.substring(0, 4); // Extract the first 3 characters (e.g., C2.2)
+
+                                return '<span style="color:' + this.color + '">●</span> ' + this.series.name + ': <b>' + letterAndNumbers
+                                    + '</b><br>' + ' <b>' + formatTime(this.category) + '</b><br>';
+                            },
+                        },
+                    },
+                ],
+            });
+        }
+    </script>
+</body>
+
+</html>
