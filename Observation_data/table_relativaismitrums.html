@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>table_relativaismitrums</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: white;
+      font-family: 'Kumbh Sans', sans-serif;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      text-align: center;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #444;
+      position: relative;
+      cursor: pointer;
+      color: white;
+      /* Text color for header cells */
+    }
+
+    tbody tr:nth-child(odd) {
+      background-color: rgb(57, 57, 77);
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: rgb(67, 67, 87);
+    }
+
+    .sort-button {
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+    }
+
+    .sort-button span {
+      display: none;
+      /* Hide the sorting text */
+    }
+
+    tr:nth-child(even) {
+      background-color: rgb(35, 35, 35);
+    }
+
+    tr {
+      background-color: rgb(45, 45, 45);
+    }
+  </style>
+</head>
+
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th onclick="sortTable(0)">
+          Stacija
+          <button class="sort-button" onclick="sortTable(0)">
+            <span>Sort</span>
+          </button>
+        </th>
+        <th data-ignore-sort>Laiks</th>
+        <th onclick="sortTable(2)">
+          Relatīvais mitrums (%)
+          <button class="sort-button" onclick="sortTable(2)">
+            <span>Sort</span>
+          </button>
+        </th>
+      </tr>
+    </thead>
+    <tbody id="weather-data-body">
+      <!-- Weather data will be populated here -->
+    </tbody>
+  </table>
+
+  <script>
+    let data = []; // Store the data
+    let sortDirections = Array(12).fill(1); // 1 for ascending, -1 for descending
+
+    // Color values based on temperature
+    const temperatureColors = [
+      "rgb(250,255,255)",
+      "rgb(225,255,255)",
+      "rgb(200,255,255)",
+      "rgb(180,255,255)",
+      "rgb(160,255,255)",
+      "rgb(140,255,255)",
+      "rgb(120,255,255)",
+      "rgb(100,255,255)",
+      "rgb(80,255,255)",
+      "rgb(60,255,255)",
+      "rgb(40,255,255)",
+      "rgb(15,255,255)",
+      "rgb(0,255,255)",
+      "rgb(0,240,255)",
+      "rgb(0,215,255)",
+      "rgb(0,190,255)",
+      "rgb(0,170,255)",
+      "rgb(0,150,255)",
+      "rgb(0,130,255)",
+      "rgb(0,110,255)",
+      "rgb(0,90,255)",
+      "rgb(0,70,255)",
+      "rgb(0,50,255)",
+      "rgb(0,25,255)",
+      "rgb(0,0,255)",
+      "rgb(0,0,225)",
+    ];
+
+    // Fetch data from the URL
+    fetch("https://videscentrs.lvgmc.lv/data/weather_monitoring_data_raw")
+      .then((response) => response.json())
+      .then((responseData) => {
+        // Sort data by station and time in descending order
+        responseData.sort((a, b) => {
+          if (a.stacijas_kods !== b.stacijas_kods) {
+            return a.stacijas_kods.localeCompare(b.stacijas_kods);
+          } else {
+            return new Date(b.laiks) - new Date(a.laiks);
+          }
+        });
+
+        // Filter data to keep only the latest hour for each station
+        const latestDataByStation = {};
+        for (const stationData of responseData) {
+          if (!latestDataByStation[stationData.stacijas_kods]) {
+            latestDataByStation[stationData.stacijas_kods] = stationData;
+          }
+        }
+
+        data = Object.values(latestDataByStation);
+        renderTable(data);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+
+    const stationNameMapping = {
+      // Add mappings here, e.g., "stationID": "Station Name"
+      "DAUGAVGR": "Daugavgrīva", // Replace with the desired station name
+      "KALNCIEM": "Kalnciems",
+      "KULDIGA": "Kuldīga",
+      "LIELPECI": "Lielpeči",
+      "PIEDRUJA": "Piedruja",
+      "RIAI99PA": "Ainaži",
+      "RIAL99MS": "Alūksne",
+      "RIBA99PA": "Bauska",
+      "RIDAGDA": "Dagda",
+      "RIDM99MS": "Daugavpils",
+      "RIDO99MS": "Dobele",
+      "RIGASLU": "Rīga (LU)",
+      "RIGU99MS": "Gulbene",
+      "RIJE99PA": "Jelgava",
+      "RIKO99PA": "Kolka",
+      "RILP99PA": "Liepāja",
+      "RIMADONA": "Madona",
+      "RIME99MS": "Mērsrags",
+      "RIPA99PA": "Pāvilosta",
+      "RIPR99PA": "Priekuļi",
+      "RIREZEKN": "Rēzekne",
+      "RIRU99PA": "Rūjiena",
+      "RISA99PA": "Saldus",
+      "RISE99MS": "Skulte",
+      "RISI99PA": "Skrīveri",
+      "RIST99PA": "Stende",
+      "RIVE99PA": "Ventspils",
+      "RIZI99PA": "Zīlāni",
+      "RIZO99MS": "Zosēni",
+      "RUCAVA": "Rucava",
+      "SIGULDA": "Sigulda",
+      "SILI": "Sīļi",
+      "VICAKI": "Vičaki",
+      // Add mappings for all station IDs in your data
+    };
+
+    const excludedStations = [
+      // Add station IDs to be excluded here
+      "KALNCIEM",
+      "KULDIGA",
+      "LIELPECI",
+      "PIEDRUJA",
+      "SIGULDA",
+      "SILI",
+      "VICAKI",
+      // Add more station IDs as needed
+    ];
+
+
+    function renderTable(data) {
+      const tbody = document.getElementById("weather-data-body");
+      tbody.innerHTML = ""; // Clear existing rows
+
+      // Filter the data to exclude stations in the 'excludedStations' array
+      const filteredData = data.filter((stationData) => !excludedStations.includes(stationData.stacijas_kods));
+
+      for (const stationData of filteredData) {
+        const row = document.createElement("tr");
+        const temperature = parseFloat(stationData.relativais_mitrums);
+
+        // Get the station name from the mapping
+        const stationName = stationNameMapping[stationData.stacijas_kods] || stationData.stacijas_kods;
+
+// Find the color based on temperature
+let colorIndex = Math.floor((temperature / 100) * temperatureColors.length);
+colorIndex = Math.min(Math.max(colorIndex, 0), temperatureColors.length - 1);
+
+        row.innerHTML = `
+              <td>${stationName}</td>
+              <td>${stationData.laiks}</td>
+              <td style="background-color: ${temperatureColors[colorIndex]};">${stationData.relativais_mitrums}</td>
+          `;
+        tbody.appendChild(row);
+      }
+    }
+
+
+
+    function sortTable(columnIndex) {
+      if (columnIndex === 1) {
+        return; // Do not sort the "Time" column
+      }
+
+      // Toggle sorting direction
+      sortDirections[columnIndex] *= -1;
+
+      data.sort((a, b) => {
+        if (columnIndex === 2) {
+          // Sort based on the temperature column
+          const tempA = parseFloat(a.relativais_mitrums);
+          const tempB = parseFloat(b.relativais_mitrums);
+
+          if (a.stacijas_kods === "DAUGAVGR") {
+            return sortDirections[columnIndex] * (tempA - tempB);
+          } else if (b.stacijas_kods === "DAUGAVGR") {
+            return sortDirections[columnIndex] * (tempA - tempB);
+          } else {
+            return sortDirections[columnIndex] * (tempA - tempB);
+          }
+        } else {
+          // Sort based on station names or other columns
+          if (a.stacijas_kods === "DAUGAVGR") {
+            return -1; // "Daugavgrīva" is always first
+          } else if (b.stacijas_kods === "DAUGAVGR") {
+            return 1; // "Daugavgrīva" is always first
+          } else {
+            return sortDirections[columnIndex] * a.stacijas_kods.localeCompare(b.stacijas_kods);
+          }
+        }
+      });
+
+      renderTable(data);
+    }
+  </script>
+</body>
+
+</html>

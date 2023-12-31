@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+  <base target="_top" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>LVĢMC_redzamība</title>
+
+  <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+
+  <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+  <!-- Other JavaScript libraries and resources -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js"></script>
+  <link href="https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css" rel="stylesheet" />
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@drustack/leaflet.resetview/dist/L.Control.ResetView.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@drustack/leaflet.resetview/dist/L.Control.ResetView.min.js"></script>
+  <script src="https://unpkg.com/leaflet-simple-map-screenshoter"></script>
+
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      background-color: rgb(43, 43, 51);
+      overflow: hidden;
+      /* Prevent scrolling */
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #map {
+      flex-grow: 1;
+      /* Take up remaining vertical space */
+    }
+
+    .leaflet-container {
+      height: 100%;
+      width: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 0px;
+      text-align: center;
+    }
+
+    .marker div {
+      font-size: 1em;
+      font-weight: 900;
+      padding: 3px;
+      width: 75px;
+      height: 28px;
+      border-radius: 5px;
+      border-color: rgb(0, 0, 0);
+      /*text-shadow: 0 0 2px #ffffff;*/
+      text-shadow: 0px 0px 2px rgb(255, 255, 255),
+        0px 0px 2px rgb(255, 255, 255), 0px 0px 2px rgb(255, 255, 255),
+        0px 0px 2px rgb(255, 255, 255), 0px 0px 2px rgb(255, 255, 255);
+      border-width: 1px;
+      border-style: solid;
+      text-align: center;
+    }
+
+    .button-container {
+      display: flex;
+      align-items: center;
+      /* Center items vertically */
+      justify-content: space-between;
+      margin: 10px;
+    }
+
+    button {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      background-color: rgb(57, 57, 77);
+      /* Green background color */
+      color: white;
+      /* White text color */
+      transition: background-color 0.3s;
+      /* Add a transition effect on hover */
+    }
+
+    button:hover {
+      background-color: rgb(82, 82, 102);
+      /* Dark green background color on hover */
+    }
+
+    button i {
+      margin-right: 5px;
+    }
+
+    #currentTime {
+      flex-grow: 1;
+      /* Allow the element to grow and take available space */
+      text-align: center;
+      /* Center the text within the element */
+      padding: 10px;
+      font-size: 1.5rem;
+      background-color: rgb(57, 57, 77);
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+  <div id="currentTime"></div>
+  <div class="button-container">
+    <button id="minusOneHourBtn" onclick="initializeMap(-1)">
+      <i class="fas fa-chevron-left"></i> -1 stunda
+    </button>
+    <button id="plusOneHourBtn" onclick="initializeMap(1)">
+      +1 stunda <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+  <script>
+    function initializeMap() { }
+    // Create a promise to handle the initial AJAX request
+    var initialDataPromise = new Promise(function (resolve, reject) {
+      $.ajax({
+        type: "GET",
+        url: weatherjson,
+        traditional: true,
+        dataType: "json",
+        success: function (response2) {
+          var initialData = {};
+          response2.forEach(function (tabledata2) {
+            if (tabledata2.laiks === datlaiks) {
+              initialData[tabledata2.stacijas_kods] = tabledata2.redzamiba;
+            }
+          });
+          resolve(initialData);
+        },
+        error: function (error) {
+          reject(error);
+        },
+      });
+    });
+
+    // Handle the promise resolution for the initial data
+    initialDataPromise
+      .then(function (initialData) {
+        // Update markers with initial data
+        myObj = initialData;
+        sazimet();  // Move this call here
+      })
+      .catch(function (error) {
+        console.error("Error fetching initial data:", error);
+      });
+
+
+
+    var today = new Date();
+    var menesis = ("0" + (today.getMonth() + 1)).slice(-2);
+    var diena = ("0" + today.getDate()).slice(-2);
+    var date = today.getFullYear() + "." + menesis + "." + diena;
+    var stundas = ("0" + today.getHours()).slice(-2) + ":00";
+    if (today.getHours() === 0) {
+      var stundaminus = "23:00";
+      var vakardiena =
+        today.getFullYear() +
+        "." +
+        menesis +
+        "." +
+        ("0" + (today.getDate() - 1)).slice(-2);
+      var datlaiksminus = vakardiena + " " + stundaminus;
+    } else {
+      var stundaminus = ("0" + (today.getHours() - 1)).slice(-2) + ":00";
+      var datlaiksminus = date + " " + stundaminus;
+    }
+    var datlaiks = date + " " + stundas;
+    console.log("tagad", datlaiks);
+    console.log("pirms", datlaiksminus);
+
+    L.mapbox.accessToken =
+      "pk.eyJ1IjoibWV0ZW9sYXR2aWEiLCJhIjoiY2xjcWF3ajRkMDQ0NDNucDE4aTdkZ3h2NSJ9.L0yigObs_66n45KR3oLfUQ";
+    var map = L.map("map").setView([56.85, 24.55], 7);
+
+    // Add tiles from the Mapbox Static Tiles API
+    // (https://docs.mapbox.com/api/maps/#static-tiles)
+    // Tiles are 512x512 pixels and are offset by 1 zoom level
+    L.tileLayer(
+      "https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/{z}/{x}/{y}?access_token=" +
+      L.mapbox.accessToken,
+      {
+        tileSize: 512,
+        zoomOffset: -1,
+        attribution:
+          '© <a href="https://www.mapbox.com/contribute/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://videscentrs.lvgmc.lv/laika-noverojumu-karte">LVĢMC</a>',
+      }
+    ).addTo(map);
+
+    const baseballIcon = L.icon({
+      iconUrl: "baseball-marker.png",
+      iconSize: [32, 37],
+      iconAnchor: [16, 37],
+      popupAnchor: [0, -28],
+    });
+
+    /*Reset view function*/
+    L.control
+      .resetView({
+        position: "topleft",
+        title: "Reset view",
+        latlng: L.latLng([56.85, 24.55]),
+        zoom: 7.0,
+      })
+      .addTo(map);
+
+    /*Screenshoter*/
+    L.simpleMapScreenshoter().addTo(map);
+
+    /*Create watermark*/
+    L.Control.Watermark = L.Control.extend({
+      onAdd: function (map) {
+        var img = L.DomUtil.create("img");
+
+        img.src = "https://fv9-7.failiem.lv/down.php?i=p2kgbydxw&view";
+        img.style.width = "50px";
+
+        return img;
+      },
+
+      onRemove: function (map) {
+        // Nothing to do here
+      },
+    });
+
+    L.control.watermark = function (opts) {
+      return new L.Control.Watermark(opts);
+    };
+
+    L.control.watermark({ position: "bottomleft" }).addTo(map);
+
+    //izveidot geoJson
+
+    var myLayer = L.geoJSON().addTo(map);
+    var gj = {
+      name: "MyFeatureType",
+      type: "FeatureCollection",
+      features: [],
+    };
+    var myObj = {};
+    var koordjson =
+      "https://videscentrs.lvgmc.lv/data/weather_monitoring_points";
+    var weatherjson =
+      "https://videscentrs.lvgmc.lv/data/weather_monitoring_data_raw";
+    $.ajax({
+      type: "GET",
+      url: weatherjson,
+      traditional: true,
+      dataType: "json",
+      success: function (response2) {
+        response2.forEach(function (tabledata2) {
+          console.log(tabledata2.laiks);
+          if (tabledata2.laiks === datlaiks) {
+            myObj[tabledata2.stacijas_kods] = tabledata2.redzamiba;
+          } else if (tabledata2.laiks === datlaiksminus) {
+            if (myObj[tabledata2.stacijas_kods] === undefined) {
+              myObj[tabledata2.stacijas_kods] = tabledata2.redzamiba;
+            }
+          }
+        });
+      },
+    });
+    console.log(myObj);
+
+    function sazimet() {
+      $.ajax({
+        type: "GET",
+        url: koordjson,
+        traditional: true,
+        dataType: "json",
+        success: function (response) {
+          response.forEach(function (tabledata) {
+            if (tabledata.kods in myObj && myObj[tabledata.kods] !== null) {
+              var atslega = tabledata.kods;
+              //console.log(atslega)
+              var temp = myObj[atslega];
+              //console.log(temp)
+              geojsonFeature = {
+                type: "Feature",
+                geometry: {
+                  type: "Point",
+                  coordinates: [
+                    parseFloat(tabledata.lon),
+                    parseFloat(tabledata.lat),
+                  ],
+                },
+                properties: { kods: tabledata.kods, temperatura: temp },
+              };
+              /*gj.features.push(geojsonFeature);
+                          var myLayer = L.geoJSON().addTo(map);
+                          myLayer.addData(geojsonFeature);
+                          myLayer.bindTooltip(temp, { permanent: true, direction: 'center', className: 'countryLabel' });*/
+
+              value = temp;
+              const numbers = [
+                50, 100, 150, 200, 250, 300, 400, 500, 1000, 1500, 2000, 2500,
+                3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 10000, 15000,
+                20000, 20000, 20000, 20000, 20000, 20000, 20000, 20000, 20000,
+                20000, 30000,
+              ];
+              const colours = [
+                "#ff0300",
+                "#ff1400",
+                "#ff2600",
+                "#ff3c00",
+                "#ff5000",
+                "#ff6600",
+                "#ff7f00",
+                "#ffad00",
+                "#ffc300",
+                "#ffdb00",
+                "#fff400",
+                "#eaff00",
+                "#d4ff00",
+                "#beff00",
+                "#aaff00",
+                "#88ff12",
+                "#42ff70",
+                "#18ffa8",
+                "#00fcc8",
+                "#00e5d1",
+                "#00c9dc",
+                "#00aee6",
+                "#0075fd",
+                "#0075fd",
+                "#0075fd",
+                "#0075fd",
+                "#0075fd",
+                "#0075fd",
+                "#0075fd",
+                "#0075fd",
+                "#0075fd",
+                "#0075fd",
+                "#0075fd",
+              ];
+              const index = numbers.findIndex((e) => e > value);
+              console.log(colours[index]);
+              var content = `<div style="background:${colours[index]}">${temp} m</div>`;
+              var myIcon = L.divIcon({ html: content, className: "marker" });
+              var marker = L.marker(
+                [parseFloat(tabledata.lat), parseFloat(tabledata.lon)],
+                { icon: myIcon }
+              );
+              marker.addTo(map);
+            }
+          });
+        },
+      });
+    }
+
+    var currentHourOffset = 0; // Initialize the offset to 0
+
+    // Call initializeMap when the page loads
+    initializeMap();
+
+    function initializeMap(offset) {
+      currentHourOffset += offset || 0; // Update the offset (if provided)
+
+      // Calculate new time based on the offset
+      var newDate = new Date();
+      newDate.setHours(today.getHours() + currentHourOffset);
+      var newDateStr =
+        newDate.getFullYear() +
+        "." +
+        ("0" + (newDate.getMonth() + 1)).slice(-2) +
+        "." +
+        ("0" + newDate.getDate()).slice(-2) +
+        " " +
+        ("0" + newDate.getHours()).slice(-2) +
+        ":00";
+
+      // Update the div with the current time
+      var currentTimeDiv = document.getElementById("currentTime");
+      currentTimeDiv.innerHTML = "" + newDateStr;
+
+
+      // Create a promise to handle the AJAX request for the initial data
+      var getInitialDataPromise = new Promise(function (resolve, reject) {
+        $.ajax({
+          type: "GET",
+          url: weatherjson,
+          traditional: true,
+          dataType: "json",
+          success: function (response2) {
+            var initialData = {};
+            response2.forEach(function (tabledata2) {
+              if (tabledata2.laiks === datlaiks) {
+                initialData[tabledata2.stacijas_kods] = tabledata2.redzamiba;
+              }
+            });
+            myObj = initialData;
+            sazimet(); // Move this call here
+            resolve(initialData);
+          },
+          error: function (error) {
+            reject(error);
+          },
+        });
+      });
+
+      // Create a promise to handle the AJAX request for updated data
+      var getUpdatedDataPromise = new Promise(function (resolve, reject) {
+        $.ajax({
+          type: "GET",
+          url: weatherjson,
+          traditional: true,
+          dataType: "json",
+          success: function (response2) {
+            var updatedData = {};
+            response2.forEach(function (tabledata2) {
+              if (tabledata2.laiks === newDateStr) {
+                updatedData[tabledata2.stacijas_kods] = tabledata2.redzamiba;
+              }
+            });
+            resolve(updatedData);
+          },
+          error: function (error) {
+            reject(error);
+          },
+        });
+      });
+
+      // Handle the promises concurrently and update markers when both are resolved
+      Promise.all([getInitialDataPromise, getUpdatedDataPromise])
+        .then(function ([initialData, updatedData]) {
+          // Clear existing markers
+          map.eachLayer(function (layer) {
+            if (layer instanceof L.Marker) {
+              map.removeLayer(layer);
+            }
+          });
+
+          // Update markers with new data
+          myObj = updatedData;
+          sazimet();
+        })
+        .catch(function (error) {
+          console.error("Error fetching data:", error);
+        });
+    }
+
+    setTimeout(sazimet, 1000);
+    console.log(gj);
+  </script>
+</body>
+
+</html>

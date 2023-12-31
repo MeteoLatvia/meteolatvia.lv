@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>table_videja_veja_atrums</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: white;
+      /* Text color for the entire table */
+      font-family: 'Kumbh Sans', sans-serif;
+      /* Use the desired font-family */
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      text-align: center;
+      padding: 8px;
+    }
+
+    th {
+      background-color: rgb(35, 35, 35);
+      position: relative;
+      cursor: pointer;
+      color: white;
+      /* Text color for header cells */
+    }
+
+    .sort-button {
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+    }
+
+    .sort-button span {
+      display: none;
+      /* Hide the sorting text */
+    }
+
+    tr:nth-child(even) {
+      background-color: rgb(35, 35, 35);
+    }
+
+    tr {
+      background-color: rgb(45, 45, 45);
+    }
+  </style>
+</head>
+
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th onclick="sortTable(0)">
+          Stacija
+          <button class="sort-button" onclick="sortTable(0)">
+            <span>Sort</span>
+          </button>
+        </th>
+        <th data-ignore-sort>Laiks</th>
+        <th onclick="sortTable(5)">
+          Vēja ātrums (m/s)
+          <button class="sort-button" onclick="sortTable(5)">
+            <span>Sort</span>
+          </button>
+        </th>
+      </tr>
+    </thead>
+    <tbody id="weather-data-body">
+      <!-- Weather data will be populated here -->
+    </tbody>
+  </table>
+
+  <script>
+    let data = []; // Store the data
+    let sortDirections = Array(12).fill(1); // 1 for ascending, -1 for descending
+
+    // Color values based on wind gust speed and corresponding ranges
+    const windColors = [
+      { color: "rgb(0,220,255)", min: 0, max: 0 },
+      { color: "rgb(0,220,255)", min: 0, max: 1 },
+      { color: "rgb(0,185,255)", min: 0, max: 2 },
+      { color: "rgb(0,150,255)", min: 0, max: 3 },
+      { color: "rgb(0,115,255)", min: 0, max: 4 },
+      { color: "rgb(0,90,255)", min: 0, max: 5 },
+      { color: "rgb(0,70,255)", min: 0, max: 6 },
+      { color: "rgb(0,45,255)", min: 0, max: 7 },
+      { color: "rgb(0,25,255)", min: 0, max: 8 },
+      { color: "rgb(0,0,255)", min: 0, max: 9 },
+      { color: "rgb(15,0,255)", min: 0, max: 10 },
+      { color: "rgb(45,0,255)", min: 0, max: 11 },
+      { color: "rgb(65,0,255)", min: 0, max: 12 },
+      { color: "rgb(90,0,255)", min: 0, max: 13 },
+      { color: "rgb(110,0,255)", min: 0, max: 14 },
+      { color: "rgb(135,0,255)", min: 0, max: 15 },
+      { color: "rgb(165,0,255)", min: 0, max: 16 },
+      { color: "rgb(190,0,255)", min: 0, max: 17 },
+      { color: "rgb(210,0,255)", min: 0, max: 18 },
+      { color: "rgb(225,0,255)", min: 0, max: 19 },
+      { color: "rgb(240,0,255)", min: 0, max: 20 },
+      { color: "rgb(250,0,255)", min: 0, max: 21 },
+      { color: "rgb(255,0,255)", min: 0, max: 22 },
+      { color: "rgb(255,0,245)", min: 0, max: 23 },
+      { color: "rgb(255,0,225)", min: 0, max: 24 },
+      { color: "rgb(255,0,210)", min: 0, max: 25 },
+      { color: "rgb(255,0,190)", min: 0, max: 26 },
+      { color: "rgb(255,0,165)", min: 0, max: 27 },
+      { color: "rgb(255,0,140)", min: 0, max: 28 },
+      { color: "rgb(255,0,110)", min: 0, max: 29 },
+      { color: "rgb(255,0,90)", min: 0, max: 30 },
+      { color: "rgb(255,0,70)", min: 0, max: 31 },
+      { color: "rgb(255,0,40)", min: 0, max: 32 },
+      { color: "rgb(255,0,20)", min: 0, max: 33 },
+      { color: "rgb(255,0,0)", min: 0, max: 34 },
+      { color: "rgb(240,0,0)", min: 0, max: 35 },
+      { color: "rgb(225,0,0)", min: 0, max: 36 },
+      { color: "rgb(200,0,0)", min: 0, max: 37 },
+      { color: "rgb(185,0,0)", min: 0, max: 38 },
+      { color: "rgb(160,0,0)", min: 0, max: 39 },
+      { color: "rgb(130,0,0)", min: 0, max: 40 },
+      { color: "rgb(100,0,0)", min: 0, max: 41 },
+      { color: "rgb(100,15,15)", min: 0, max: 42 },
+      { color: "rgb(95,35,30)", min: 0, max: 43 },
+      { color: "rgb(95,65,60)", min: 0, max: 44 },
+      { color: "rgb(100,90,90)", min: 0, max: 45 },
+      { color: "rgb(115,115,115)", min: 0, max: 46 },
+      { color: "rgb(140,140,140)", min: 0, max: 47 },
+      { color: "rgb(180,180,180)", min: 0, max: 48 },
+      { color: "rgb(200,200,200)", min: 0, max: 49 },
+      { color: "rgb(220,220,220)", min: 0, max: 50 },
+      // Add more color ranges as needed
+    ];
+
+    // Function to find the color based on wind gust speed
+    function getColorByWindSpeed(windSpeed) {
+      for (const range of windColors) {
+        if (windSpeed >= range.min && windSpeed < range.max) {
+          return range.color;
+        }
+      }
+      // If no range matches, return a default color
+      return "rgb(255,255,255)";
+    }
+
+    // Fetch data from the URL
+    fetch("https://videscentrs.lvgmc.lv/data/weather_monitoring_data_raw")
+      .then((response) => response.json())
+      .then((responseData) => {
+        // Sort data by station and time in descending order
+        responseData.sort((a, b) => {
+          if (a.stacijas_kods !== b.stacijas_kods) {
+            return a.stacijas_kods.localeCompare(b.stacijas_kods);
+          } else {
+            return new Date(b.laiks) - new Date(a.laiks);
+          }
+        });
+
+        // Filter data to keep only the latest hour for each station
+        const latestDataByStation = {};
+        for (const stationData of responseData) {
+          if (!latestDataByStation[stationData.stacijas_kods]) {
+            latestDataByStation[stationData.stacijas_kods] = stationData;
+          }
+        }
+
+        data = Object.values(latestDataByStation);
+        renderTable(data);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+
+    const stationNameMapping = {
+      // Add mappings here, e.g., "stationID": "Station Name"
+      "DAUGAVGR": "Daugavgrīva", // Replace with the desired station name
+      "KALNCIEM": "Kalnciems",
+      "KULDIGA": "Kuldīga",
+      "LIELPECI": "Lielpeči",
+      "PIEDRUJA": "Piedruja",
+      "RIAI99PA": "Ainaži",
+      "RIAL99MS": "Alūksne",
+      "RIBA99PA": "Bauska",
+      "RIDAGDA": "Dagda",
+      "RIDM99MS": "Daugavpils",
+      "RIDO99MS": "Dobele",
+      "RIGASLU": "Rīga (LU)",
+      "RIGU99MS": "Gulbene",
+      "RIJE99PA": "Jelgava",
+      "RIKO99PA": "Kolka",
+      "RILP99PA": "Liepāja",
+      "RIMADONA": "Madona",
+      "RIME99MS": "Mērsrags",
+      "RIPA99PA": "Pāvilosta",
+      "RIPR99PA": "Priekuļi",
+      "RIREZEKN": "Rēzekne",
+      "RIRU99PA": "Rūjiena",
+      "RISA99PA": "Saldus",
+      "RISE99MS": "Skulte",
+      "RISI99PA": "Skrīveri",
+      "RIST99PA": "Stende",
+      "RIVE99PA": "Ventspils",
+      "RIZI99PA": "Zīlāni",
+      "RIZO99MS": "Zosēni",
+      "RUCAVA": "Rucava",
+      "SIGULDA": "Sigulda",
+      "SILI": "Sīļi",
+      "VICAKI": "Vičaki",
+      // Add mappings for all station IDs in your data
+    };
+
+    const excludedStations = [
+      // Add station IDs to be excluded here
+      "KALNCIEM",
+      "KULDIGA",
+      "LIELPECI",
+      "PIEDRUJA",
+      "SIGULDA",
+      "SILI",
+      "VICAKI",
+      // Add more station IDs as needed
+    ];
+
+
+    function renderTable(data) {
+      const tbody = document.getElementById("weather-data-body");
+      tbody.innerHTML = ""; // Clear existing rows
+
+      // Filter the data to exclude stations in the 'excludedStations' array
+      const filteredData = data.filter((stationData) => !excludedStations.includes(stationData.stacijas_kods));
+
+      for (const stationData of filteredData) {
+        const row = document.createElement("tr");
+        const temperature = parseFloat(stationData.veja_brazmas);
+
+        // Get the station name from the mapping
+        const stationName = stationNameMapping[stationData.stacijas_kods] || stationData.stacijas_kods;
+
+        // Find the color based on wind gust speed
+        const cellColor = getColorByWindSpeed(temperature);
+
+        row.innerHTML = `
+      <td>${stationName}</td>
+      <td>${stationData.laiks}</td>
+      <td style="background-color: ${cellColor};">${stationData.veja_brazmas}</td>
+    `;
+        tbody.appendChild(row);
+      }
+    }
+
+    // Function to sort the table by column
+    function sortTable(columnIndex) {
+      if (columnIndex === 1) {
+        return; // Do not sort the "Time" column
+      }
+
+      // Toggle sorting direction
+      sortDirections[columnIndex] *= -1;
+
+      data.sort((a, b) => {
+        // Sort by numeric values based on sorting direction
+        return (
+          sortDirections[columnIndex] *
+          (parseFloat(a[Object.keys(a)[columnIndex]]) -
+            parseFloat(b[Object.keys(b)[columnIndex]]))
+        );
+      });
+
+      renderTable(data);
+    }
+  </script>
+</body>
+
+</html>

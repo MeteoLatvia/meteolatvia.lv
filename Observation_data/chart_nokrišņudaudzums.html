@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+
+<body>
+  <div id="temperature-chart"></div>
+
+  <script>
+    // Make an AJAX request to fetch the JSON data
+    $.ajax({
+      url: 'https://videscentrs.lvgmc.lv/data/weather_monitoring_data_raw',
+      method: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        processData(data);
+      },
+      error: function (error) {
+        console.error('Failed to fetch data:', error);
+      }
+    });
+
+    // Create a mapping from station IDs to station names
+    const stationNameMapping = {
+
+      "DAUGAVGR": "Daugavgrīva", // Replace with the desired station name
+      "KALNCIEM": "Kalnciems",
+      "KULDIGA": "Kuldīga",
+      "LIELPECI": "Lielpeči",
+      "PIEDRUJA": "Piedruja",
+      "RIAI99PA": "Ainaži",
+      "RIAL99MS": "Alūksne",
+      "RIBA99PA": "Bauska",
+      "RIDAGDA": "Dagda",
+      "RIDM99MS": "Daugavpils",
+      "RIDO99MS": "Dobele",
+      "RIGASLU": "Rīga (LU)",
+      "RIGU99MS": "Gulbene",
+      "RIJE99PA": "Jelgava",
+      "RIKO99PA": "Kolka",
+      "RILP99PA": "Liepāja",
+      "RIMADONA": "Madona",
+      "RIME99MS": "Mērsrags",
+      "RIPA99PA": "Pāvilosta",
+      "RIPR99PA": "Priekuļi",
+      "RIREZEKN": "Rēzekne",
+      "RIRU99PA": "Rūjiena",
+      "RISA99PA": "Saldus",
+      "RISE99MS": "Skulte",
+      "RISI99PA": "Skrīveri",
+      "RIST99PA": "Stende",
+      "RIVE99PA": "Ventspils",
+      "RIZI99PA": "Zīlāni",
+      "RIZO99MS": "Zosēni",
+      "RUCAVA": "Rucava",
+      "SIGULDA": "Sigulda",
+      "SILI": "Sīļi",
+      "VICAKI": "Vičaki",
+      // Add more mappings as needed
+    };
+
+    function processData(jsonData) {
+      // Extract unique weather station names
+      const stationNames = [...new Set(jsonData.map((data) => data.stacijas_kods))];
+
+      // Create a data structure for Highcharts series with the mapped station names
+      const seriesData = stationNames.map((station) => ({
+        name: stationNameMapping[station] || station, // Use the mapped name if available, otherwise use the ID
+        data: jsonData
+          .filter((data) => data.stacijas_kods === station)
+          .map((data) => [new Date(data.laiks).getTime(), parseFloat(data.nokrisnu_daudzums)]),
+      }));
+
+      // Define the color values for temperature range from -50°C to +50°C with 1°C increment
+      const precipitationColors = [
+        "rgb(200,200,200)",
+        "rgb(0,255,0)",
+        "rgb(0,244,0)",
+        "rgb(0,233,0)",
+        "rgb(0,220,0)",
+        "rgb(0,204,0)",
+        "rgb(0,187,0)",
+        "rgb(0,171,0)",
+        "rgb(0,156,0)",
+        "rgb(0,141,0)",
+        "rgb(0,128,0)",
+        "rgb(0,116,0)",
+        "rgb(0,104,0)",
+        "rgb(0,90,0)",
+        "rgb(0,76,0)",
+        "rgb(0,63,0)",
+        "rgb(0,52,0)",
+        "rgb(0,44,0)",
+        "rgb(0,38,0)",
+        "rgb(0,30,0)",
+        "rgb(0,24,0)",
+        "rgb(255,255,0)",
+        "rgb(255,248,0)",
+        "rgb(255,235,0)",
+        "rgb(255,212,0)",
+        "rgb(255,186,0)",
+        "rgb(255,160,0)",
+        "rgb(255,135,0)",
+        "rgb(255,121,0)",
+        "rgb(255,106,0)",
+        "rgb(255,93,0)",
+        "rgb(255,78,0)",
+        "rgb(255,63,0)",
+        "rgb(255,45,0)",
+        "rgb(255,23,0)",
+        "rgb(255,0,0)",
+        "rgb(237,0,0)",
+        "rgb(218,0,0)",
+        "rgb(197,0,0)",
+        "rgb(176,0,0)",
+        "rgb(155,0,0)",
+        "rgb(137,0,0)",
+        "rgb(124,0,0)",
+        "rgb(114,0,0)",
+        "rgb(102,0,0)",
+        "rgb(96,0,0)",
+        "rgb(88,0,0)",
+        "rgb(80,0,0)",
+        "rgb(72,0,0)",
+        "rgb(64,0,0)",
+        "rgb(54,0,0)",
+        "rgb(54,0,54)",
+        "rgb(64,0,64)",
+        "rgb(71,0,71)",
+        "rgb(81,0,81)",
+        "rgb(93,0,93)",
+        "rgb(107,0,112)",
+        "rgb(122,0,122)",
+        "rgb(140,0,140)",
+        "rgb(156,0,156)",
+        "rgb(171,0,171)",
+        "rgb(190,190,190)",
+      ];
+
+      // Define the desired opacity (alpha) value
+      const desiredOpacity = 0.5; // Adjust the opacity as needed
+
+      // Loop through the precipitationColors array and update the opacity for each color
+      for (let i = 0; i < precipitationColors.length; i++) {
+        const color = precipitationColors[i];
+        const match = color.match(/^rgb\((\d+),(\d+),(\d+)\)$/);
+        if (match) {
+          const r = match[1];
+          const g = match[2];
+          const b = match[3];
+          precipitationColors[i] = `rgba(${r},${g},${b},${desiredOpacity})`;
+        }
+      }
+
+      // Now the temperatureColors array contains RGBA colors with the desired opacity
+
+      // Create the plotBands configuration based on precipitationColors
+      const gradientRanges = precipitationColors.map((color, index) => ({
+        color: color,
+        from: index,   // Starting precipitation intensity
+        to: index + 1, // Ending precipitation intensity (next increment)
+      }));
+
+      // Initialize the Highcharts chart with custom tooltip format
+      Highcharts.chart("temperature-chart", {
+        chart: {
+          backgroundColor: 'rgba(43, 43, 51, 255)',
+          type: "line",
+        },
+        exporting: {
+          enabled: true, // Enable exporting module
+          buttons: {
+            contextButton: {
+              menuItems: [
+                "viewFullscreen",
+                "printChart",
+                "downloadPNG",
+                "downloadJPEG",
+                "downloadPDF",
+                "downloadSVG",
+              ],
+            },
+          },
+        },
+        title: {
+          text: "Nokrišņu daudzums",
+          style: {
+            color: 'rgb(250, 252, 255)',
+          }
+        },
+        xAxis: {
+          type: "datetime",
+          title: {
+            text: "Laiks",
+            style: {
+              color: 'rgb(250, 252, 255)' // Title text color
+            }
+          },
+          labels: {
+            style: {
+              color: 'rgb(250, 252, 255)' // X-axis label text color
+            }
+          },
+          lineColor: 'rgb(250, 252, 255)', // X-axis line color
+        },
+
+        yAxis: {
+          title: {
+            text: "(mm/h)",
+            style: {
+              color: 'rgb(250, 252, 255)',
+            }
+          },
+          labels: {
+            style: {
+              color: 'rgb(250, 252, 255)' // X-axis label text color
+            }
+          },
+          plotBands: gradientRanges, // Set the gradientRanges configuration
+        },
+        plotOptions: {
+          series: {
+            allowPointSelect: true,
+          },
+        },
+        series: seriesData,
+        legend: {
+          layout: "horizontal",
+          align: "center",
+          verticalAlign: "bottom",
+          enabled: true,
+          itemStyle: {
+            color: 'rgb(250, 252, 255)' // Text color
+          },
+        },
+        tooltip: {
+          formatter: function () {
+            const date = new Date(this.x);
+            const formattedDate = `${padZero(date.getDate())}.${padZero(date.getMonth() + 1)}.${date.getFullYear()} ${padZero(date.getHours())}:${padZero(date.getMinutes())}`;
+            return `<b>${formattedDate}</b><br/>${this.series.name}: ${this.y} mm/h`;
+          }
+        }
+      });
+    }
+
+    // Function to pad a number with a leading zero if it's less than 10
+    function padZero(num) {
+      return num < 10 ? `0${num}` : num;
+    }
+  </script>
+</body>
+
+</html>

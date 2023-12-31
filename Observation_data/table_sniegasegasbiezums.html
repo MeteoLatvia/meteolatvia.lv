@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>table_sniegasegasbiezums</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: white;
+      /* Text color for the entire table */
+      font-family: 'Kumbh Sans', sans-serif;
+      /* Use the desired font-family */
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      text-align: center;
+      padding: 8px;
+    }
+
+    th {
+      background-color: rgb(35, 35, 35);
+      position: relative;
+      cursor: pointer;
+      color: white;
+      /* Text color for header cells */
+    }
+
+    .sort-button {
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+    }
+
+    .sort-button span {
+      display: none;
+      /* Hide the sorting text */
+    }
+
+    tr:nth-child(even) {
+      background-color: rgb(35, 35, 35);
+    }
+
+    tr {
+      background-color: rgb(45, 45, 45);
+    }
+  </style>
+</head>
+
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th onclick="sortTable(0)">
+          Stacija
+          <button class="sort-button" onclick="sortTable(0)">
+            <span>Sort</span>
+          </button>
+        </th>
+        <th data-ignore-sort>Laiks</th>
+        <th onclick="sortTable(2)">
+          Sniega segas biezums (cm)
+          <button class="sort-button" onclick="sortTable(2)">
+            <span>Sort</span>
+          </button>
+        </th>
+      </tr>
+    </thead>
+    <tbody id="weather-data-body">
+      <!-- Weather data will be populated here -->
+    </tbody>
+  </table>
+
+  <script>
+    let data = []; // Store the data
+    let sortDirections = [1, 1, 1]; // 1 for ascending, -1 for descending
+
+    // Color values based on temperature
+    const snowDepthColors = [
+      "rgb(127,127,127)",
+      "rgb(121,219,255)",
+      "rgb(65,214,255)",
+      "rgb(0,190,255)",
+      "rgb(0,155,255)",
+      "rgb(0,115,255)",
+      "rgb(0,67,255)",
+      "rgb(0,0,255)",
+      "rgb(0,0,167)",
+      "rgb(0,0,127)",
+      "rgb(20,0,120)",
+      "rgb(35,0,115)",
+      "rgb(47,0,117)",
+      "rgb(60,0,123)",
+      "rgb(70,0,130)",
+      "rgb(76,0,142)",
+      "rgb(80,0,159)",
+      "rgb(85,0,177)",
+      "rgb(92,0,191)",
+      "rgb(101,0,201)",
+      "rgb(109,0,205)",
+      "rgb(119,0,210)",
+      "rgb(130,0,210)",
+      "rgb(141,10,210)",
+      "rgb(155,15,210)",
+      "rgb(165,15,199)",
+      "rgb(178,15,200)",
+      "rgb(188,10,198)",
+      "rgb(198,0,198)",
+      "rgb(206,0,203)",
+      "rgb(214,0,210)",
+      "rgb(220,0,215)",
+      "rgb(228,0,228)",
+      "rgb(232,0,232)",
+      "rgb(240,0,240)",
+      "rgb(245,0,246)",
+      "rgb(251,0,251)",
+      "rgb(255,0,255)",
+      "rgb(255,0,250)",
+      "rgb(255,0,245)",
+      "rgb(255,0,235)",
+      "rgb(255,0,222)",
+      "rgb(255,5,207)",
+      "rgb(255,10,192)",
+      "rgb(255,15,176)",
+      "rgb(255,15,160)",
+      "rgb(255,10,144)",
+      "rgb(255,5,130)",
+      "rgb(255,0,120)",
+      "rgb(255,0,110)",
+      "rgb(255,0,100)",
+      "rgb(255,0,90)",
+      "rgb(255,0,77)",
+      "rgb(255,0,66)",
+      "rgb(255,0,52)",
+      "rgb(255,0,41)",
+      "rgb(255,0,25)",
+      "rgb(255,0,0)",
+      "rgb(237,0,0)",
+      "rgb(225,0,0)",
+      "rgb(212,0,0)",
+      "rgb(197,0,0)",
+      "rgb(181,0,0)",
+      "rgb(167,0,0)",
+      "rgb(153,0,0)",
+      "rgb(141,0,0)",
+      "rgb(131,0,0)",
+      "rgb(122,0,0)",
+      "rgb(113,0,0)",
+      "rgb(106,0,0)",
+      "rgb(99,0,0)",
+      "rgb(87,0,0)",
+      "rgb(82,0,0)",
+      "rgb(77,0,0)",
+      "rgb(72,0,0)",
+      "rgb(67,0,0)",
+      "rgb(63,0,0)",
+      "rgb(60,0,0)",
+      "rgb(56,0,0)",
+      "rgb(53,0,0)",
+      "rgb(50,0,0)",
+      "rgb(47,0,0)",
+      "rgb(45,0,0)",
+      "rgb(42,0,0)",
+      "rgb(39,0,0)",
+      "rgb(37,0,0)",
+      "rgb(34,0,0)",
+      "rgb(31,0,0)",
+      "rgb(28,0,0)",
+      "rgb(26,0,0)",
+      "rgb(24,0,0)",
+      "rgb(22,0,0)",
+      "rgb(19,0,0)",
+      "rgb(17,0,0)",
+      "rgb(14,0,0)",
+      "rgb(10,0,0)",
+      "rgb(8,0,0)",
+      "rgb(6,0,0)",
+      "rgb(4,0,0)",
+      "rgb(2,0,0)",
+      "rgb(2,0,0)",
+      // ... Add all the color values here
+    ];
+
+    // Fetch data from the URL
+    fetch("https://videscentrs.lvgmc.lv/data/weather_monitoring_data_raw")
+      .then((response) => response.json())
+      .then((responseData) => {
+        // Sort data by station and time in descending order
+        responseData.sort((a, b) => {
+          if (a.stacijas_kods !== b.stacijas_kods) {
+            return a.stacijas_kods.localeCompare(b.stacijas_kods);
+          } else {
+            return new Date(b.laiks) - new Date(a.laiks);
+          }
+        });
+
+        // Filter data to keep only the latest hour for each station
+        const latestDataByStation = {};
+        for (const stationData of responseData) {
+          if (!latestDataByStation[stationData.stacijas_kods]) {
+            latestDataByStation[stationData.stacijas_kods] = stationData;
+          }
+        }
+
+        data = Object.values(latestDataByStation);
+        renderTable(data);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+
+    const stationNameMapping = {
+      // Add mappings here, e.g., "stationID": "Station Name"
+      "DAUGAVGR": "Daugavgrīva", // Replace with the desired station name
+      "KALNCIEM": "Kalnciems",
+      "KULDIGA": "Kuldīga",
+      "LIELPECI": "Lielpeči",
+      "PIEDRUJA": "Piedruja",
+      "RIAI99PA": "Ainaži",
+      "RIAL99MS": "Alūksne",
+      "RIBA99PA": "Bauska",
+      "RIDAGDA": "Dagda",
+      "RIDM99MS": "Daugavpils",
+      "RIDO99MS": "Dobele",
+      "RIGASLU": "Rīga (LU)",
+      "RIGU99MS": "Gulbene",
+      "RIJE99PA": "Jelgava",
+      "RIKO99PA": "Kolka",
+      "RILP99PA": "Liepāja",
+      "RIMADONA": "Madona",
+      "RIME99MS": "Mērsrags",
+      "RIPA99PA": "Pāvilosta",
+      "RIPR99PA": "Priekuļi",
+      "RIREZEKN": "Rēzekne",
+      "RIRU99PA": "Rūjiena",
+      "RISA99PA": "Saldus",
+      "RISE99MS": "Skulte",
+      "RISI99PA": "Skrīveri",
+      "RIST99PA": "Stende",
+      "RIVE99PA": "Ventspils",
+      "RIZI99PA": "Zīlāni",
+      "RIZO99MS": "Zosēni",
+      "RUCAVA": "Rucava",
+      "SIGULDA": "Sigulda",
+      "SILI": "Sīļi",
+      "VICAKI": "Vičaki",
+      // Add mappings for all station IDs in your data
+    };
+
+    const excludedStations = [
+      // Add station IDs to be excluded here
+      // Add more station IDs as needed
+    ];
+
+
+    function renderTable(data) {
+      const tbody = document.getElementById("weather-data-body");
+      tbody.innerHTML = ""; // Clear existing rows
+
+      // Filter the data to exclude stations in the 'excludedStations' array
+      const filteredData = data.filter((stationData) => !excludedStations.includes(stationData.stacijas_kods));
+
+      for (const stationData of filteredData) {
+        const row = document.createElement("tr");
+        const snowDepth = parseFloat(stationData.sniega_segas_biezums);
+
+        // Get the station name from the mapping
+        const stationName = stationNameMapping[stationData.stacijas_kods] || stationData.stacijas_kods;
+
+        // Find the color based on snow depth
+        let colorIndex = Math.round(snowDepth); // Use the snow depth value directly
+        colorIndex = Math.min(
+          Math.max(colorIndex, 0),
+          snowDepthColors.length - 1
+        ); // Ensure it's within bounds
+
+        row.innerHTML = `
+              <td>${stationName}</td>
+              <td>${stationData.laiks}</td>
+              <td style="background-color: ${snowDepthColors[colorIndex]};">${stationData.sniega_segas_biezums}</td>
+          `;
+        tbody.appendChild(row);
+      }
+    }
+
+
+
+    function sortTable(columnIndex) {
+      if (columnIndex === 1) {
+        return; // Do not sort the "Time" column
+      }
+
+      // Toggle sorting direction
+      sortDirections[columnIndex] *= -1;
+
+      data.sort((a, b) => {
+        if (columnIndex === 2) {
+          // Sort based on the snow depth column
+          const snowDepthA = parseFloat(a.sniega_segas_biezums);
+          const snowDepthB = parseFloat(b.sniega_segas_biezums);
+          return sortDirections[columnIndex] * (snowDepthA - snowDepthB);
+        } else {
+          // Sort based on station names or other columns
+          return sortDirections[columnIndex] * a.stacijas_kods.localeCompare(b.stacijas_kods);
+        }
+      });
+
+      renderTable(data);
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+
+<body>
+  <div id="visibility-chart"></div>
+
+  <script>
+    // Make an AJAX request to fetch the JSON data
+    $.ajax({
+      url: 'https://videscentrs.lvgmc.lv/data/weather_monitoring_data_raw',
+      method: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        processData(data);
+      },
+      error: function (error) {
+        console.error('Failed to fetch data:', error);
+      }
+    });
+
+    // Create a mapping from station IDs to station names
+    const stationNameMapping = {
+      "DAUGAVGR": "Daugavgrīva",
+      "KALNCIEM": "Kalnciems",
+      "KULDIGA": "Kuldīga",
+      "LIELPECI": "Lielpeči",
+      "PIEDRUJA": "Piedruja",
+      "RIAI99PA": "Ainaži",
+      "RIAL99MS": "Alūksne",
+      "RIBA99PA": "Bauska",
+      "RIDAGDA": "Dagda",
+      "RIDM99MS": "Daugavpils",
+      "RIDO99MS": "Dobele",
+      "RIGASLU": "Rīga (LU)",
+      "RIGU99MS": "Gulbene",
+      "RIJE99PA": "Jelgava",
+      "RIKO99PA": "Kolka",
+      "RILP99PA": "Liepāja",
+      "RIMADONA": "Madona",
+      "RIME99MS": "Mērsrags",
+      "RIPA99PA": "Pāvilosta",
+      "RIPR99PA": "Priekuļi",
+      "RIREZEKN": "Rēzekne",
+      "RIRU99PA": "Rūjiena",
+      "RISA99PA": "Saldus",
+      "RISE99MS": "Skulte",
+      "RISI99PA": "Skrīveri",
+      "RIST99PA": "Stende",
+      "RIVE99PA": "Ventspils",
+      "RIZI99PA": "Zīlāni",
+      "RIZO99MS": "Zosēni",
+      "RUCAVA": "Rucava",
+      "SIGULDA": "Sigulda",
+      "SILI": "Sīļi",
+      "VICAKI": "Vičaki",
+    };
+
+    function processData(jsonData) {
+      // Extract unique weather station names
+      const stationNames = [...new Set(jsonData.map((data) => data.stacijas_kods))];
+
+      // Create a data structure for Highcharts series with the mapped station names
+      const seriesData = stationNames.map((station) => ({
+        name: stationNameMapping[station] || station,
+        data: jsonData
+          .filter((data) => data.stacijas_kods === station)
+          .map((data) => [new Date(data.laiks).getTime(), parseFloat(data.redzamiba)]),
+      }));
+
+      // Initialize the Highcharts chart with custom tooltip format
+      Highcharts.chart("visibility-chart", {
+        chart: {
+          type: "line",
+          backgroundColor: 'rgba(43, 43, 51, 255)',
+        },
+        exporting: {
+          enabled: true,
+          buttons: {
+            contextButton: {
+              menuItems: [
+                "viewFullscreen",
+                "printChart",
+                "downloadPNG",
+                "downloadJPEG",
+                "downloadPDF",
+                "downloadSVG",
+              ],
+            },
+          },
+        },
+        title: {
+          text: "Redzamība",
+          style: {
+            color: 'rgb(250, 252, 255)',
+          }
+        },
+        xAxis: {
+          type: "datetime",
+          title: {
+            text: "Laiks",
+            style: {
+              color: 'rgb(250, 252, 255)',
+            }
+          },
+          labels: {
+            style: {
+              color: 'rgb(250, 252, 255)',
+            }
+          },
+          lineColor: 'rgb(250, 252, 255)',
+        },
+        yAxis: {
+          title: {
+            text: "Redzamība (m)",
+            style: {
+              color: 'rgb(250, 252, 255)',
+            }
+          },
+          labels: {
+            style: {
+              color: 'rgb(250, 252, 255)',
+            }
+          },
+        },
+        plotOptions: {
+          series: {
+            allowPointSelect: true,
+          },
+        },
+        series: seriesData,
+        legend: {
+          layout: "horizontal",
+          align: "center",
+          verticalAlign: "bottom",
+          enabled: true,
+          itemStyle: {
+            color: 'rgb(250, 252, 255)',
+          },
+        },
+        tooltip: {
+          formatter: function () {
+            const date = new Date(this.x);
+            const formattedDate = `${padZero(date.getDate())}.${padZero(date.getMonth() + 1)}.${date.getFullYear()} ${padZero(date.getHours())}:${padZero(date.getMinutes())}`;
+            return `<b>${formattedDate}</b><br/>${this.series.name}: ${this.y} m`;
+          }
+        }
+      });
+    }
+
+    function padZero(num) {
+      return num < 10 ? `0${num}` : num;
+    }
+  </script>
+</body>
+
+</html>

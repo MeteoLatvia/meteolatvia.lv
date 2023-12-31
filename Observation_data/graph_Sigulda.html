@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Highcharts Line Chart</title>
+    <!-- Include Highcharts library -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+  </head>
+  <body>
+    <!-- Create a container for the chart with styling -->
+    <div
+      id="chartContainer"
+      style="width: 100%; max-width: 800px; height: 400px; margin: 0 auto"
+    ></div>
+
+    <!-- Add a parameter selection dropdown with styling -->
+    <div style="text-align: center">
+      <label
+        for="parameterSelect"
+        style="font-weight: bold; margin-right: 10px; color: aliceblue"
+        >Izvēlies parametru:</label
+      >
+      <select id="parameterSelect" style="padding: 5px; font-size: 16px">
+        <option value="temperatura">Temperatūra</option>
+        <option value="redzamiba">Redzamība</option>
+        <option value="veja_virziens">Vēja virziens</option>
+        <option value="videja_veja_atrums">Vēja ātrums</option>
+        <option value="veja_brazmas">Vēja brāzmas</option>
+        <option value="relativais_mitrums">Relatīvais mitrums</option>
+        <option value="atmosferas_spiediens">Atmosfēras spiediens</option>
+        <option value="nokrisnu_daudzums">Nokrišņu intensitāte</option>
+        <option value="sniega_segas_biezums">Sniega segas biezums</option>
+        <!-- Add more options for other parameters here -->
+      </select>
+    </div>
+
+    <script>
+      // Fetch the JSON data
+      fetch("https://videscentrs.lvgmc.lv/data/weather_monitoring_data_raw")
+        .then((response) => response.json())
+        .then((data) => {
+          // Filter data for the "DAUGAVGR" station
+          const daugavgrData = data.filter(
+            (item) => item.stacijas_kods === "-"
+          );
+
+          // Initialize with the default parameter (temperature)
+          renderChart("temperatura");
+
+          // Function to render the chart with the selected parameter
+          function renderChart(selectedParameter) {
+            // Extract selected parameter data
+            const selectedData = daugavgrData
+              .map((item) => parseFloat(item[selectedParameter]))
+              .reverse(); // Reverse the selectedData array
+            const times = daugavgrData.map((item) => item.laiks).reverse(); // Reverse the times array
+
+            // Create the Highcharts line chart with styling
+            Highcharts.chart("chartContainer", {
+              chart: {
+                backgroundColor: "white",
+              },
+              title: {
+                text: `${selectedParameter} Sigulda`,
+                style: {
+                  color: "rgb(210, 210, 210)",
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                },
+              },
+              xAxis: {
+                categories: times,
+                tickInterval: 6,
+                labels: {
+                  rotation: 0, // Rotate labels to 0 degrees
+                  step: 4,     // Display every 4th label (adjust as needed)
+                  style: {
+                    color: "rgb(210, 210, 210)",
+                    fontSize: "1rem",
+                  },
+                },
+              },
+              yAxis: {
+                title: {
+                  text: selectedParameter,
+                  style: {
+                    color: "rgb(210, 210, 210)",
+                    fontSize: "1rem",
+                  },
+                },
+                labels: {
+                  style: {
+                    color: "rgb(210, 210, 210)",
+                    fontSize: "1rem",
+                  },
+                },
+              },
+              series: [
+                {
+                  name: selectedParameter,
+                  data: selectedData,
+                  type: "line",
+                  color: "rgb(0, 40, 255)", // Customize the line color
+                },
+              ],
+              legend: {
+                itemStyle: {
+                  color: "rgb(210, 210, 210)",
+                  fontSize: "1rem",
+                },
+              },
+            });
+          }
+
+          // Add event listener to the parameter selection dropdown
+          document
+            .getElementById("parameterSelect")
+            .addEventListener("change", function () {
+              const selectedParameter = this.value;
+              renderChart(selectedParameter);
+            });
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    </script>
+  </body>
+</html>
