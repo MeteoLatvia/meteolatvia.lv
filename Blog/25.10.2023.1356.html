@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Blog - arcticle</title>
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scale=no" />
+    <title>Blogs</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+        integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
+
+    <style>
+        #blog-arcticle{
+            display: grid;
+            grid-template-columns: 1fr 900px 1fr;
+        }
+        .article-container{
+            background-color: aliceblue;
+            border-left: 1px solid rgba(0, 0, 0, 0.13);
+            border-right: 1px solid rgba(0, 0, 0, 0.13);
+            padding: 30px;
+        }
+
+        .article-main-heading{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .article-main-heading h1{
+            color: rgba(0, 0, 0, 255);
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 30px;
+        }
+
+        .by-date{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .article-by,
+        .article-date{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            color: rgba(128, 128, 128, 255);
+        }
+
+        .article-by i,
+        .article-date i{
+            margin: 0px 10px;
+        }
+
+        .article-img{
+            width: 100%;
+            min-height: 500px;
+            margin: 10px 0px;
+            display: flex;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .article-img img{
+            width: 60%;
+            height: 60%;
+            object-fit: cover;
+            object-position: center;
+            margin: auto;
+        }
+
+        .article-text-box{
+            margin: 10px 0px;
+            box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.06);
+            padding: 10px;
+            border-left: 2px solid rgba(0, 0, 0, 255);
+            background-color: rgba(240, 240, 240, 255);
+        }
+
+        .article-text-box strong{
+            color: rgba(0, 0, 0, 255);
+            font-size: 1.3rem;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .article-text-box p{
+            color: rgba(128, 128, 128, 255);
+        }
+
+        @media(max-width:1250px){
+            #blog-article{
+                grid-template-columns: 1fr 800px 1fr;
+            }
+        }
+
+        @media(max-width:1150px){
+            #blog-article{
+                display: flex;
+                width: 80%;
+                margin: auto;
+            }
+        }
+
+        @media(max-width:1000px){
+            #blog-article{
+                width: 90%;
+            }
+            .article-img{
+                max-height: auto;
+                min-height: auto;
+            }
+        }
+
+        @media(max-width:600px){
+            #blog-article{
+                width: 100%;
+                padding: 0px 10px;
+            }
+            .article-container{
+                padding: 20px 10px;
+            }
+            .article-main-heading{
+                font-size: 1.8rem;
+                line-height: 30px;
+            }
+            .article-text-box p{
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <section id="blog-article">
+        <!--article-container-->
+        <div class="article-container">
+            <!--main-heading-->
+            <div class="article-main-heading">
+                <h1>Kirunas magnetometrs</h1>
+            </div>
+
+            <!--publisher-name-and-date-->
+            <div class="by-date">
+                <!--name-->
+                <div class="article-by">
+                    <i class="far fa-user"></i>
+                    <span>Martins Bergšteins</span>
+                </div>
+                <!--date-->
+                <div class="article-date">
+                    <i class="far fa-clock"></i>
+                    <p><span>21</span>.<span>12</span>.<span>2023</span>, <span>09:32</span></p>
+                </div>
+            </div>
+
+
+            <!--Article-img-->
+            <div class="article-img">
+                <img src="https://fv9-5.failiem.lv/down.php?i=hqsbx3nemb&view" alt="img">
+            </div>
+
+            <!--text-->
+            <div class="article-text">
+                <!--box-1-->
+                <div class="article-text-box">
+                    <strong>Kas tas ir?</strong>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <img src="https://fv9-4.failiem.lv/down.php?i=65ntvchmp6&view" alt="img">
+                </div>
+
+                 <!--box-2-->
+                 <div class="article-text-box">
+                    <strong>Heading 2</strong>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+
+                 <!--box-3-->
+                 <div class="article-text-box">
+                    <strong>Heading 3</strong>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+
+                 <!--box-4-->
+                 <div class="article-text-box">
+                    <strong>Heading 4</strong>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+
+                 <!--box-5-->
+                 <div class="article-text-box">
+                    <strong>Heading 5</strong>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+
+                 <!--box-6-->
+                 <div class="article-text-box">
+                    <strong>Heading 6</strong>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+</body>
+
+</html>
