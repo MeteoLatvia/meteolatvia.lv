@@ -7,6 +7,15 @@
 </head>
 <body>
     <script src="https://cdn.logwork.com/widget/countdown.js"></script>
-<a href="https://logwork.com/countdown-42xd" class="countdown-timer" data-timezone="Europe/Riga" data-language="lv" data-date="2024-01-01 18:00">MeteoLatvia 2024</a>
+    <a href="https://logwork.com/countdown-42xd" class="countdown-timer" data-timezone="Europe/Riga" data-language="lv" data-date="2024-01-01 18:00" id="myLink">MeteoLatvia 2024</a>
+
+    <script>
+        // Disable click interaction
+        document.getElementById('myLink').addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent the default click action
+            // Optionally, you can add further logic or leave this block empty to completely disable the click event
+        });
+    </script>
 </body>
 </html>
+
