@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blogs</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+    integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset default margin and padding */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Apply a background color to the entire page */
+    body {
+      background-color: rgb(23,
+          25,
+          26);
+      /* Replace with your preferred background color */
+      font-family: Arial, sans-serif;
+    }
+
+    /* Header styling */
+    header {
+      background-color: rgb(23, 25, 26);
+      /* Main color */
+      color: rgb(255, 255, 255);
+      /* Text color for the header */
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-top: 1rem;
+      font-size: 2rem;
+      font-weight: 700;
+      background-image: linear-gradient(to right,
+          rgb(64, 92, 255) 0%,
+          rgb(0, 40, 255) 100%);
+      background-size: 100%;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -moz-text-fill-color: transparent;
+      padding-top: 5%;
+    }
+
+    /* Category buttons styling */
+    #categories {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    #categories button {
+      background-color: #fff;
+      color: rgb(0, 19, 128);
+      /* Main color */
+      border: 1px solid rgb(0, 0, 0);
+      /* Main color */
+      padding: 8px 16px;
+      margin: 5px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    /* Blog post styling */
+    .blog-post {
+      padding: 20px;
+      margin: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .blog-post::before {
+      content: "";
+      background-image: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0.5),
+          rgba(0, 0, 0, 0.7));
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .blog-post:hover::before {
+      opacity: 1;
+      background-size: contain;
+      background-position: center;
+    }
+
+    .blog-post h2 {
+      font-size: 20px;
+      color: rgb(0, 40, 255);
+      /* Main color */
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .blog-post p {
+      font-size: 16px;
+      color: #fff;
+      /* Text color for content on a dark background */
+      position: relative;
+      z-index: 1;
+      padding: 10px;
+    }
+
+    /* Thumbnail image styling */
+    .blog-thumbnail {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      max-height: 200px;
+      /* Adjust the max height as needed */
+    }
+
+    /* Apply different styles to category buttons when hovered */
+    #categories button:hover {
+      background-color: rgb(0, 40, 255);
+      /* Main color */
+      color: #fff;
+    }
+
+    /* Add styles for success, warning, error, information pop-ups as needed */
+
+    /* Thumbnail image styling */
+    .blog-thumbnail {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar Section -->
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="index.html" id="navbar__logo"><img src="https://fv9-7.failiem.lv/down.php?i=p2kgbydxw&view"
+          alt="Meteo Logo" />METEO LATVIA</a>
+      <div class="navbar__toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <a href="index.html" class="navbar__links">Sākumlapa</a>
+        </li>
+        <li class="navbar__item navbar__dropdown">
+          <a href="#" class="navbar__links">Novērojumi</a>
+          <ul class="navbar__submenu">
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_temperatura.html">Novērojumu stacijas</a>
+            </li>
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_radars.html">Meteoroloģiskais radars</a>
+            </li>
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_satelitsIR10.8.html">Meteoroloģiskais satelīts</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navbar__item navbar__dropdown">
+          <a href="#" class="navbar__links">Prognozes</a>
+          <ul class="navbar__submenu">
+            <li class="navbar__submenu-item">
+              <a href="Meteo_prognozes.html">"MeteoLatvia" prognoze</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navbar__item">
+          <a href="Meteo_kosmosaapstakli.html" class="navbar__links">Kosmosa apstākļi</a>
+        </li>
+        <li class="navbar__item">
+          <a href="Meteo_blog.html" class="navbar__links">Ziņas</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page title Section -->
+  <div class="main">
+    <div class="main__container">
+      <div class="main__content">
+        <h2>"MeteoLatvia blogs"</h2>
+        <p>"MeteoLatvia" ieraksti par dažādām ar dabu saistītām tēmam.</p>
+      </div>
+      <div class="main__img--container">
+        <img id="main__img" src="https://fv9-6.failiem.lv/down.php?i=j6d43jx25&view" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Blog content section -->
+  <header>
+    <h1>"MeteoLatvia blogs"</h1>
+    <div id="categories">
+      <button data-category="all">Visi</button>
+      <button data-category="tech">Prognozes</button>
+      <button data-category="travel">Novērojumi</button>
+      <!-- Add more category buttons as needed -->
+    </div>
+  </header>
+  <div id="blog-posts">
+    <!-- Blog posts will be displayed here dynamically -->
+  </div>
+  <script>
+    // Sample blog data (you can load this from a JSON file)
+    const blogData = [
+      {
+        title: "Tech Blog Post 1",
+        category: "tech",
+        content: "This is a tech blog post.",
+        image: "https://fv9-5.failiem.lv/down.php?i=j9zn2yfhx&view",
+      },
+      {
+        title: "Travel Blog Post 1",
+        category: "travel",
+        content: "This is a travel blog post.",
+        image: "https://fv9-6.failiem.lv/down.php?i=ddmjv2vej&view",
+      },
+      // Add more blog posts with images as needed
+    ];
+
+    // Function to display blog posts
+    function displayBlogPosts(category) {
+      const blogPostsContainer = document.getElementById("blog-posts");
+      blogPostsContainer.innerHTML = "";
+
+      blogData
+        .filter((post) => category === "all" || post.category === category)
+        .forEach((post) => {
+          const postDiv = document.createElement("div");
+          postDiv.className = "blog-post";
+          postDiv.innerHTML = `
+                <a href="baseURL/Blog/${post.title
+              .replace(/ /g, "-")
+              .toLowerCase()}.html">
+                    <img src="${post.image}" alt="${post.title
+            }" class="blog-thumbnail" />
+                    <h2>${post.title}</h2>
+                </a>
+                <p>${post.content}</p>
+            `;
+          blogPostsContainer.appendChild(postDiv);
+        });
+    }
+
+    // Add event listeners to category buttons
+    const categoryButtons = document.querySelectorAll("#categories button");
+    categoryButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const category = button.getAttribute("data-category");
+        displayBlogPosts(category);
+      });
+    });
+
+    // Initial display of all blog posts
+    displayBlogPosts("all");
+  </script>
+  <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<div class="tab-container">
+    <ul class="tabs">
+        <li><a href="#" onclick="showCharts('DSCOVR_tables_3hour')">3 hours</a></li>
+        <li><a href="#" onclick="showCharts('DSCOVR_tables_6hour')">6 hours</a></li>
+        <li><a href="#" onclick="showCharts('DSCOVR_tables_24hour')">24 hours</a></li>
+    </ul>
+
+    <div class="DSCOVR_tables_3hour tab-content">
+        <!-- 3-hour content -->
+        <div class="grid-item-dscovr">
+            <iframe src="SpaceWeather/chart_speed.html" width="820" height="420" class="iframe_ACE"
+                style="border: none"></iframe>
+            <iframe src="SpaceWeather/chart_density.html" width="820" height="420" class="iframe_ACE"
+                style="border: none"></iframe>
+            <iframe src="SpaceWeather/chart_bT.html" width="820" height="420" class="iframe_ACE"
+                style="border: none"></iframe>
+            <iframe src="SpaceWeather/chart_bZ.html" width="820" height="420" class="iframe_ACE"
+                style="border: none"></iframe>
+        </div>
+        <!-- Add other charts as needed -->
+    </div>
+
+    <div class="DSCOVR_tables_6hour tab-content" style="display: none;">
+        <!-- 6-hour content -->
+        <div class="grid-item-dscovr">
+            <iframe src="SpaceWeather/chart_speed_6hour.html" width="820" height="420" class="iframe_ACE"
+                style="border: none"></iframe>
+            <iframe src="SpaceWeather/chart_density_6hour.html" width="820" height="420" class="iframe_ACE"
+                style="border: none"></iframe>
+            <iframe src="SpaceWeather/chart_bT_6hour.html" width="820" height="420" class="iframe_ACE"
+                style="border: none"></iframe>
+            <iframe src="SpaceWeather/chart_bZ_6hour.html" width="820" height="420" class="iframe_ACE"
+                style="border: none"></iframe>
+        </div>
+        <!-- Add other charts as needed -->
+    </div>
+
+    <div class="DSCOVR_tables_24hour tab-content" style="display: none;">
+        <!-- 24-hour content -->
+        <div class="grid-item-dscovr">
+            <iframe src="SpaceWeather/chart_speed_24hour.html" width="820" height="420" class="iframe_ACE"
+                style="border: none"></iframe>
+            <iframe src="SpaceWeather/chart_density_24hour.html" width="820" height="420" class="iframe_ACE"
+                style="border: none"></iframe>
+            <iframe src="SpaceWeather/chart_bT_24hour copy.html" width="820" height="420" class="iframe_ACE"
+                style="border: none"></iframe>
+            <iframe src="SpaceWeather/chart_bZ_24hour.html" width="820" height="420" class="iframe_ACE"
+                style="border: none"></iframe>
+        </div>
+        <!-- Add other charts as needed -->
+    </div>
+</div>
+
+<script>
+    function showCharts(className) {
+        // Hide all tab contents
+        var tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach(function (content) {
+            content.style.display = 'none';
+        });
+
+        // Show the selected tab content
+        var selectedContent = document.querySelector('.' + className);
+        if (selectedContent) {
+            selectedContent.style.display = 'block';
+        }
+    }
+</script>

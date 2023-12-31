@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Novērojumu stacijas</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+    integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .navbar_obs {
+      width: 69%;
+      background-color: rgb(23, 25, 26);
+      overflow: auto;
+      margin: 0 auto;
+      /* Center the div horizontally */
+      border-radius: 4px;
+    }
+
+    .navbar_obs a {
+      float: left;
+      padding: 12px;
+      color: white;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .navbar_obs a:hover {
+      background-color: #000;
+      border-radius: 4px;
+    }
+
+    .active {
+      background-color: rgb(0, 40, 255);
+      border-radius: 4px;
+    }
+
+    .group_container_LVGMC h2 {
+      color: rgb(240, 240, 250);
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 500px) {
+      .navbar_obs a {
+        float: none;
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar Section -->
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="index.html" id="navbar__logo"><img src="https://fv9-7.failiem.lv/down.php?i=p2kgbydxw&view"
+          alt="Meteo Logo" />METEO LATVIA</a>
+      <div class="navbar__toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <a href="index.html" class="navbar__links">Sākumlapa</a>
+        </li>
+        <li class="navbar__item navbar__dropdown">
+          <a href="#" class="navbar__links">Novērojumi</a>
+          <ul class="navbar__submenu">
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_temperatura.html">Novērojumu stacijas</a>
+            </li>
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_radars.html">Meteoroloģiskais radars</a>
+            </li>
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_satelitsIR10.8.html">Meteoroloģiskais satelīts</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navbar__item navbar__dropdown">
+          <a href="#" class="navbar__links">Prognozes</a>
+          <ul class="navbar__submenu">
+            <li class="navbar__submenu-item">
+              <a href="Meteo_prognozes.html">"MeteoLatvia" prognoze</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navbar__item">
+          <a href="Meteo_kosmosaapstakli.html" class="navbar__links">Kosmosa apstākļi</a>
+        </li>
+        <li class="navbar__item">
+          <a href="Meteo_blog.html" class="navbar__links">Ziņas</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Observation map Section -->
+  <div class="group_container_LVGMC">
+    <h2>Redzamība (m)</h2>
+    <div class="noverojumu_karte_LVGMC">
+      <div class="noverojumu_datu_izvelne_konteineris">
+        <a href="#" class="noverojumu_datu_izvelne_poga">Redzamība</a>
+        <div class="noverojumu_datu_izvelne_saturs">
+          <a href="Meteo_noverojumi_temperatura.html"><i class="fa-solid fa-temperature-three-quarters"></i> Gaisa
+            temperatūra</a>
+          <a href="Meteo_noverojumi_vejavirziens.html"><i class="fa-solid fa-compass"></i> Vēja virziens</a>
+          <a href="Meteo_noverojumi_vejaatrums.html"><i class="fa-solid fa-wind"></i> Vēja ātrums</a>
+          <a href="Meteo_noverojumi_vejabrazmas.html"><i class="fa-solid fa-wind"></i> Vēja brāzmas</a>
+          <a href="Meteo_noverojumi_relativaismitrums.html"><i class="fa-solid fa-droplet"></i> Relatīvais mitrums</a>
+          <a href="Meteo_noverojumi_atmosferasspiediens.html"><i class="fa-solid fa-hurricane"></i> Atmosfēras
+            spiediens</a>
+          <a href="Meteo_noverojumi_nokrisnudaudzums.html"><i class="fa-solid fa-cloud-rain"></i> Nokrišņu daudzums</a>
+          <a href="Meteo_noverojumi_redzamiba.html"><i class="fa-solid fa-smog"></i> Redzamība</a>
+          <a href="Meteo_noverojumi_sniegasegasbiezums.html"><i class="fa-solid fa-snowflake"></i> Sniega segas
+            biezums</a>
+        </div>
+      </div>
+      <iframe src="Observation_data\map_redzamiba.html" width="1280" height="720" class="noverojumu_karte"></iframe>
+      <div class="color-scale">
+        <div class="color-gradient"></div>
+        <div class="color-values">
+          <span>-30</span>
+          <span>-15</span>
+          <span>0</span>
+          <span>15</span>
+          <span>30</span>
+        </div>
+      </div>
+      <iframe src="Observation_data/table_redzamiba.html" width="1280" height="980" class="noverojumu_tabula_standarta"></iframe>
+      <iframe src="Observation_data/chart_redzamiba.html" width="1280" height="420" class="obs_chart"></iframe>
+      <script src="app.js"></script>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Novērojumu stacijas</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+    integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <!-- Navbar Section -->
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="index.html" id="navbar__logo"><img src="https://fv9-7.failiem.lv/down.php?i=p2kgbydxw&view"
+          alt="Meteo Logo" />METEO LATVIA</a>
+      <div class="navbar__toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <a href="index.html" class="navbar__links">Sākumlapa</a>
+        </li>
+        <li class="navbar__item navbar__dropdown">
+          <a href="#" class="navbar__links">Novērojumi</a>
+          <ul class="navbar__submenu">
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_temperatura.html">Novērojumu stacijas</a>
+            </li>
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_radars.html">Meteoroloģiskais radars</a>
+            </li>
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_satelitsIR10.8.html">Meteoroloģiskais satelīts</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navbar__item navbar__dropdown">
+          <a href="#" class="navbar__links">Prognozes</a>
+          <ul class="navbar__submenu">
+            <li class="navbar__submenu-item">
+              <a href="Meteo_prognozes.html">"MeteoLatvia" prognoze</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navbar__item">
+          <a href="Meteo_kosmosaapstakli.html" class="navbar__links">Kosmosa apstākļi</a>
+        </li>
+        <li class="navbar__item">
+          <a href="Meteo_blog.html" class="navbar__links">Ziņas</a>
+        </li>
+      </ul>
+    </div>
+  </nav>>
+  </nav>
+
+  <!-- Radar map Section -->
+  <div class="observation__map">
+    <p>Nokrišņu intensitāte</p>
+    <iframe width="1280" height="720"
+      src="https://embed.windy.com/embed2.html?lat=56.831&lon=24.423&detailLat=53.398&detailLon=-9.031&width=1280&height=720&zoom=7&level=surface&overlay=radar&product=radar&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=m%2Fs&metricTemp=%C2%B0C&radarRange=-1"
+      frameborder="0" class="radar_map"></iframe>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

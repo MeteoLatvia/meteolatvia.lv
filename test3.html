@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MeteoLatvia</title>
+  <link rel="stylesheet" href="MeteoStyle.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/d13555ebbc.js" crossorigin="anonymous"></script>
+  <style>
+#blur-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://fv9-4.failiem.lv/down.php?i=8guz2mpzad&view') center/cover no-repeat;
+      filter: blur(5px);
+      z-index: 9999;
+      opacity: 0.7; /* Set the opacity for half transparency */
+    }
+
+    #countdown-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10000; /* Ensure it's on top of the blur container */
+      text-align: center;
+      color: white;
+      font-size: 24px;
+      background: rgba(0, 0, 0, 0.7); /* Add transparency to the background */
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    #countdown {
+      font-size: 36px;
+      margin-top: 20px;
+      text-decoration: underline;
+    }
+
+
+    * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.header {
+    min-height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(0, 9, 30, 0.7), rgba(4, 9, 30, 0.7)), url(https://fv9-3.failiem.lv/down.php?i=twqq54ua5&view);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+nav {
+    display: flex;
+    padding: 2%, 6%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav img {
+    width: 150px;
+}
+
+.nav-links {
+    flex: 1;
+    text-align: right;
+}
+
+.nav-links ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 8px 12px;
+    position: relative;
+}
+
+.nav-links ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.nav-links ul li::after {
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: rgba(0, 40, 255, 255);
+    display: block;
+    margin: auto;
+    transition: 0.5s;
+}
+
+.nav-links ul li:hover::after {
+    width: 100%;
+}
+
+/*Dropdowns*/
+.nav-links ul.sub-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: rgb(0, 40, 255);
+    padding: 0;
+    border-radius: 10px;
+  }
+  
+  .nav-links li:hover ul.sub-menu {
+    display: block;
+  }
+
+.text-box {
+    width: 90%;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.text-box h1 {
+    font-size: 62px;
+}
+
+.text-box p {
+    margin: 10px 0 40px;
+    font-size: 14px;
+    color: white
+}
+
+.hero-btn {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 12px 34px;
+    font-size: 13px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+}
+
+.hero-btn:hover {
+    border: 1px solid rgba(0, 40, 255, 1.0);
+    background: rgba(0, 40, 255, 1.0);
+    transition: 0.5s;
+}
+
+nav .fa {
+    display: none;
+}
+
+@media(max-width: 700px) {
+    .text-box h1 {
+      font-size: 20px;
+    }
+  
+    .nav-links ul li {
+      display: block;
+    }
+  
+    .nav-links {
+      position: absolute;
+      background: rgba(0, 40, 255, 1.0);
+      height: 100vh;
+      width: 200px;
+      top: 0;
+      right: -200px;
+      text-align: left;
+      z-index: 2;
+      transition: 1s;
+    }
+  
+    nav .fa {
+      display: block;
+      color: white;
+      margin: 10px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+  
+    .nav-links ul {
+      padding: 30px;
+    }
+  
+    .sub-menu {
+      position: relative;
+      z-index: 3;
+    }
+  
+    .nav-links:hover {
+      z-index: 4; /* Increase the z-index value */
+    }
+  
+    .nav-links ul li:hover .sub-menu {
+      right: -200px;
+      z-index: 5; /* Increase the z-index value */
+    }
+  }
+  </style>
+</head>
+
+<body>
+    <div id="blur-container"></div>
+    <div id="countdown-container">
+      <p>MeteoLatvia 2024</p>
+      <div id="countdown"></div>
+    </div>
+
+  <script>
+    // Countdown function
+    function updateCountdown() {
+      var currentDate = new Date();
+      var targetDate = new Date("01/01/2024"); // MM/DD/YYYY format
+      var timeDifference = targetDate - currentDate;
+
+      var days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
+        + minutes + "m " + seconds + "s ";
+
+      if (timeDifference <= 0) {
+        // Content is active
+        document.getElementById("blur-container").style.display = "none";
+        document.body.style.overflow = "auto";
+      } else {
+        // Content is inactive
+        document.getElementById("blur-container").style.display = "flex";
+        document.body.style.overflow = "hidden";
+        setTimeout(updateCountdown, 1000); // Update every second
+      }
+    }
+
+    window.onload = updateCountdown;
+  </script>
+
+
+  <!--Header/izvēlne-->
+
+
+  <section class="header">
+    <nav>
+      <a href="MeteoHome.html"><img src="https://fv9-5.failiem.lv/down.php?i=c35dyk4ce&view"></a>
+      <div class="nav-links" id="navLinks">
+        <i class="fa fa-times" onclick="hideMenu()"></i>
+        <ul>
+          <li><a href="index.html">MĀJAS</a></li>
+          <li><a href="MeteoPar.html">PAR</a></li>
+          <li>
+            <a href="">NOVĒROJUMU DATI</a>
+            <ul class="sub-menu">
+              <li><a href="MeteoNoverojumuKarte_temperatura.html">Novērojumu karte</a></li>
+              <li><a href="MeteoSatelits_HRV.html">Satelītattēli</a></li>
+              <li><a href="MeteoRadars.html">Nokrišņu radars</a></li>
+              <li><a href="MeteoZibenosana.html">Zibeņošana</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="">PROGNOZES</a>
+            <ul class="sub-menu">
+              <li><a href="MeteoPrognoze.html">Laika prognoze</a></li>
+              <li><a href="MeteoNegaisi.html">Negaisu prognoze</a></li>
+            </ul>
+          </li>
+          <li><a href="https://failiem.lv/contact@meteolatvia.com" target="_blank">GALERIJA</a></li>
+        </ul>
+      </div>
+      <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+
+    <script>function showMenu() {
+        document.getElementById("navLinks").style.right = "0";
+      }
+
+      function hideMenu() {
+        document.getElementById("navLinks").style.right = "-200px";
+      }
+    </script>
+
+
+    <!--Hero element/titullapa-->
+
+
+    <div class="text-box">
+      <h1>Meteo Latvia</h1>
+      <p>Hidrometeoroloģiskā informācija</p>
+      <a href="https://youtu.be/pfg8e0bWd7M" target="_blank" class="hero-btn">Par MeteoLatvia</a>
+    </div>
+  </section>
+
+
+  <!--LVĢMC sākumlapa-->
+
+
+  <section class="LVGMC_sakumlapa">
+    <h1>Pašreizējā situācija</h1>
+    <p>Novērojumu staciju dati no LVĢMC</p>
+    <embed type="text/html" src="LVGMC_kartes/karte_gaisatemperatura.html" class="LVGMC_karte2">
+    <a href="MeteoNoverojumuKarte_temperatura.html" target="_self" class="LVGMC_karte_poga">Pilnā versija</a>
+  </section>
+
+  </div>
+  </section>
+
+
+  <!--Nokrišnu radars sākumlapa-->
+
+
+  <section class="Nokrisnu_radars_sakumlapa">
+    <h1>Nokrišņu radars</h1>
+    <p>Latvijas un Pasaules nokrišņu radaru dati</p>
+    <iframe width="100%" height="600px"
+      src="https://embed.windy.com/embed2.html?lat=56.819&lon=24.686&detailLat=56.786&detailLon=24.642&width=1280&height=720&zoom=7&level=surface&overlay=radar&product=radar&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=m%2Fs&metricTemp=%C2%B0C&radarRange=-1"
+      frameborder="0">
+    </iframe>
+    <a href="MeteoRadars.html" target="_self" class="LVGMC_karte_poga">Pilnā versija</a>
+  </section>
+
+
+  <!--Satelītattēli sākumlapa-->
+
+
+  <section class="Satelitatteli_sakumlapa">
+    <h1>Jaunākais satelītattēls</h1>
+    <p>Meteoroloģiskā satelīdati no EUMETSAT</p>
+    <embed type="text/html" src="EUMETSAT/EUMETSAT_HRV.html" class="LVGMC_karte2">
+    <a href="MeteoSatelits_HRV.html" target="_self" class="LVGMC_karte_poga">Pilnā versija</a>
+  </section>
+
+
+  <!--Zibeņošana sākumlapa-->
+
+
+  <section class="Zibenosana_sakumlapa">
+    <h1>Zibeņošana tiešsaistē</h1>
+    <p>Zibens izlāžu dati tiešsaistes režīmā no Blitzortung</p>
+    <iframe src="https://map.blitzortung.org/index.php?
+    interactive=1
+    &NavigationControl=1
+    &FullScreenControl=1
+    &Cookies=0
+    &InfoDiv=1
+    &MenuButtonDiv=1
+    &ScaleControl=1
+    &LinksCheckboxChecked=0
+    &LinksRangeValue=10
+    &MapStyle=2
+    &MapStyleRangeValue=1
+    &LightningRangeValue=23
+    &CourseRangeValue=10
+    &CourseCheckboxChecked=0
+    &CountingRangeValue=1
+    &CountingCheckboxChecked=1
+    &CirclesRangeValue=2
+    &CirclesCheckboxChecked=1
+    &SpeedRangeValue=2
+    &SpeedCheckboxChecked=1
+    &DayNightRangeValue=8
+    &DayNightCheckboxChecked=1
+    &AudioRangeValue=10
+    &AudioCheckboxChecked=1
+    &Advertisment=0#6.5/56.87/24.60" width="100%" height="750">
+    </iframe>
+    <a href="MeteoZibenosana.html" target="_self" class="LVGMC_karte_poga">Pilnā versija</a>
+  </section>
+
+
+  <!--TOP3 fotogrāfijas-->
+
+
+  <section class="karte">
+    <h1>Interesantākās fotogrāfijas</h1>
+    <p>Pagājušās nedēļas, TOP3, interesantākās un skaistākās fotogrāfijas.</p>
+
+    <div class="row_TOP3">
+      <div class="TOP3">
+        <img src="images/TOP3.jpg">
+        <h3>TOP3</h3>
+        <p>Inese Zeltiņa</p>
+      </div>
+      <div class="TOP3">
+        <img src="images/TOP2.jpg">
+        <h3>TOP2</h3>
+        <p>Jānis Uzaris</p>
+      </div>
+      <div class="TOP3">
+        <img src="images/TOP1.jpg">
+        <h3>TOP1</h3>
+        <p>Martins Bergšteins</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews">
+    <h1>Ko saka lietotāji</h1>
+    <p>Mājaslapas "MeteoLatvia" apmeklētāju atsauksmes</p>
+
+    <div class="row">
+      <div class="reviews-col">
+        <img src="images/Inese.jpg">
+        <div>
+          <p>Fantastiska mājaslapa! Ērta pārskatāmība, kvalitatīvi dati un prognozes!
+            Ikdienā arvien biežāk sāku izmantot tieši šo mājaslapu, citu meteo mājaslapu vietā.
+          </p>
+          <h3>Inese Zeltiņa</h3>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star-o"></i>
+        </div>
+      </div>
+      <div class="reviews-col">
+        <img src="images/Janis.jpg">
+        <div>
+          <p>Ļoti laba mājaslapa. Bieži izmantoju darba vajadzībām, jo darbā laikapstākļi ļoti
+            ietekmē darba procesu. Kvalitatīvas prognozes, operatīva informācija, kā arī bieži
+            izmantoju privātu saziņu, vēl detalizētākai informācijai.
+          </p>
+          <h3>Jānis Uzaris</h3>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star-half-o"></i>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="footer">
+    <h4>Martins Bergšteins - Meteo Latvia</h4>
+    <p></p>
+    <div class="icons">
+      <a href="https://twitter.com/MeteoLatvia">
+        <i class="fa fa-twitter"></i>
+      </a>
+      <a href="https://www.facebook.com/MetLatvia">
+        <i class="fa fa-facebook"></i>
+      </a>
+      <a href="https://www.instagram.com/meteo_latvia15/">
+        <i class="fa fa-instagram"></i>
+      </a>
+      <a href="https://youtube.com/@meteolatvia">
+        <i class="fa fa-youtube"></i>
+      </a>
+    </div>
+    <p><i class="fa fa-copyright"></i>MeteoLatvia 2023 <br>V5</p>
+  </section>
+
+
+
+
+  <script>
+
+    var navLinks = document.getElementById("navLinks");
+
+    function showMenu() {
+      navLinks.style.right = "0";
+    }
+
+    function hideMenu() {
+      navLinks.style.right = "-200px";
+    }
+
+  </script>
+
+</body>
+
+</html>

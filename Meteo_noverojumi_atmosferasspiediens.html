@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Novērojumu stacijas</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+    integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .color-scale {
+      text-align: center;
+      margin: 20px auto;
+      /* Center the color scale horizontally */
+      max-width: 800px;
+      /* Adjust this value to your desired width */
+    }
+
+    .color-gradient {
+      width: 100%;
+      height: 20px;
+      background: linear-gradient(to right,
+          rgb(255, 127, 255),
+          rgb(255, 108, 255),
+          rgb(255, 95, 255),
+          rgb(255, 81, 255),
+          rgb(255, 71, 255),
+          rgb(255, 60, 255),
+          rgb(255, 43, 255),
+          rgb(255, 25, 255),
+          rgb(251, 0, 251),
+          rgb(243, 0, 243),
+          rgb(238, 0, 238),
+          rgb(228, 0, 228),
+          rgb(217, 0, 217),
+          rgb(203, 0, 203),
+          rgb(188, 0, 188),
+          rgb(178, 0, 177),
+          rgb(168, 0, 172),
+          rgb(161, 0, 171),
+          rgb(155, 0, 175),
+          rgb(147, 0, 175),
+          rgb(137, 0, 175),
+          rgb(126, 0, 175),
+          rgb(111, 0, 175),
+          rgb(96, 0, 175),
+          rgb(82, 0, 175),
+          rgb(68, 0, 175),
+          rgb(57, 0, 175),
+          rgb(48, 0, 174),
+          rgb(31, 0, 173),
+          rgb(17, 1, 173),
+          rgb(0, 0, 175),
+          rgb(0, 0, 178),
+          rgb(0, 0, 181),
+          rgb(0, 0, 186),
+          rgb(0, 0, 193),
+          rgb(0, 0, 200),
+          rgb(0, 0, 210),
+          rgb(0, 0, 222),
+          rgb(0, 0, 235),
+          rgb(0, 0, 247),
+          rgb(0, 0, 255),
+          rgb(0, 21, 255),
+          rgb(0, 36, 255),
+          rgb(0, 48, 255),
+          rgb(0, 58, 255),
+          rgb(0, 65, 255),
+          rgb(0, 70, 255),
+          rgb(0, 76, 255),
+          rgb(0, 83, 255),
+          rgb(0, 90, 255),
+          rgb(0, 98, 255),
+          rgb(0, 107, 255),
+          rgb(0, 116, 255),
+          rgb(0, 125, 255),
+          rgb(0, 134, 255),
+          rgb(0, 143, 255),
+          rgb(0, 153, 255),
+          rgb(0, 163, 255),
+          rgb(0, 173, 255),
+          rgb(0, 183, 255),
+          rgb(0, 194, 255),
+          rgb(0, 204, 255),
+          rgb(0, 215, 255),
+          rgb(0, 224, 255),
+          rgb(66, 232, 255),
+          rgb(108, 239, 255),
+          rgb(143, 245, 255),
+          rgb(164, 251, 255),
+          rgb(175, 255, 255),
+          rgb(167, 255, 230),
+          rgb(146, 255, 195),
+          rgb(111, 255, 144),
+          rgb(68, 255, 89),
+          rgb(0, 255, 0),
+          rgb(0, 246, 0),
+          rgb(0, 237, 0),
+          rgb(0, 225, 0),
+          rgb(0, 213, 0),
+          rgb(0, 200, 0),
+          rgb(0, 182, 0),
+          rgb(0, 160, 0),
+          rgb(0, 141, 0),
+          rgb(0, 129, 0),
+          rgb(7, 128, 0),
+          rgb(68, 145, 0),
+          rgb(120, 175, 0),
+          rgb(177, 212, 0),
+          rgb(227, 243, 0),
+          rgb(255, 255, 0),
+          rgb(255, 249, 0),
+          rgb(255, 236, 0),
+          rgb(255, 216, 0),
+          rgb(255, 195, 0),
+          rgb(255, 178, 0),
+          rgb(255, 166, 0),
+          rgb(255, 156, 0),
+          rgb(255, 146, 0),
+          rgb(255, 136, 0),
+          rgb(255, 126, 0),
+          rgb(255, 116, 0),
+          rgb(255, 106, 0),
+          rgb(255, 94, 0),
+          rgb(255, 81, 0),
+          rgb(255, 68, 0),
+          rgb(255, 57, 0),
+          rgb(255, 46, 0),
+          rgb(255, 33, 0),
+          rgb(255, 20, 0),
+          rgb(255, 0, 0),
+          rgb(246, 0, 0),
+          rgb(232, 0, 0),
+          rgb(216, 0, 0),
+          rgb(199, 0, 0),
+          rgb(184, 0, 0),
+          rgb(172, 0, 0),
+          rgb(161, 0, 0),
+          rgb(149, 0, 0),
+          rgb(138, 0, 0),
+          rgb(126, 0, 0),
+          rgb(111, 0, 0),
+          rgb(99, 0, 0),
+          rgb(86, 0, 0),
+          rgb(74, 0, 0),
+          rgb(67, 0, 0),
+          rgb(64, 0, 14),
+          rgb(61, 0, 29),
+          rgb(60, 0, 42),
+          rgb(63, 0, 57),
+          rgb(68, 0, 69),
+          rgb(77, 0, 81),
+          rgb(89, 0, 93),
+          rgb(102, 0, 105),
+          rgb(116, 0, 116),
+          rgb(130, 0, 130),
+          rgb(144, 0, 144),
+          rgb(161, 0, 161),
+          rgb(175, 0, 175),
+          rgb(190, 0, 190),
+          rgb(204, 0, 204),
+          rgb(218, 0, 218),
+          rgb(230, 0, 230),
+          rgb(240, 0, 240),
+          rgb(255, 0, 255));
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+
+    .obs_map {
+      border: none;
+    }
+
+    .color-values {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      color: rgb(210, 210, 210);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .color-values span {
+      flex-grow: 1;
+    }
+
+    .color-scale h2 {
+      color: rgb(210, 210, 210);
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .navbar_obs {
+      width: 69%;
+      background-color: rgb(23, 25, 26);
+      overflow: auto;
+      margin: 0 auto;
+      /* Center the div horizontally */
+      border-radius: 4px;
+    }
+
+    .navbar_obs a {
+      float: left;
+      padding: 12px;
+      color: white;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .navbar_obs a:hover {
+      background-color: #000;
+      border-radius: 4px;
+    }
+
+    .active {
+      background-color: rgb(0, 40, 255);
+      border-radius: 4px;
+    }
+
+    .group_container_LVGMC h2 {
+      color: rgb(240, 240, 250);
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 500px) {
+      .navbar_obs a {
+        float: none;
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar Section -->
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="index.html" id="navbar__logo"><img src="https://fv9-7.failiem.lv/down.php?i=p2kgbydxw&view"
+          alt="Meteo Logo" />METEO LATVIA</a>
+      <div class="navbar__toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <a href="index.html" class="navbar__links">Sākumlapa</a>
+        </li>
+        <li class="navbar__item navbar__dropdown">
+          <a href="#" class="navbar__links">Novērojumi</a>
+          <ul class="navbar__submenu">
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_temperatura.html">Novērojumu stacijas</a>
+            </li>
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_radars.html">Meteoroloģiskais radars</a>
+            </li>
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_satelitsIR10.8.html">Meteoroloģiskais satelīts</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navbar__item navbar__dropdown">
+          <a href="#" class="navbar__links">Prognozes</a>
+          <ul class="navbar__submenu">
+            <li class="navbar__submenu-item">
+              <a href="Meteo_prognozes.html">"MeteoLatvia" prognoze</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navbar__item">
+          <a href="Meteo_kosmosaapstakli.html" class="navbar__links">Kosmosa apstākļi</a>
+        </li>
+        <li class="navbar__item">
+          <a href="Meteo_blog.html" class="navbar__links">Ziņas</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Observation map Section -->
+  <div class="group_container_LVGMC">
+    <h2>Atmosfēras spiediens (hPa)</h2>
+    <div class="noverojumu_karte_LVGMC">
+      <div class="noverojumu_datu_izvelne_konteineris">
+        <a href="#" class="noverojumu_datu_izvelne_poga">Atmosfēras spiediens</a>
+        <div class="noverojumu_datu_izvelne_saturs">
+          <a href="Meteo_noverojumi_temperatura.html"><i class="fa-solid fa-temperature-three-quarters"></i> Gaisa
+            temperatūra</a>
+          <a href="Meteo_noverojumi_vejavirziens.html"><i class="fa-solid fa-compass"></i> Vēja virziens</a>
+          <a href="Meteo_noverojumi_vejaatrums.html"><i class="fa-solid fa-wind"></i> Vēja ātrums</a>
+          <a href="Meteo_noverojumi_vejabrazmas.html"><i class="fa-solid fa-wind"></i> Vēja brāzmas</a>
+          <a href="Meteo_noverojumi_relativaismitrums.html"><i class="fa-solid fa-droplet"></i> Relatīvais mitrums</a>
+          <a href="Meteo_noverojumi_atmosferasspiediens.html"><i class="fa-solid fa-hurricane"></i> Atmosfēras
+            spiediens</a>
+          <a href="Meteo_noverojumi_nokrisnudaudzums.html"><i class="fa-solid fa-cloud-rain"></i> Nokrišņu daudzums</a>
+          <a href="Meteo_noverojumi_redzamiba.html"><i class="fa-solid fa-smog"></i> Redzamība</a>
+          <a href="Meteo_noverojumi_sniegasegasbiezums.html"><i class="fa-solid fa-snowflake"></i> Sniega segas
+            biezums</a>
+        </div>
+      </div>
+      <iframe src="Observation_data\map_atmosferasspiediens.html" width="1280" height="720" class="noverojumu_karte"></iframe>
+      <div class="color-scale">
+        <div class="color-gradient"></div>
+        <div class="color-values">
+          <span>960 hPa</span>
+          <span>980 hPa</span>
+          <span>1000 hPa</span>
+          <span>1020 hPa</span>
+          <span>1040 hPa</span>
+        </div>
+      </div>
+      <iframe src="Observation_data/table_atmosferasspiediens.html" width="1280" height="980" class="noverojumu_tabula_standarta"></iframe>
+      <iframe src="Observation_data/chart_atmosferasspiediens.html" width="1280" height="420" class="noverojumu_grafiks"></iframe>
+      <script src="app.js"></script>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

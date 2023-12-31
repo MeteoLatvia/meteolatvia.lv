@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapbox Data Visualization</title>
+    <!-- Include Mapbox CSS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+    <style>
+        /* Set the map container size */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Map container -->
+    <div id="map"></div>
+
+    <!-- Include Mapbox JavaScript library -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        // Your Mapbox access token
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWV0ZW9sYXR2aWEiLCJhIjoiY2xjcWF3ajRkMDQ0NDNucDE4aTdkZ3h2NSJ9.L0yigObs_66n45KR3oLfUQ';
+
+        // Initialize the map
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11', // You can use other Mapbox styles
+            center: [24, 57], // Center the map around the coordinates you prefer
+            zoom: 6 // Adjust the zoom level
+        });
+
+        // Add zoom and rotation controls to the map.
+        const nav = new mapboxgl.NavigationControl({
+            visualizePitch: true
+        });
+        map.addControl(nav, 'top-right');
+
+        map.addControl(new mapboxgl.FullscreenControl({ container: document.querySelector('body') }));
+
+        map.addControl(new mapboxgl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
+            },
+            trackUserLocation: true,
+            showUserHeading: true
+        }));
+
+        const scale = new mapboxgl.ScaleControl({
+            maxWidth: 80,
+            unit: 'imperial'
+        });
+        map.addControl(scale);
+
+        scale.setUnit('metric');
+
+        // API endpoint for data retrieval
+        var apiEndpoint = 'https://data.gov.lv/dati/api/3/action/datastore_search?resource_id=79e707d8-6719-49b2-92b1-ec261451f1d9&limit=50';
+
+        // Fetch data from the API
+        $.ajax({
+            url: apiEndpoint,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // Add markers to the map based on the data
+                data.result.records.forEach(function (record) {
+                    // Check if latitude and longitude are present
+                    if (record.GEOGR1 && record.GEOGR2) {
+                        // Convert to decimal degrees
+                        var latitude = parseFloat(record.GEOGR2);
+                        var longitude = parseFloat(record.GEOGR1);
+
+                        // Check if the conversion is successful and latitude is within the valid range
+                        if (!isNaN(latitude) && !isNaN(longitude) && latitude >= -90 && latitude <= 90) {
+                            // Create a marker
+                            var marker = new mapboxgl.Marker()
+                                .setLngLat([longitude, latitude])
+                                .addTo(map);
+
+                            // Create a popup
+                            var popup = new mapboxgl.Popup()
+                                .setHTML(
+                                    '<h3>' + record.NAME + '</h3>' +
+                                    '<p>Station ID: ' + record.STATION_ID + '</p>' +
+                                    '<p>WMO ID: ' + record.WMO_ID + '</p>' +
+                                    '<p>Begin Date: ' + record.BEGIN_DATE + '</p>' +
+                                    '<p>End Date: ' + record.END_DATE + '</p>' +
+                                    '<p>Elevation: ' + record.ELEVATION + '</p>'
+                                    // Add more fields as needed
+                                );
+
+                            // Attach the popup to the marker
+                            marker.setPopup(popup);
+                        } else {
+                            console.error('Invalid latitude or longitude:', record.GEOGR2, record.GEOGR1);
+                        }
+                    }
+                });
+            },
+            error: function (error) {
+                console.error('Error fetching data:', error);
+            }
+        });
+    </script>
+
+</body>
+
+</html>

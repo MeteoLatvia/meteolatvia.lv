@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Novērojumu stacijas</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+    integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <!-- Navbar Section -->
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="index.html" id="navbar__logo"><img src="https://fv9-7.failiem.lv/down.php?i=p2kgbydxw&view"
+          alt="Meteo Logo" />METEO LATVIA</a>
+      <div class="navbar__toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <a href="index.html" class="navbar__links">Sākumlapa</a>
+        </li>
+        <li class="navbar__item navbar__dropdown">
+          <a href="#" class="navbar__links">Novērojumi</a>
+          <ul class="navbar__submenu">
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_temperatura.html">Novērojumu stacijas</a>
+            </li>
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_radars.html">Meteoroloģiskais radars</a>
+            </li>
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_satelitsIR10.8.html">Meteoroloģiskais satelīts</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navbar__item navbar__dropdown">
+          <a href="#" class="navbar__links">Prognozes</a>
+          <ul class="navbar__submenu">
+            <li class="navbar__submenu-item">
+              <a href="Meteo_prognozes.html">"MeteoLatvia" prognoze</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navbar__item">
+          <a href="Meteo_kosmosaapstakli.html" class="navbar__links">Kosmosa apstākļi</a>
+        </li>
+        <li class="navbar__item">
+          <a href="Meteo_blog.html" class="navbar__links">Ziņas</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Forecast data Section -->
+  <div class="forecast__map">
+    <div class="image-container">
+      <div class="image-text">
+        <img id="forecastMap__img1" src="https://pbs.twimg.com/media/F9yIW-xWQAAzczJ?format=jpg&name=4096x4096" />
+        <p>
+          🌓 Apmācies, daudzviet lietus. Nakts būs salīdzinoši silta un ar lēnu līdz mērenu vēju.<br /><br />
+          🌡 +8°C...+11°C.<br /><br />
+          💨 DR-R 3-9 m/s, rietumu un centrālajos rajonos brāzmas līdz 13-15 m/s.
+        </p>
+      </div>
+      <div class="image-text">
+        <img id="forecastMap__img2" src="https://pbs.twimg.com/media/F9yIXgZX0AAHpgU?format=jpg&name=4096x4096" />
+        <p>
+          ☀️ Mākoņains, daudzviet neliels, īslaicīgs lietus. Diena būs salīdzinoši silta un ar lēnu līdz mērenu vēju. <br /><br />
+          🌡 +8°C...+11°C. <br /><br />
+          💨 R 2-8 m/s.
+        </p>
+      </div>
+    </div>
+    <iframe src="Tests/test_meteogram.html" width="1280" height="450" class="obs_map"></iframe>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

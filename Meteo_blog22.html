@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blogs</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+    integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <!-- Navbar Section -->
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="index.html" id="navbar__logo"><img src="https://fv9-7.failiem.lv/down.php?i=p2kgbydxw&view"
+          alt="Meteo Logo" />METEO LATVIA</a>
+      <div class="navbar__toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <a href="index.html" class="navbar__links">Sākumlapa</a>
+        </li>
+        <li class="navbar__item navbar__dropdown">
+          <a href="#" class="navbar__links">Novērojumi</a>
+          <ul class="navbar__submenu">
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_temperatura.html">Novērojumu stacijas</a>
+            </li>
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_radars.html">Meteoroloģiskais radars</a>
+            </li>
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_satelitsIR10.8.html">Meteoroloģiskais satelīts</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navbar__item navbar__dropdown">
+          <a href="#" class="navbar__links">Prognozes</a>
+          <ul class="navbar__submenu">
+            <li class="navbar__submenu-item">
+              <a href="Meteo_prognozes.html">"MeteoLatvia" prognoze</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navbar__item">
+          <a href="Meteo_kosmosaapstakli.html" class="navbar__links">Kosmosa apstākļi</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Blog content section -->
+  <header>
+    <div id="categories">
+      <button data-category="all">Visi</button>
+      <button data-category="tech">Teksta tiešraide</button>
+      <button data-category="travel">Negaisu izsekošana</button>
+      <!-- Add more category buttons as needed -->
+    </div>
+  </header>
+  <div id="blog-posts">
+    <!-- Blog posts will be displayed here dynamically -->
+  </div>
+  <script>
+    // Sample blog data (you can load this from a JSON file)
+    const blogData = [
+      {
+        title: "Vētra 07.10.2023.",
+        category: "tech",
+        content: "07.10.2023. 10:00",
+        image: "https://fv9-4.failiem.lv/down.php?i=9ebzyg434d&view",
+      },
+      {
+        title: "Negaisu izsekošana 30.08.2023.",
+        category: "travel",
+        content: "30.08.2023. 09:00.",
+        image: "https://fv9-7.failiem.lv/down.php?i=bdc6hbp9ep&view",
+      },
+      // Add more blog posts with images as needed
+    ];
+
+    // Function to display blog posts
+    function displayBlogPosts(category) {
+      const blogPostsContainer = document.getElementById("blog-posts");
+      blogPostsContainer.innerHTML = "";
+
+      blogData
+        .filter((post) => category === "all" || post.category === category)
+        .forEach((post) => {
+          const postDiv = document.createElement("div");
+          postDiv.className = "blog-post";
+          postDiv.innerHTML = `
+                <a href="baseURL/Blog/${post.title
+              .replace(/ /g, "-")
+              .toLowerCase()}.html">
+                    <img src="${post.image}" alt="${post.title
+            }" class="blog-thumbnail" />
+                    <h2>${post.title}</h2>
+                </a>
+                <p>${post.content}</p>
+            `;
+          blogPostsContainer.appendChild(postDiv);
+        });
+    }
+
+    // Add event listeners to category buttons
+    const categoryButtons = document.querySelectorAll("#categories button");
+    categoryButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const category = button.getAttribute("data-category");
+        displayBlogPosts(category);
+      });
+    });
+
+    // Initial display of all blog posts
+    displayBlogPosts("all");
+  </script>
+  <script src="app.js"></script>
+</body>
+
+</html>

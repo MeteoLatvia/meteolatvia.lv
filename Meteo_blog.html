@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE-edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scale=no" />
+  <title>Blogs</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+    integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    nav {
+      background-color: aliceblue;
+    }
+
+    .blog-filter {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px 20px;
+      border-top: 1px solid rgba(0, 0, 0, 0.5);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+      background-color: aliceblue;
+    }
+
+    ::selection {
+      background-color: rgba(0, 40, 255, 0.5);
+      color: aliceblue;
+    }
+
+    .blog-filter li {
+      padding: 5px 15px;
+      color: rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      margin: 3px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      user-select: none;
+      list-style-type: none;
+    }
+
+    .blog-filter li:hover,
+    blog-filter-active {
+      background-color: rgba(0, 0, 0, 0.03);
+      color: rgba(0, 40, 255, 0.5) !important;
+      transition: all ease 0.3s;
+
+    }
+
+    .blog-container {
+      display: grid;
+      max-width: 1200px;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto;
+      margin: auto;
+    }
+
+    .blog-box {
+      padding: 20px;
+      background-color: aliceblue;
+      margin: 20px;
+      box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .blog-img {
+      display: flex;
+      width: 100%;
+      min-height: 185px;
+      overflow: hidden;
+      border-radius: 5px;
+      position: relative;
+    }
+
+    .blog-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .category {
+      color: #ffff;
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      padding: 2px 10px;
+      font-size: 0.9rem;
+      background-color: blue;
+    }
+
+    .blog-text strong {
+      font-size: 1.2rem;
+      color: black;
+      display: flex;
+      font-weight: 400;
+      margin: 10px 0px;
+      line-height: 25px;
+      text-decoration: none;
+    }
+
+    .category-time {
+      display: flex;
+      align-items: center;
+    }
+
+    .category-time span {
+      font-size: 0.8rem;
+    }
+
+    .blog-category {
+      padding: 3px 6px;
+      color: rgba(0, 0, 0, 255);
+      font-weight: 500;
+      background-color: rgba(0, 0, 0, 0.06);
+    }
+
+    .published-time {
+      margin-left: 10px;
+      color: rgba(255, 128, 128, 255);
+      font-weight: 500;
+    }
+
+    .publisher-profile {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .publisher-profile img {
+      width: 30px;
+      height: 30px;
+      object-position: center;
+      object-fit: cover;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .publisher-profile span {
+      color: rgba(0, 0, 0, 255);
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+      margin-left: 10px;
+    }
+
+    .visi .category {
+      background-color: aqua;
+    }
+
+    .tekstalive .category {
+      background-color: rgb(255, 127, 127);
+    }
+
+    .negaisutracker .category {
+      background-color: blueviolet;
+    }
+
+    .prognozes .category {
+      background-color: rgb(226, 43, 202);
+    }
+
+    .fix-nav {
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.15);
+      z-index: 105;
+      animation: nav-animation 0.3s;
+    }
+
+    @keyframes nav-animation {
+      0% {
+        top: -100%;
+      }
+
+      100% {
+        top: 0px;
+      }
+    }
+
+    nav .menu-btn {
+      display: none;
+    }
+
+    /*making-home-page-responsive----------------*/
+    @media(max-width:1200px) {
+      .blog-container {
+        width: 1000px;
+      }
+
+      .blog-img {
+        min-height: auto;
+        height: 170px;
+      }
+    }
+
+    @media(max-width:900px) {
+      .blog-container {
+        max-width: 100%;
+        grid-template-columns: 1fr 1fr;
+      }
+
+    }
+
+    @media(max-width:600px) {
+      .blog-container {
+        width: 90%;
+        grid-template-columns: 1fr;
+      }
+
+      .blog-img {
+        height: auto;
+      }
+
+      nav {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        height: 70px;
+        position: relative;
+        padding: 0px 20px;
+      }
+
+      .blog-filter {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        left: 0px;
+        top: 70px;
+        width: 100%;
+        border-bottom: 2px solid rgb(240, 240, 240, 255);
+        z-index: 105;
+      }
+
+      .blog-filter li {
+        width: 100%;
+      }
+
+      nav .menu-icon {
+        cursor: pointer;
+        float: right;
+        padding: 5px;
+        position: relative;
+        user-select: none;
+        z-index: 2;
+      }
+
+      nav .menu-icon .nav-icon {
+        background-color: rgba(0, 0, 0, 255);
+        display: block;
+        height: 2px;
+        position: relative;
+        transition: background 0.2s ease-out;
+        width: 25px;
+      }
+
+      nav .menu-icon .nav-icon::before,
+      nav .menu-icon .nav-icon::after {
+        background-color: rgba(0, 0, 0, 255);
+        content: '';
+        position: absolute;
+        height: 100%;
+        display: block;
+        width: 100%;
+        transition: all ease-out 0.2s;
+      }
+
+      nav .menu-icon .nav-icon::before {
+        top: 5px
+      }
+
+      nav .menu-icon .nav-icon::after {
+        top: -5px
+      }
+
+      nav .menu-icon .nav-icon,
+      nav .menu-icon:checked~.menu-icon .nav-icon {
+        background-color: transparent;
+      }
+
+      nav .menu-btn:checked~.menu-icon::before {
+        transform: rotate(-45deg);
+        top: 0px;
+      }
+
+      nav .menu-btn:checked~.menu-icon::after {
+        transform: rotate(45deg);
+        top: 0px;
+      }
+
+      nav .menu-btn:checked~.blog-filter {
+        display: flex;
+      }
+    }
+
+    @media(max-width:500px) {
+      .blog-category {
+        width: 100%;
+      }
+    }
+
+    .blog-text a strong:hover {
+      color: rgba(128, 128, 128, 255);
+      transition: all ease 0.2s;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar Section -->
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="index.html" id="navbar__logo"><img src="https://fv9-7.failiem.lv/down.php?i=p2kgbydxw&view"
+          alt="Meteo Logo" />METEO LATVIA</a>
+      <div class="navbar__toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <a href="index.html" class="navbar__links">Sākumlapa</a>
+        </li>
+        <li class="navbar__item navbar__dropdown">
+          <a href="#" class="navbar__links">Novērojumi</a>
+          <ul class="navbar__submenu">
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_temperatura.html">Novērojumu stacijas</a>
+            </li>
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_radars.html">Meteoroloģiskais radars</a>
+            </li>
+            <li class="navbar__submenu-item">
+              <a href="Meteo_noverojumi_satelitsIR10.8.html">Meteoroloģiskais satelīts</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navbar__item navbar__dropdown">
+          <a href="#" class="navbar__links">Prognozes</a>
+          <ul class="navbar__submenu">
+            <li class="navbar__submenu-item">
+              <a href="Meteo_prognozes.html">"MeteoLatvia" prognoze</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navbar__item">
+          <a href="Meteo_kosmosaapstakli.html" class="navbar__links">Kosmosa apstākļi</a>
+        </li>
+        <li class="navbar__item">
+          <a href="Meteo_blog.html" class="navbar__links">Ziņas</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!--Blog section-->
+
+  <section id="blog">
+
+    <!--Blog filter-->
+    <nav>
+      <!--menu-icon-->
+      <input type="checkbox" class="menu-btn" id="menu-btn">
+      <label for="menu-btn" class="menu-icon">
+        <span class="nav-icon"></span>
+      </label>
+
+
+      <!--filter-->
+      <ul class="blog-filter">
+        <li class="list blog-filter-active" data-filter="visi">Visi</li>
+        <li class="list" data-filter="tekstalive">Teksta tiešraides</li>
+        <li class="list" data-filter="negaisutracker">Negaisu izsekošana</li>
+        <li class="list" data-filter="prognozes">Prognozes</li>
+      </ul>
+    </nav>
+
+    <!--container-->
+    <div class="blog-container">
+      <!--box-1------------------------------------------>
+      <div class="blog-box tekstalive">
+        <!--img-->
+        <div class="blog-img">
+          <img src="https://fv9-4.failiem.lv/down.php?i=65ntvchmp6&view" alt="img">
+          <span class="category">Teksta tiešraide</span>
+        </div>
+
+        <!--text-->
+        <div class="blog-text">
+
+          <!--title-->
+          <a href="Blog/25.10.2023.1356.html">
+            <strong>Kirunas magnetometrs</strong>
+          </a>
+
+          <!--time-and-category-->
+          <div class="category-time">
+            <span class="blog-category">Teksta tiešraide</span>
+            <span class="published-time">25.10.2023.</span>
+          </div>
+
+          <!--publisher-profile-->
+          <div class="publisher-profile">
+            <img src="https://fv9-6.failiem.lv/down.php?i=xe9f9tt64f&view" alt="Publisher">
+            <span>Martins Bergšteins</span>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!--box-2------------------------------------------>
+      <div class="blog-box negaisutracker">
+        <!--img-->
+        <div class="blog-img">
+          <img src="https://fv9-4.failiem.lv/down.php?i=65ntvchmp6&view" alt="img">
+          <span class="category">Negaisu izsekošana</span>
+        </div>
+
+        <!--text-->
+        <div class="blog-text">
+
+          <!--title-->
+          <a href="#">
+            <strong>Negaisu izsekošanas tiešraide 07.08.2023.</strong>
+          </a>
+
+          <!--time-and-category-->
+          <div class="category-time">
+            <span class="blog-category">Negaisu izsekošana</span>
+            <span class="published-time">25.10.2023.</span>
+          </div>
+
+          <!--publisher-profile-->
+          <div class="publisher-profile">
+            <img src="https://fv9-6.failiem.lv/down.php?i=xe9f9tt64f&view" alt="Publisher">
+            <span>Martins Bergšteins</span>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!--box-3------------------------------------------>
+      <div class="blog-box prognoze">
+        <!--img-->
+        <div class="blog-img">
+          <img src="https://fv9-4.failiem.lv/down.php?i=65ntvchmp6&view" alt="img">
+          <span class="category">Prognozes</span>
+        </div>
+
+        <!--text-->
+        <div class="blog-text">
+
+          <!--title-->
+          <a href="#">
+            <strong>Spēcīgs sniegputenis nākamnedēļ</strong>
+          </a>
+
+          <!--time-and-category-->
+          <div class="category-time">
+            <span class="blog-category">Prognozes</span>
+            <span class="published-time">25.10.2023.</span>
+          </div>
+
+          <!--publisher-profile-->
+          <div class="publisher-profile">
+            <img src="https://fv9-6.failiem.lv/down.php?i=xe9f9tt64f&view" alt="Publisher">
+            <span>Martins Bergšteins</span>
+          </div>
+        </div>
+
+      </div>
+
+
+      
+
+      </div>
+
+
+
+    </div>
+
+
+  </section>
+
+
+  <!--JQuery-->
+  <script type="text/javascript" src="jquery.js"></script>
+
+  <!--script-->
+  <script type="text/javascript">
+
+    /*blog-filter-menu*/
+    $(document).on('click', '.blog-filter li', function () {
+      $(this).addClass('blog-filter-active').siblings().removeClass('blog-filter-active')
+    });
+
+
+    /*post-filter-------*/
+    $(document).ready(function () {
+      $('.list').click(function () {
+        const value = $(this).attr('data-filter');
+        if (value == 'visi') {
+          $('.blog-box').show('1000');
+        }
+        else {
+          $('.blog-box').not('.' + value).hide('1000');
+          $('.blog-box').filter('.' + value).show('1000');
+        }
+      });
+    });
+
+    /*for-fix-filter-menu--------*/
+    $(window).scroll(function () {
+      if ($(document).scrollTop() > 80) {
+        $('nav').addClass('fix-nav');
+      }
+      else {
+        $('nav').removeClass('fix-nav');
+      }
+    });
+  </script>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
