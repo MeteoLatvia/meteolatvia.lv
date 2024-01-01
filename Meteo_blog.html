@@ -311,6 +311,19 @@
 </head>
 
 <body>
+  <script>
+    // Prompt the user for credentials
+    const username = prompt('Enter your username:');
+    const password = prompt('Enter your password:');
+
+    // Check if the entered credentials match the expected values
+    if (username !== 'MetLat2007#' || password !== 'vilciensjelgava') {
+      // If the credentials are incorrect, display an error message
+      alert('Access Denied');
+      // Redirect the user to the homepage (change the URL as needed)
+      window.location.href = 'index.html';
+    }
+  </script>
   <!-- Navbar Section -->
   <nav class="navbar">
     <div class="navbar__container">
