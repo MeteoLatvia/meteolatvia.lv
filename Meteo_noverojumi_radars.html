@@ -4,11 +4,129 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Novērojumu stacijas</title>
+  <title>Meteoroloģiskais radars</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
     integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
   <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    .color-scale {
+      text-align: center;
+      margin: 20px auto;
+      max-width: 800px;
+    }
+
+    .color-gradient {
+      width: 100%;
+      height: 20px;
+      background: linear-gradient(to right,
+          rgb(0, 1, 198),
+          rgb(0, 51, 255),
+          rgb(1,121,252),
+          rgb(28,162,252),
+          rgb(86,207,254),
+          rgb(130,241,250),
+          rgb(255,253,255),
+          rgb(255,246,193),
+          rgb(254,228,1),
+          rgb(254,187,1),
+          rgb(251,116,0),
+          rgb(253,64,0),
+          rgb(199,1,0),
+          rgb(162,0,1),
+          rgb(126,1,0));
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+
+    .color-values {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      color: rgb(210, 210, 210);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .color-values span {
+      flex-grow: 1;
+    }
+
+    .color-scale h2 {
+      color: rgb(210, 210, 210);
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .obs_map {
+      border: none;
+    }
+
+    .collapsible {
+      background-color: rgb(55, 55, 55);
+      color: white;
+      cursor: pointer;
+      padding: 18px;
+      width: 80%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .active,
+    .collapsible:hover {
+      background-color: rgb(85, 85, 85);
+    }
+
+    .content {
+      padding: 0 18px;
+      display: none;
+      overflow: hidden;
+      background-color: rgb(35, 35, 35);
+    }
+
+    .navbar_obs {
+      width: 69%;
+      background-color: rgb(23, 25, 26);
+      overflow: auto;
+      margin: 0 auto;
+      /* Center the div horizontally */
+      border-radius: 4px;
+    }
+
+    .navbar_obs a {
+      float: left;
+      padding: 12px;
+      color: white;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .navbar_obs a:hover {
+      background-color: #000;
+      border-radius: 4px;
+    }
+
+    .active {
+      background-color: rgb(0, 40, 255);
+      border-radius: 4px;
+    }
+
+    .group_container_LVGMC h2 {
+      color: rgb(240, 240, 250);
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 500px) {
+      .navbar_obs a {
+        float: none;
+        display: block;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -60,11 +178,22 @@
   </nav>
 
   <!-- Radar map Section -->
-  <div class="observation__map">
-    <p>Nokrišņu intensitāte</p>
-    <iframe width="1280" height="720"
-      src="https://embed.windy.com/embed2.html?lat=56.831&lon=24.423&detailLat=53.398&detailLon=-9.031&width=1280&height=720&zoom=7&level=surface&overlay=radar&product=radar&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=m%2Fs&metricTemp=%C2%B0C&radarRange=-1"
-      frameborder="0" class="radar_map"></iframe>
+  <div class="group_container_LVGMC">
+    <h2>Meteoroloģiskais radars</h2>
+    <div class="noverojumu_karte_LVGMC">
+      <iframe src="Radar_data/radar_map.html" width="1280" height="720" class="noverojumu_karte"></iframe>
+      <p2><br>Dati: Latvijas Vides ģeoloģijas un meteorloģijas centrs</p2>
+      <div class="color-scale">
+        <div class="color-gradient"></div>
+        <div class="color-values">
+          <span>0,1 mm/h</span>
+          <span>1 mm/h</span>
+          <span>5 mm/h</span>
+          <span>15 mm/h</span>
+          <span>30 mm/h</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="app.js"></script>
