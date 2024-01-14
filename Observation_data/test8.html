@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>Dynamic Mapbox Example</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css' rel='stylesheet' />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id='map'></div>
+
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWV0ZW9sYXR2aWEiLCJhIjoiY2xjcWF3ajRkMDQ0NDNucDE4aTdkZ3h2NSJ9.L0yigObs_66n45KR3oLfUQ'; // Replace with your Mapbox access token
+
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [24.365833, 57.867778], // Use the center coordinates of your map
+      zoom: 8 // Adjust the zoom level accordingly
+    });
+
+    function fetchData() {
+        fetch('https://www.meteo.lv/meteorologijas-operativie-dati', { redirect: 'follow' })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok (Status: ${response.status} ${response.statusText})`);
+                }
+                return response.text();
+            })
+            .then(htmlData => {
+                // Parse HTML data and extract information
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(htmlData, 'text/html');
+                
+                // Extract station information from the parsed HTML
+                var stations = [];
+                var stationElements = doc.querySelectorAll('.some-selector-for-stations'); // Adjust the selector accordingly
+
+                stationElements.forEach(stationElement => {
+                    var station = {
+                        name: stationElement.querySelector('.station-name-selector').textContent,
+                        temperature: stationElement.querySelector('.temperature-selector').textContent,
+                        // Add other properties as needed
+                    };
+                    stations.push(station);
+                });
+
+                // Now you have the station data in the 'stations' array
+                stations.forEach(function (station) {
+                    var popupContent = `<b>${station.name}</b><br>Temperature: ${station.temperature}°C`;
+
+                    new mapboxgl.Marker()
+                        .setLngLat([station.longitude, station.latitude])
+                        .setPopup(new mapboxgl.Popup().setHTML(popupContent))
+                        .addTo(map);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    }
+  </script>
+</body>
+</html>

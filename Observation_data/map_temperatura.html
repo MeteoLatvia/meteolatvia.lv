@@ -208,6 +208,26 @@
       }
     ).addTo(map);
 
+     // Load GeoJSON data from file
+  $.getJSON('C:/MeteoLatvia/Coding/MeteoLatviaWebsite/Leaflet_data/Latvia_robeza.json', function(data) {
+    // Style function to highlight Latvia and gray out other countries
+    function style(feature) {
+      return {
+        fillColor: feature.properties.name === 'Latvia' ? 'green' : 'gray',
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+      };
+    }
+
+    // Add GeoJSON layer to the map
+    L.geoJson(data, {
+      style: style
+    }).addTo(map);
+  });
+
     const baseballIcon = L.icon({
       iconUrl: "baseball-marker.png",
       iconSize: [32, 37],
