@@ -1086,6 +1086,13 @@
   position: relative;
 }
 
+.group_container_LVGMC h2 {
+  color: rgb(240, 240, 250);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
 .noverojumu_karte {
   border-radius: 5px;
   max-width: 100%;
@@ -1100,7 +1107,7 @@
   border-radius: 10px;
   margin: 10px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  width: 1600px;
+  width: 1282px;
   height: 420px;
   background-color: rgb(57, 57, 77);
   max-width: 100%;
@@ -1139,7 +1146,7 @@
   font-size: 15px;
   border: none;
   cursor: pointer;
-  width: 100%;
+  width: 81%;
   margin: 0 auto;
   text-align: left;
   border-radius: 4px;
@@ -1156,7 +1163,7 @@
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
+  width: 81%;
   max-width: 1895px;
   border-radius: 4px;
   overflow: hidden;
@@ -1259,12 +1266,6 @@
   border-radius: 10px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   background-color: rgb(57, 57, 77);
-}
-
-iframe {
-  width: 110%;
-  height: 420px;
-  border: none;
 }
 
 .kirunachart{
@@ -2621,3 +2622,155 @@ header h1 {
   height: 100%;
   object-fit: cover;
 }
+
+
+
+
+
+
+
+
+
+
+/*Kameras*/
+.group_container_kameras {
+  background-color: rgb(43, 43, 51);
+  padding: 2%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  margin: 2% 5%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.group_container_kameras h2 {
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: rgb(250, 252, 255);
+  padding: 1%;
+  text-align: center;
+  width: 100%;
+}
+
+.title_separator_kameras {
+  border: none;
+  border-top: 1px solid #ccc;
+  width: 80%;
+  margin: 50px auto;
+}
+
+
+
+
+
+
+
+
+
+
+/*Changelog*/
+/* Changelog Styles */
+
+.changelog {
+  background-color: rgb(43, 43, 51);
+  padding: 2rem;
+}
+
+.changelog__container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.changelog__heading {
+  color: rgb(0, 40, 255);
+}
+
+.changelog__version {
+  margin-bottom: 2rem;
+}
+
+.changelog__version-number {
+  color: rgb(0, 40, 255);
+  font-size: 2rem;
+}
+
+.changelog__date {
+  color: white;
+  margin-bottom: 1rem;
+}
+
+/* Different colors for each section */
+.changelog__changes h4 {
+  margin-top: 1rem;
+}
+
+.changelog__changes h4.new-features {
+  color: lime; /* Green for new features */
+}
+
+.changelog__changes h4.changes {
+  color: yellow; /* Yellow for changes */
+}
+
+.changelog__changes h4.removed {
+  color: red; /* Red for removed items */
+}
+
+.changelog__changes ul {
+  /*list-style: none;*/
+  margin: 0;
+  padding: 0;
+}
+
+.changelog__changes li {
+  margin-bottom: 0.5rem;
+}
+
+.changelog__toggle-btn {
+  background-color: rgb(0, 40, 255);
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.changelog__toggle-btn:hover {
+  background-color: rgb(0, 20, 200);
+}
+
+.group_container_changelog {
+  background-color: rgb(43, 43, 51);
+  padding: 2%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  margin: 2% 5%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.group_container_changelog h2 {
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: rgb(250, 252, 255);
+  padding: 1%;
+  text-align: center;
+  width: 100%;
+}
+
+.title_separator_changelog {
+  border: none;
+  border-top: 1px solid #ccc;
+  width: 80%;
+  margin: 50px auto;
+}
+
