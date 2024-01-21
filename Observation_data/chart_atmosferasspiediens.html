@@ -1,83 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atmosfēras spiediena grafiks</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.highcharts.com/stock/highstock.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/highcharts-more.js"></script>
   <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+  <style>
+    .temperature-chart {
+      width: 100%;
+      height: 100%;
+    }
+
+    .toggle-button {
+      position: absolute;
+      top: 10px;
+      right: 88%;
+      background-color: rgb(0, 40, 255);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+  </style>
 </head>
 
 <body>
-  <div id="temperature-chart"></div>
-
+  <div id="temperature-chart" class="temperature-chart"></div>
+  <button id="toggleButton" class="toggle-button" onclick="toggleSeriesVisibility()">Paslēpt</button>
   <script>
-    // Make an AJAX request to fetch the JSON data
-    $.ajax({
-      url: 'https://videscentrs.lvgmc.lv/data/weather_monitoring_data_raw',
-      method: 'GET',
-      dataType: 'json',
-      success: function (data) {
-        processData(data);
-      },
-      error: function (error) {
-        console.error('Failed to fetch data:', error);
-      }
-    });
-
-    // Create a mapping from station IDs to station names
-    const stationNameMapping = {
-
-      "DAUGAVGR": "Daugavgrīva", // Replace with the desired station name
-      "KALNCIEM": "Kalnciems",
-      "KULDIGA": "Kuldīga",
-      "LIELPECI": "Lielpeči",
-      "PIEDRUJA": "Piedruja",
-      "RIAI99PA": "Ainaži",
-      "RIAL99MS": "Alūksne",
-      "RIBA99PA": "Bauska",
-      "RIDAGDA": "Dagda",
-      "RIDM99MS": "Daugavpils",
-      "RIDO99MS": "Dobele",
-      "RIGASLU": "Rīga (LU)",
-      "RIGU99MS": "Gulbene",
-      "RIJE99PA": "Jelgava",
-      "RIKO99PA": "Kolka",
-      "RILP99PA": "Liepāja",
-      "RIMADONA": "Madona",
-      "RIME99MS": "Mērsrags",
-      "RIPA99PA": "Pāvilosta",
-      "RIPR99PA": "Priekuļi",
-      "RIREZEKN": "Rēzekne",
-      "RIRU99PA": "Rūjiena",
-      "RISA99PA": "Saldus",
-      "RISE99MS": "Skulte",
-      "RISI99PA": "Skrīveri",
-      "RIST99PA": "Stende",
-      "RIVE99PA": "Ventspils",
-      "RIZI99PA": "Zīlāni",
-      "RIZO99MS": "Zosēni",
-      "RUCAVA": "Rucava",
-      "SIGULDA": "Sigulda",
-      "SILI": "Sīļi",
-      "VICAKI": "Vičaki",
-      // Add more mappings as needed
-    };
-
-    function processData(jsonData) {
-      // Extract unique weather station names
-      const stationNames = [...new Set(jsonData.map((data) => data.stacijas_kods))];
-
-      // Create a data structure for Highcharts series with the mapped station names
-      const seriesData = stationNames.map((station) => ({
-        name: stationNameMapping[station] || station, // Use the mapped name if available, otherwise use the ID
-        data: jsonData
-          .filter((data) => data.stacijas_kods === station)
-          .map((data) => [new Date(data.laiks).getTime(), parseFloat(data.atmosferas_spiediens)]),
-      }));
-
-      // Define the color values for temperature range from -50°C to +50°C with 1°C increment
-      const pressureColors = [
-        "rgb(255,255,255)",
+    let seriesVisible = true;
+    const colorScale = [
+    "rgb(255,255,255)",
         "rgb(255,245,255)",
         "rgb(255,230,255)",
         "rgb(255,220,255)",
@@ -177,43 +142,100 @@
         "rgb(140,140,140)",
         "rgb(160,160,160)",
         "rgb(180,180,180)",
-      ];
+      // ... (add other colors as needed)
+    ];
 
-      // Define the desired opacity (alpha) value
-      const desiredOpacity = 0.5; // Adjust the opacity as needed
+    $(document).ready(function () {
+      fetchData();
+    });
 
-      // Loop through the pressureColors array and update the opacity for each color
-      for (let i = 0; i < pressureColors.length; i++) {
-        const color = pressureColors[i];
-        const match = color.match(/^rgb\((\d+),(\d+),(\d+)\)$/);
-        if (match) {
-          const r = match[1];
-          const g = match[2];
-          const b = match[3];
-          pressureColors[i] = `rgba(${r},${g},${b},${desiredOpacity})`;
+    function fetchData() {
+      $.ajax({
+        url: 'https://videscentrs.lvgmc.lv/data/weather_monitoring_data_raw',
+        method: 'GET',
+        dataType: 'json',
+        success: processData,
+        error: function (error) {
+          console.error('Failed to fetch data:', error);
         }
-      }
+      });
+    }
 
-      // Now the temperatureColors array contains RGBA colors with the desired opacity
+    function processData(data) {
+      const stationNameMapping = {
+        "DAUGAVGR": "Daugavgrīva",
+        "KALNCIEM": "Kalnciems",
+        "KULDIGA": "Kuldīga",
+        "LIELPECI": "Lielpeči",
+        "PIEDRUJA": "Piedruja",
+        "RIAI99PA": "Ainaži",
+        "RIAL99MS": "Alūksne",
+        "RIBA99PA": "Bauska",
+        "RIDAGDA": "Dagda",
+        "RIDM99MS": "Daugavpils",
+        "RIDO99MS": "Dobele",
+        "RIGASLU": "Rīga (LU)",
+        "RIGU99MS": "Gulbene",
+        "RIJE99PA": "Jelgava",
+        "RIKO99PA": "Kolka",
+        "RILP99PA": "Liepāja",
+        "RIMADONA": "Madona",
+        "RIME99MS": "Mērsrags",
+        "RIPA99PA": "Pāvilosta",
+        "RIPR99PA": "Priekuļi",
+        "RIREZEKN": "Rēzekne",
+        "RIRU99PA": "Rūjiena",
+        "RISA99PA": "Saldus",
+        "RISE99MS": "Skulte",
+        "RISI99PA": "Skrīveri",
+        "RIST99PA": "Stende",
+        "RIVE99PA": "Ventspils",
+        "RIZI99PA": "Zīlāni",
+        "RIZO99MS": "Zosēni",
+        "RUCAVA": "Rucava",
+        "SIGULDA": "Sigulda",
+        "SILI": "Sīļi",
+        "VICAKI": "Vičaki",
+        // Add more mappings as needed
+      };
 
-      // Calculate the increment for the gradient ranges based on the number of colors
-      const increment = 100 / pressureColors.length;
+      const stationNames = [...new Set(data.map((entry) => entry.stacijas_kods))];
 
-      // Create the plotBands configuration based on pressureColors
-      const gradientRanges = pressureColors.map((color, index) => ({
-        color: color,
-        from: 950 + index,        // Starting pressure in hPa
-        to: 950 + (index + 1),   // Ending pressure in hPa
+      const seriesData = stationNames.map((station) => ({
+        name: stationNameMapping[station] || station,
+        data: data
+          .filter((entry) => entry.stacijas_kods === station)
+          .map((entry) => [new Date(entry.laiks).getTime(), parseFloat(entry.atmosferas_spiediens)]),
       }));
 
-      // Initialize the Highcharts chart with custom tooltip format
+      initializeChart(seriesData);
+    }
+
+    function initializeChart(seriesData) {
+      // Common styles for the chart
+      const commonStyles = {
+        backgroundColor: 'transparent',
+        height: 641,
+      };
+
+      // Common styles for axis
+      const axisStyles = {
+        labels: {
+          style: {
+            color: 'rgb(250, 252, 255)',
+          }
+        },
+        lineColor: 'rgb(250, 252, 255)',
+        gridLineColor: 'rgba(255, 255, 255, 0.2)',
+      };
+
       Highcharts.chart("temperature-chart", {
         chart: {
-          backgroundColor: 'rgba(43, 43, 51, 255)',
           type: "line",
+          ...commonStyles,
         },
         exporting: {
-          enabled: true, // Enable exporting module
+          enabled: true,
           buttons: {
             contextButton: {
               menuItems: [
@@ -233,22 +255,25 @@
             color: 'rgb(250, 252, 255)',
           }
         },
+        plotOptions: {
+          line: {
+            marker: {
+              enabled: false,
+            }
+          }
+        },
         xAxis: {
           type: "datetime",
           title: {
             text: "Laiks",
             style: {
-              color: 'rgb(250, 252, 255)' // Title text color
+              color: 'rgb(250, 252, 255)',
             }
           },
-          labels: {
-            style: {
-              color: 'rgb(250, 252, 255)' // X-axis label text color
-            }
-          },
-          lineColor: 'rgb(250, 252, 255)', // X-axis line color
+          lineColor: 'rgb(250, 252, 255)',
+          gridLineWidth: 1,  // Width of the grid lines
+          gridLineColor: 'rgba(255, 255, 255, 0.2)',  // Color of the grid lines
         },
-
         yAxis: {
           title: {
             text: "Atmosfēras spiediens (hPa)",
@@ -256,26 +281,43 @@
               color: 'rgb(250, 252, 255)',
             }
           },
-          labels: {
-            style: {
-              color: 'rgb(250, 252, 255)' // X-axis label text color
-            }
-          },
-          plotBands: gradientRanges, // Set the gradientRanges configuration
+          ...axisStyles,
+          plotLines: [{
+            value: 0,
+            color: 'rgba(255, 255, 255, 1.0)',
+            width: 3,
+            zIndex: 1,
+          }],
         },
-        plotOptions: {
+        series: seriesData.map((entry, index) => ({
+          ...entry,
+          zones: generateColorZones(colorScale, index),
+        })),
+        navigator: {
+          enabled: true,
+          adaptToUpdatedData: true,
+          xAxis: {
+            lineColor: 'rgb(250, 252, 255)',
+            gridLineWidth: 1,  // Width of the grid lines
+            gridLineColor: 'rgba(255, 255, 255, 0.2)',  // Color of the grid lines,
+          },
+          maskFill: 'rgba(255, 255, 255, 0.1)',
           series: {
-            allowPointSelect: true,
+            color: 'rgba(255, 255, 255, 0.5)',
           },
+          handles: {
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            borderColor: 'rgb(250, 252, 255)',
+          },
+          outlineColor: 'rgb(250, 252, 255)',
         },
-        series: seriesData,
         legend: {
           layout: "horizontal",
           align: "center",
           verticalAlign: "bottom",
           enabled: true,
           itemStyle: {
-            color: 'rgb(250, 252, 255)' // Text color
+            color: 'rgb(250, 252, 255)',
           },
         },
         tooltip: {
@@ -288,7 +330,322 @@
       });
     }
 
-    // Function to pad a number with a leading zero if it's less than 10
+    function generateColorZones(colorScale, index) {
+      // Sample color zones, replace with your logic
+      return [{
+        value: 950,
+        color: colorScale[1],
+      }, {
+        value: 951,
+        color: colorScale[2],
+      }, {
+        value: 952,
+        color: colorScale[3],
+      }, {
+        value: 953,
+        color: colorScale[4],
+      }, {
+        value: 954,
+        color: colorScale[5],
+      }, {
+        value: 955,
+        color: colorScale[6],
+      }, {
+        value: 956,
+        color: colorScale[7],
+      }, {
+        value: 957,
+        color: colorScale[8],
+      }, {
+        value: 958,
+        color: colorScale[9],
+      }, {
+        value: 959,
+        color: colorScale[10],
+      }, {
+        value: 960,
+        color: colorScale[11],
+      }, {
+        value: 961,
+        color: colorScale[12],
+      }, {
+        value: 962,
+        color: colorScale[13],
+      }, {
+        value: 963,
+        color: colorScale[14],
+      }, {
+        value: 964,
+        color: colorScale[15],
+      }, {
+        value: 965,
+        color: colorScale[16],
+      }, {
+        value: 966,
+        color: colorScale[17],
+      }, {
+        value: 967,
+        color: colorScale[18],
+      }, {
+        value: 968,
+        color: colorScale[19],
+      }, {
+        value: 969,
+        color: colorScale[20],
+      }, {
+        value: 970,
+        color: colorScale[21],
+      }, {
+        value: 971,
+        color: colorScale[22],
+      }, {
+        value: 972,
+        color: colorScale[23],
+      }, {
+        value: 973,
+        color: colorScale[24],
+      }, {
+        value: 974,
+        color: colorScale[25],
+      }, {
+        value: 975,
+        color: colorScale[26],
+      }, {
+        value: 976,
+        color: colorScale[27],
+      }, {
+        value: 977,
+        color: colorScale[28],
+      }, {
+        value: 978,
+        color: colorScale[29],
+      }, {
+        value: 979,
+        color: colorScale[30],
+      }, {
+        value: 980,
+        color: colorScale[31],
+      }, {
+        value: 981,
+        color: colorScale[32],
+      }, {
+        value: 982,
+        color: colorScale[33],
+      }, {
+        value: 983,
+        color: colorScale[34],
+      }, {
+        value: 984,
+        color: colorScale[35],
+      }, {
+        value: 985,
+        color: colorScale[36],
+      }, {
+        value: 986,
+        color: colorScale[37],
+      }, {
+        value: 987,
+        color: colorScale[38],
+      }, {
+        value: 988,
+        color: colorScale[39],
+      }, {
+        value: 989,
+        color: colorScale[40],
+      }, {
+        value: 990,
+        color: colorScale[41],
+      }, {
+        value: 991,
+        color: colorScale[42],
+      }, {
+        value: 992,
+        color: colorScale[43],
+      }, {
+        value: 993,
+        color: colorScale[44],
+      }, {
+        value: 994,
+        color: colorScale[45],
+      }, {
+        value: 995,
+        color: colorScale[46],
+      }, {
+        value: 996,
+        color: colorScale[47],
+      }, {
+        value: 997,
+        color: colorScale[48],
+      }, {
+        value: 998,
+        color: colorScale[49],
+      }, {
+        value: 999,
+        color: colorScale[50],
+      }, {
+        value: 1000,
+        color: colorScale[51],
+      }, {
+        value: 1001,
+        color: colorScale[52],
+      }, {
+        value: 1002,
+        color: colorScale[53],
+      }, {
+        value: 1003,
+        color: colorScale[54],
+      }, {
+        value: 1004,
+        color: colorScale[55],
+      }, {
+        value: 1005,
+        color: colorScale[56],
+      }, {
+        value: 1006,
+        color: colorScale[57],
+      }, {
+        value: 1007,
+        color: colorScale[58],
+      }, {
+        value: 1008,
+        color: colorScale[59],
+      }, {
+        value: 1009,
+        color: colorScale[60],
+      }, {
+        value: 1010,
+        color: colorScale[61],
+      }, {
+        value: 1011,
+        color: colorScale[62],
+      }, {
+        value: 1012,
+        color: colorScale[63],
+      }, {
+        value: 1013,
+        color: colorScale[64],
+      }, {
+        value: 1014,
+        color: colorScale[65],
+      }, {
+        value: 1015,
+        color: colorScale[66],
+      }, {
+        value: 1016,
+        color: colorScale[67],
+      }, {
+        value: 1017,
+        color: colorScale[68],
+      }, {
+        value: 1018,
+        color: colorScale[69],
+      }, {
+        value: 1019,
+        color: colorScale[70],
+      }, {
+        value: 1020,
+        color: colorScale[71],
+      }, {
+        value: 1021,
+        color: colorScale[72],
+      }, {
+        value: 1022,
+        color: colorScale[73],
+      }, {
+        value: 1023,
+        color: colorScale[74],
+      }, {
+        value: 1024,
+        color: colorScale[75],
+      }, {
+        value: 1025,
+        color: colorScale[76],
+      }, {
+        value: 1026,
+        color: colorScale[77],
+      }, {
+        value: 1027,
+        color: colorScale[78],
+      },{
+        value: 1028,
+        color: colorScale[79],
+      }, {
+        value: 1029,
+        color: colorScale[80],
+      }, {
+        value: 1030,
+        color: colorScale[81],
+      }, {
+        value: 1031,
+        color: colorScale[82],
+      }, {
+        value: 1032,
+        color: colorScale[83],
+      }, {
+        value: 1033,
+        color: colorScale[84],
+      }, {
+        value: 1034,
+        color: colorScale[85],
+      }, {
+        value: 1035,
+        color: colorScale[86],
+      }, {
+        value: 1036,
+        color: colorScale[87],
+      }, {
+        value: 1037,
+        color: colorScale[88],
+      }, {
+        value: 1038,
+        color: colorScale[89],
+      }, {
+        value: 1039,
+        color: colorScale[90],
+      }, {
+        value: 1040,
+        color: colorScale[91],
+      }, {
+        value: 1041,
+        color: colorScale[92],
+      }, {
+        value: 1042,
+        color: colorScale[93],
+      }, {
+        value: 1043,
+        color: colorScale[94],
+      }, {
+        value: 1044,
+        color: colorScale[95],
+      }, {
+        value: 1045,
+        color: colorScale[96],
+      }, {
+        value: 1046,
+        color: colorScale[97],
+      }, {
+        value: 1047,
+        color: colorScale[98],
+      }, {
+        value: 1048,
+        color: colorScale[99],
+      }, {
+        value: 1049,
+        color: colorScale[100],
+      }, {
+      }];
+    }
+    function toggleSeriesVisibility() {
+      const chart = Highcharts.charts[0]; // Assuming you have only one chart on the page
+
+      chart.series.forEach((series) => {
+        const newVisibility = !series.visible;
+        series.setVisible(newVisibility, false);
+      });
+
+      chart.redraw(); // Redraw the chart after updating series visibility
+    }
+
     function padZero(num) {
       return num < 10 ? `0${num}` : num;
     }
