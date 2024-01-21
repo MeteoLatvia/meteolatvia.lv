@@ -1077,11 +1077,11 @@
 }
 
 .group_container_LVGMC {
-  background-color: rgb(43, 43, 51);
+
   padding: 2%;
-  border: 1px solid #ccc;
+  border: 0px solid #ccc;
   border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.0);
   margin: 2% 5%;
   position: relative;
 }
@@ -1100,36 +1100,32 @@
 }
 
 .noverojumu_grafiks {
-  border-radius: 5px;
   max-width: 100%;
   border: none;
   border: 2px solid #ccc;
-  border-radius: 10px;
+  border-radius: 4px;
   margin: 10px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   width: 1282px;
-  height: 420px;
+  height: 700px;
   background-color: rgb(57, 57, 77);
-  max-width: 100%;
 }
 
 .noverojumu_tabula_standarta {
-  border-radius: 5px;
   max-width: 100%;
   border: none;
-  border-radius: 10px;
+  border-radius: 4px;
   margin: 10px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.0);
   height: 970px;
 }
 
 .noverojumu_tabula_pilna {
-  border-radius: 5px;
   max-width: 100%;
   border: none;
-  border-radius: 10px;
+  border-radius: 4px;
   margin: 10px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.0);
   height: 1210px;
 }
 
