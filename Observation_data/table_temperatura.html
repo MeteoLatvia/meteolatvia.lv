@@ -11,13 +11,18 @@
       color: white;
       font-family: 'Kumbh Sans', sans-serif;
       box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      table-layout: fixed; /* Added for consistency in column width */
     }
 
     th,
     td {
-      border: 1px solid #ddd;
-      text-align: center;
-      padding: 8px;
+       border: 1px solid #ddd;
+  text-align: center;
+  padding: 8px;
+  max-width: 33%; /* Set a maximum width for columns */
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: normal; /* Allow text to wrap */
     }
 
     th {
