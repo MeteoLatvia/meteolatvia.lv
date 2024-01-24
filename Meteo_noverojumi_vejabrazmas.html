@@ -13,28 +13,6 @@
     integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    .noverojumu_grafiks {
-  max-width: 100%;
-  border: none;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  margin: 10px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  width: 1282px;
-  height: 700px;
-  background-color: rgb(57, 57, 77);
-}
-
-    
-  .group_container_LVGMC {
-  background-color: rgba(43, 43, 51, 0.0);
-  padding: 2% !important;
-  border: 0px solid #ccc;
-  border-radius: 5px !important;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.0);
-  margin: 2% 5% !important;
-  position: relative !important;
-}
     .color-scale {
       text-align: center;
       margin: 20px auto;
@@ -219,24 +197,7 @@
   <div class="group_container_LVGMC">
     <h2>Vēja brāzmas (m/s)</h2>
     <div class="noverojumu_karte_LVGMC">
-      <div class="noverojumu_datu_izvelne_konteineris">
-        <a href="#" class="noverojumu_datu_izvelne_poga">Vēja brāzmas</a>
-        <div class="noverojumu_datu_izvelne_saturs">
-          <a href="Meteo_noverojumi_temperatura.html"><i class="fa-solid fa-temperature-three-quarters"></i> Gaisa
-            temperatūra</a>
-          <a href="Meteo_noverojumi_vejavirziens.html"><i class="fa-solid fa-compass"></i> Vēja virziens</a>
-          <a href="Meteo_noverojumi_vejaatrums.html"><i class="fa-solid fa-wind"></i> Vēja ātrums</a>
-          <a href="Meteo_noverojumi_vejabrazmas.html"><i class="fa-solid fa-wind"></i> Vēja brāzmas</a>
-          <a href="Meteo_noverojumi_relativaismitrums.html"><i class="fa-solid fa-droplet"></i> Relatīvais mitrums</a>
-          <a href="Meteo_noverojumi_atmosferasspiediens.html"><i class="fa-solid fa-hurricane"></i> Atmosfēras
-            spiediens</a>
-          <a href="Meteo_noverojumi_nokrisnudaudzums.html"><i class="fa-solid fa-cloud-rain"></i> Nokrišņu daudzums</a>
-          <a href="Meteo_noverojumi_redzamiba.html"><i class="fa-solid fa-smog"></i> Redzamība</a>
-          <a href="Meteo_noverojumi_sniegasegasbiezums.html"><i class="fa-solid fa-snowflake"></i> Sniega segas
-            biezums</a>
-        </div>
-      </div>
-      <iframe src="Observation_data/map_vejabrazmas.html" width="1280" height="720" class="noverojumu_karte"></iframe>
+      <iframe src="map_vejabrazmas.html" width="1280" height="720" class="noverojumu_karte"></iframe>
       <div class="color-scale">
         <div class="color-gradient"></div>
         <div class="color-values">
@@ -252,61 +213,7 @@
       <script src="app.js"></script>
     </div>
   </div>
-<!-- Kajene sadala -->
-  <div class="footer__container">
-    <div class="footer__links">
-      <div class="footer__link--wrapper">
-        <div class="footer__link--items">
-          <!-- <h2>About Us</h2>
-          <a href="/sign__up">How it works</a> <a href="/">Testimonials</a>
-          <a href="/">Careers</a> <a href="/">Investments</a>
-          <a href="/">Terms of Service</a>
-        </div>
-        <div class="footer__link--items">
-          <h2>Contact Us</h2>
-          <a href="/">Contact</a> <a href="/">Support</a>
-          <a href="/">Destinations</a> <a href="/">Sponsorships</a>
-        </div>
-      </div>
-      <div class="footer__link--wrapper">
-        <div class="footer__link--items">
-          <h2>Videos</h2>
-          <a href="/">Submit Video</a> <a href="/">Ambassadors</a>
-          <a href="/">Agency</a> <a href="/">Influencer</a>
-        </div>
-        <div class="footer__link--items">
-          <h2>Social Media</h2>
-          <a href="/">Instagram</a> <a href="/">Facebook</a>
-          <a href="/">Youtube</a> <a href="/">Twitter</a>
-        </div>-->
-        </div>
-      </div>
-      <section class="social__media">
-        <div class="social__media--wrap">
-          <div class="footer__logo">
-            <a href="/" id="footer__logo"><i class="fas fa-cloud"></i>METEO LATVIA</a>
-          </div>
-          <p class="website__rights">© MeteoLatvia 2023</p>
-          <div class="social__icons">
-            <a class="social__icon--link" href="https://twitter.com/MeteoLatvia" target="_blank" aria-label="Twitter">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a class="social__icon--link" href="https://www.facebook.com/MetLatvia" target="_blank"
-              aria-label="Facebook">
-              <i class="fab fa-facebook"></i>
-            </a>
-            <a class="social__icon--link" href="https://www.instagram.com/meteo_latvia16/" target="_blank"
-              aria-label="Instagram">
-              <i class="fab fa-instagram"></i>
-            </a>
-            <a class="social__icon--link" href="https://youtube.com/@meteolatvia?si=Yw-2Cn_KBR-fzjaX" target="_blank"
-              aria-label="Youtube">
-              <i class="fab fa-youtube"></i>
-            </a>
-          </div>
-        </div>
-      </section>
-    </div>
+
   <script src="app.js"></script>
 </body>
 
