@@ -6,69 +6,82 @@
   <title>table_sniegasegasbiezums</title>
   <style>
     table {
-  width: 100%;
-  border-collapse: collapse;
-  color: white;
-  font-family: 'Kumbh Sans', sans-serif;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  table-layout: fixed; /* Added for consistency in column width */
-}
+      width: 100%;
+      border-collapse: collapse;
+      color: white;
+      font-family: 'Kumbh Sans', sans-serif;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      table-layout: fixed;
+      /* Added for consistency in column width */
+    }
 
-th,
-td {
-  border: 1px solid #ddd;
-  text-align: center;
-  padding: 8px;
-  max-width: 33%; /* Set a maximum width for columns */
-  box-sizing: border-box;
-  overflow: hidden;
-  white-space: normal; /* Allow text to wrap */
-}
+    th,
+    td {
+      border: 1px solid #ddd;
+      text-align: center;
+      padding: 8px;
+      max-width: 33%;
+      /* Set a maximum width for columns */
+      box-sizing: border-box;
+      overflow: hidden;
+      white-space: normal;
+      /* Allow text to wrap */
+      word-wrap: break-word;
+      /* Added to ensure long words are wrapped */
+    }
 
-th {
-  background-color: #444;
-  position: relative;
-  cursor: pointer;
-  color: white;
-}
+    th {
+      background-color: #444;
+      position: relative;
+      cursor: pointer;
+      color: white;
+    }
 
-tbody tr:nth-child(odd) {
-  background-color: rgb(57, 57, 77);
-}
+    tbody tr:nth-child(odd) {
+      background-color: rgb(57, 57, 77);
+    }
 
-tbody tr:nth-child(even) {
-  background-color: rgb(67, 67, 87);
-}
+    tbody tr:nth-child(even) {
+      background-color: rgb(67, 67, 87);
+    }
 
-.sort-button {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-}
+    .sort-button {
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+    }
 
-.sort-button span {
-  display: none;
-}
+    .sort-button span {
+      display: none;
+    }
 
-tr:nth-child(even) {
-  background-color: rgb(35, 35, 35);
-}
+    tr:nth-child(even) {
+      background-color: rgb(35, 35, 35);
+    }
 
-tr {
-  background-color: rgb(45, 45, 45);
-}
+    tr {
+      background-color: rgb(45, 45, 45);
+    }
 
-/* Responsive styles */
-@media (max-width: 767px) {
-  th,
-  td {
-    max-width: none; /* Remove max-width for small screens */
-  }
-}
+    /* Responsive styles */
+    @media (max-width: 767px) {
+
+      th,
+      td {
+        max-width: none;
+        font-size: 10px;
+        /* Adjust the font size as needed for smaller screens */
+      }
+
+      tr {
+        line-height: 1.0;
+        /* Adjust the line height for smaller screens */
+      }
+    }
   </style>
 </head>
 

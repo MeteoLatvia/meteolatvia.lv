@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Weather Station Data</title>
+  <title>table_temperatur</title>
   <style>
     table {
       width: 100%;
@@ -11,8 +11,6 @@
       color: white;
       font-family: 'Kumbh Sans', sans-serif;
       box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-      table-layout: fixed;
-      /* Added for consistency in column width */
     }
 
     th,
@@ -20,14 +18,6 @@
       border: 1px solid #ddd;
       text-align: center;
       padding: 8px;
-      max-width: 33%;
-      /* Set a maximum width for columns */
-      box-sizing: border-box;
-      overflow: hidden;
-      white-space: normal;
-      /* Allow text to wrap */
-      word-wrap: break-word;
-      /* Added to ensure long words are wrapped */
     }
 
     th {
@@ -35,6 +25,7 @@
       position: relative;
       cursor: pointer;
       color: white;
+      /* Text color for header cells */
     }
 
     tbody tr:nth-child(odd) {
@@ -57,6 +48,7 @@
 
     .sort-button span {
       display: none;
+      /* Hide the sorting text */
     }
 
     tr:nth-child(even) {
@@ -68,20 +60,12 @@
     }
 
     /* Responsive styles */
-    @media (max-width: 767px) {
-
-      th,
-      td {
-        max-width: none;
-        font-size: 10px;
-        /* Adjust the font size as needed for smaller screens */
-      }
-
-      tr {
-        line-height: 1.0;
-        /* Adjust the line height for smaller screens */
-      }
-    }
+@media (max-width: 767px) {
+  th,
+  td {
+    max-width: none; /* Remove max-width for small screens */
+  }
+}
   </style>
 </head>
 
@@ -96,9 +80,9 @@
           </button>
         </th>
         <th data-ignore-sort>Laiks</th>
-        <th onclick="sortTable(5)">
-          Vēja brāzmas (m/s)
-          <button class="sort-button" onclick="sortTable(5)">
+        <th onclick="sortTable(2)">
+          Temperatūra (°C)
+          <button class="sort-button" onclick="sortTable(2)">
             <span>Sort</span>
           </button>
         </th>
@@ -113,72 +97,110 @@
     let data = []; // Store the data
     let sortDirections = Array(12).fill(1); // 1 for ascending, -1 for descending
 
-    // Color values based on wind gust speed and corresponding ranges
-    const windColors = [
-      { color: "rgb(0,220,255)", min: 0, max: 0 },
-      { color: "rgb(0,220,255)", min: 0, max: 1 },
-      { color: "rgb(0,185,255)", min: 0, max: 2 },
-      { color: "rgb(0,150,255)", min: 0, max: 3 },
-      { color: "rgb(0,115,255)", min: 0, max: 4 },
-      { color: "rgb(0,90,255)", min: 0, max: 5 },
-      { color: "rgb(0,70,255)", min: 0, max: 6 },
-      { color: "rgb(0,45,255)", min: 0, max: 7 },
-      { color: "rgb(0,25,255)", min: 0, max: 8 },
-      { color: "rgb(0,0,255)", min: 0, max: 9 },
-      { color: "rgb(15,0,255)", min: 0, max: 10 },
-      { color: "rgb(45,0,255)", min: 0, max: 11 },
-      { color: "rgb(65,0,255)", min: 0, max: 12 },
-      { color: "rgb(90,0,255)", min: 0, max: 13 },
-      { color: "rgb(110,0,255)", min: 0, max: 14 },
-      { color: "rgb(135,0,255)", min: 0, max: 15 },
-      { color: "rgb(165,0,255)", min: 0, max: 16 },
-      { color: "rgb(190,0,255)", min: 0, max: 17 },
-      { color: "rgb(210,0,255)", min: 0, max: 18 },
-      { color: "rgb(225,0,255)", min: 0, max: 19 },
-      { color: "rgb(240,0,255)", min: 0, max: 20 },
-      { color: "rgb(250,0,255)", min: 0, max: 21 },
-      { color: "rgb(255,0,255)", min: 0, max: 22 },
-      { color: "rgb(255,0,245)", min: 0, max: 23 },
-      { color: "rgb(255,0,225)", min: 0, max: 24 },
-      { color: "rgb(255,0,210)", min: 0, max: 25 },
-      { color: "rgb(255,0,190)", min: 0, max: 26 },
-      { color: "rgb(255,0,165)", min: 0, max: 27 },
-      { color: "rgb(255,0,140)", min: 0, max: 28 },
-      { color: "rgb(255,0,110)", min: 0, max: 29 },
-      { color: "rgb(255,0,90)", min: 0, max: 30 },
-      { color: "rgb(255,0,70)", min: 0, max: 31 },
-      { color: "rgb(255,0,40)", min: 0, max: 32 },
-      { color: "rgb(255,0,20)", min: 0, max: 33 },
-      { color: "rgb(255,0,0)", min: 0, max: 34 },
-      { color: "rgb(240,0,0)", min: 0, max: 35 },
-      { color: "rgb(225,0,0)", min: 0, max: 36 },
-      { color: "rgb(200,0,0)", min: 0, max: 37 },
-      { color: "rgb(185,0,0)", min: 0, max: 38 },
-      { color: "rgb(160,0,0)", min: 0, max: 39 },
-      { color: "rgb(130,0,0)", min: 0, max: 40 },
-      { color: "rgb(100,0,0)", min: 0, max: 41 },
-      { color: "rgb(100,15,15)", min: 0, max: 42 },
-      { color: "rgb(95,35,30)", min: 0, max: 43 },
-      { color: "rgb(95,65,60)", min: 0, max: 44 },
-      { color: "rgb(100,90,90)", min: 0, max: 45 },
-      { color: "rgb(115,115,115)", min: 0, max: 46 },
-      { color: "rgb(140,140,140)", min: 0, max: 47 },
-      { color: "rgb(180,180,180)", min: 0, max: 48 },
-      { color: "rgb(200,200,200)", min: 0, max: 49 },
-      { color: "rgb(220,220,220)", min: 0, max: 50 },
-      // Add more color ranges as needed
+    // Color values based on temperature
+    const temperatureColors = [
+      "rgb(255,255,255)",
+      "rgb(255,245,255)",
+      "rgb(255,230,255)",
+      "rgb(255,220,255)",
+      "rgb(255,205,255)",
+      "rgb(255,190,255)",
+      "rgb(255,175,255)",
+      "rgb(255,160,255)",
+      "rgb(255,145,255)",
+      "rgb(255,135,255)",
+      "rgb(255,120,255)",
+      "rgb(255,110,255)",
+      "rgb(255,100,255)",
+      "rgb(255,90,255)",
+      "rgb(255,80,255)",
+      "rgb(255,70,255)",
+      "rgb(255,60,255)",
+      "rgb(255,50,255)",
+      "rgb(255,35,255)",
+      "rgb(255,15,255)",
+      "rgb(255,0,255)",
+      "rgb(240,0,240)",
+      "rgb(230,0,230)",
+      "rgb(220,0,220)",
+      "rgb(200,0,200)",
+      "rgb(190,0,180)",
+      "rgb(175,0,165)",
+      "rgb(160,0,150)",
+      "rgb(145,0,140)",
+      "rgb(135,0,130)",
+      "rgb(115,0,125)",
+      "rgb(90,0,115)",
+      "rgb(65,0,115)",
+      "rgb(35,0,115)",
+      "rgb(10,0,120)",
+      "rgb(0,0,128)",
+      "rgb(0,0,160)",
+      "rgb(0,0,190)",
+      "rgb(0,0,225)",
+      "rgb(0,0,255)",
+      "rgb(0,35,255)",
+      "rgb(0,65,255)",
+      "rgb(0,85,255)",
+      "rgb(0,110,255)",
+      "rgb(0,128,255)",
+      "rgb(0,145,255)",
+      "rgb(0,170,255)",
+      "rgb(0,195,255)",
+      "rgb(0,215,255)",
+      "rgb(0,230,255)",
+      "rgb(0,255,255)",
+      "rgb(0,255,128)",
+      "rgb(0,255,95)",
+      "rgb(0,255,70)",
+      "rgb(0,255,40)",
+      "rgb(0,255,0)",
+      "rgb(70,255,0)",
+      "rgb(110,255,0)",
+      "rgb(140,255,0)",
+      "rgb(165,255,0)",
+      "rgb(185,255,0)",
+      "rgb(205,255,0)",
+      "rgb(220,255,0)",
+      "rgb(235,255,0)",
+      "rgb(255,255,0)",
+      "rgb(255,240,0)",
+      "rgb(255,220,0)",
+      "rgb(255,195,0)",
+      "rgb(255,165,0)",
+      "rgb(255,140,0)",
+      "rgb(255,120,0)",
+      "rgb(255,100,0)",
+      "rgb(255,80,0)",
+      "rgb(255,60,0)",
+      "rgb(255,30,0)",
+      "rgb(255,0,0)",
+      "rgb(245,0,0)",
+      "rgb(235,0,0)",
+      "rgb(220,0,0)",
+      "rgb(205,0,0)",
+      "rgb(195,0,0)",
+      "rgb(180,0,0)",
+      "rgb(165,0,0)",
+      "rgb(150,0,0)",
+      "rgb(135,0,0)",
+      "rgb(120,0,0)",
+      "rgb(110,0,0)",
+      "rgb(100,0,0)",
+      "rgb(90,0,0)",
+      "rgb(75,0,0)",
+      "rgb(60,0,0)",
+      "rgb(60,20,20)",
+      "rgb(60,40,40)",
+      "rgb(60,60,60)",
+      "rgb(80,80,80)",
+      "rgb(100,100,100)",
+      "rgb(120,120,120)",
+      "rgb(140,140,140)",
+      "rgb(160,160,160)",
+      "rgb(180,180,180)",
+      // ... Add all the color values here
     ];
-
-    // Function to find the color based on wind gust speed
-    function getColorByWindSpeed(windSpeed) {
-      for (const range of windColors) {
-        if (windSpeed >= range.min && windSpeed < range.max) {
-          return range.color;
-        }
-      }
-      // If no range matches, return a default color
-      return "rgb(255,255,255)";
-    }
 
     // Fetch data from the URL
     fetch("https://videscentrs.lvgmc.lv/data/weather_monitoring_data_raw")
@@ -266,24 +288,29 @@
 
       for (const stationData of filteredData) {
         const row = document.createElement("tr");
-        const temperature = parseFloat(stationData.veja_brazmas);
+        const temperature = parseFloat(stationData.temperatura);
 
         // Get the station name from the mapping
         const stationName = stationNameMapping[stationData.stacijas_kods] || stationData.stacijas_kods;
 
-        // Find the color based on wind gust speed
-        const cellColor = getColorByWindSpeed(temperature);
+        // Find the color based on temperature
+        let colorIndex = Math.round(temperature + 50); // Adjust for the temperature range
+        colorIndex = Math.min(
+          Math.max(colorIndex, 0),
+          temperatureColors.length - 1
+        ); // Ensure it's within bounds
 
         row.innerHTML = `
-      <td>${stationName}</td>
-      <td>${stationData.laiks}</td>
-      <td style="background-color: ${cellColor};">${stationData.veja_brazmas}</td>
-    `;
+              <td>${stationName}</td>
+              <td>${stationData.laiks}</td>
+              <td style="background-color: ${temperatureColors[colorIndex]};">${stationData.temperatura}</td>
+          `;
         tbody.appendChild(row);
       }
     }
 
-    // Function to sort the table by column
+
+
     function sortTable(columnIndex) {
       if (columnIndex === 1) {
         return; // Do not sort the "Time" column
@@ -293,12 +320,28 @@
       sortDirections[columnIndex] *= -1;
 
       data.sort((a, b) => {
-        // Sort by numeric values based on sorting direction
-        return (
-          sortDirections[columnIndex] *
-          (parseFloat(a[Object.keys(a)[columnIndex]]) -
-            parseFloat(b[Object.keys(b)[columnIndex]]))
-        );
+        if (columnIndex === 2) {
+          // Sort based on the temperature column
+          const tempA = parseFloat(a.temperatura);
+          const tempB = parseFloat(b.temperatura);
+
+          if (a.stacijas_kods === "DAUGAVGR") {
+            return sortDirections[columnIndex] * (tempA - tempB);
+          } else if (b.stacijas_kods === "DAUGAVGR") {
+            return sortDirections[columnIndex] * (tempA - tempB);
+          } else {
+            return sortDirections[columnIndex] * (tempA - tempB);
+          }
+        } else {
+          // Sort based on station names or other columns
+          if (a.stacijas_kods === "DAUGAVGR") {
+            return -1; // "Daugavgrīva" is always first
+          } else if (b.stacijas_kods === "DAUGAVGR") {
+            return 1; // "Daugavgrīva" is always first
+          } else {
+            return sortDirections[columnIndex] * a.stacijas_kods.localeCompare(b.stacijas_kods);
+          }
+        }
       });
 
       renderTable(data);

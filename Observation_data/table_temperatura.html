@@ -11,18 +11,23 @@
       color: white;
       font-family: 'Kumbh Sans', sans-serif;
       box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-      table-layout: fixed; /* Added for consistency in column width */
+      table-layout: fixed;
+      /* Added for consistency in column width */
     }
 
     th,
     td {
-       border: 1px solid #ddd;
-  text-align: center;
-  padding: 8px;
-  max-width: 33%; /* Set a maximum width for columns */
-  box-sizing: border-box;
-  overflow: hidden;
-  white-space: normal; /* Allow text to wrap */
+      border: 1px solid #ddd;
+      text-align: center;
+      padding: 8px;
+      max-width: 33%;
+      /* Set a maximum width for columns */
+      box-sizing: border-box;
+      overflow: hidden;
+      white-space: normal;
+      /* Allow text to wrap */
+      word-wrap: break-word;
+      /* Added to ensure long words are wrapped */
     }
 
     th {
@@ -30,7 +35,6 @@
       position: relative;
       cursor: pointer;
       color: white;
-      /* Text color for header cells */
     }
 
     tbody tr:nth-child(odd) {
@@ -53,7 +57,6 @@
 
     .sort-button span {
       display: none;
-      /* Hide the sorting text */
     }
 
     tr:nth-child(even) {
@@ -65,12 +68,20 @@
     }
 
     /* Responsive styles */
-@media (max-width: 767px) {
-  th,
-  td {
-    max-width: none; /* Remove max-width for small screens */
-  }
-}
+    @media (max-width: 767px) {
+
+      th,
+      td {
+        max-width: none;
+        font-size: 10px;
+        /* Adjust the font size as needed for smaller screens */
+      }
+
+      tr {
+        line-height: 1.0;
+        /* Adjust the line height for smaller screens */
+      }
+    }
   </style>
 </head>
 
