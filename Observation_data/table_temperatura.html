@@ -328,34 +328,27 @@
 
 
     function sortTable(columnIndex) {
-      if (columnIndex === 1) {
-        return; // Do not sort the "Time" column
-      }
+      if (columnIndex === 2) {
+        // Only sort when the column index corresponds to the "Temperatūra" column
+        // Toggle sorting direction
+        sortDirections[columnIndex] *= -1;
 
-      // Toggle sorting direction
-      sortDirections[columnIndex] *= -1;
-
-      data.sort((a, b) => {
-        if (columnIndex === 2) {
-          // Sort based on the temperature column
-          const tamperaturaA = parseFloat(a.temperatura);
-          const temperaturaB = parseFloat(b.temperatura);
+        data.sort((a, b) => {
+          const temperatureA = parseFloat(a.temperatura);
+          const temperatureB = parseFloat(b.temperatura);
 
           // Handle NaN values by placing them at the end
-          if (isNaN(tamperaturaA)) return 1;
-          if (isNaN(temperaturaB)) return -1;
+          if (isNaN(temperatureA)) return 1;
+          if (isNaN(temperatureB)) return -1;
 
-          console.log(`Station A: ${a.stacijas_kods}, Temperature A: ${tamperaturaA}`);
-          console.log(`Station B: ${b.stacijas_kods}, Temperature B: ${temperaturaB}`);
+          console.log(`Station A: ${a.stacijas_kods}, Temperature A: ${temperatureA}`);
+          console.log(`Station B: ${b.stacijas_kods}, Temperature B: ${temperatureB}`);
 
-          return sortDirections[columnIndex] * (tamperaturaA - temperaturaB);
-        } else {
-          // Sort based on station names or other columns
-          return sortDirections[columnIndex] * a.stacijas_kods.localeCompare(b.stacijas_kods);
-        }
-      });
+          return sortDirections[columnIndex] * (temperatureA - temperatureB);
+        });
 
-      renderTable(data);
+        renderTable(data);
+      }
     }
   </script>
 </body>

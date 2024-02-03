@@ -282,12 +282,51 @@
             }
           },
           ...axisStyles,
-          plotLines: [{
-            value: 0,
-            color: 'rgba(255, 255, 255, 1.0)',
-            width: 3,
-            zIndex: 1,
-          }],
+          plotLines: [
+            {
+              value: 0,
+              color: 'rgba(255, 255, 255, 1.0)',
+              width: 3,
+              zIndex: 1,
+            },
+            {
+              value: -30,
+              color: 'rgba(255, 0, 0, 1.0)', // Customize the color for the second plot line
+              width: 3,
+              zIndex: 2,
+            },
+            {
+              value: -25,
+              color: 'rgba(255, 128, 0, 1.0)', // Customize the color for the second plot line
+              width: 3,
+              zIndex: 2,
+            },
+            {
+              value: -20,
+              color: 'rgba(255, 255, 0, 1.0)', // Customize the color for the second plot line
+              width: 3,
+              zIndex: 2,
+            },
+            {
+              value: 27,
+              color: 'rgba(255, 255, 0, 1.0)', // Customize the color for the second plot line
+              width: 3,
+              zIndex: 2,
+            },
+            {
+              value: 31,
+              color: 'rgba(255, 128, 0, 1.0)', // Customize the color for the second plot line
+              width: 3,
+              zIndex: 2,
+            },
+            {
+              value: 35,
+              color: 'rgba(255, 0, 0, 1.0)', // Customize the color for the second plot line
+              width: 3,
+              zIndex: 2,
+            },
+            // Add more plot lines as needed
+          ],
         },
         series: seriesData.map((entry, index) => ({
           ...entry,
