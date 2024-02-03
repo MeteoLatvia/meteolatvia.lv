@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Add a polygon to a map using a GeoJSON source</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWV0ZW9sYXR2aWEiLCJhIjoiY2xjcWF3ajRkMDQ0NDNucDE4aTdkZ3h2NSJ9.L0yigObs_66n45KR3oLfUQ';
+    const map = new mapboxgl.Map({
+      container: 'map', // container ID
+      // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+      style: 'mapbox://styles/mapbox/dark-v11', // style URL
+      center: [24.50, 56.50], // starting position
+      zoom: 5 // starting zoom
+    });
+
+
+
+
+
+
+
+
+
+    // LEVEL 50%
+    map.on('load', () => {
+      // Add a data source containing GeoJSON data.
+      map.addSource('LVL50%_1', {
+        'type': 'geojson',
+        'data': {
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Polygon',
+            // These coordinates outline LVL1_1.
+            'coordinates': [
+              [
+                [-10.8, 37.5],
+                [-6.6, 38.7],
+                [-2.7, 39.8],
+                [-1.0, 39.8],
+                [2.3, 39.4],
+                [3.6, 39.0],
+                [3.4, 38.5],
+                [2.7, 38.3],
+                [1.3, 37.9],
+                [-1.3, 37.8],
+                [-2.5, 37.0],
+                [-3.9, 35.8],
+                [-3.7, 34.3],
+                [-9.3, 34.3],
+                [-11.0, 34.3],
+                [-10.8, 37.5]
+              ]
+            ]
+          }
+        }
+      });
+
+      // Add a new layer to visualize the polygon.
+      map.addLayer({
+        'id': 'LVL50%_1_fill',
+        'type': 'fill',
+        'source': 'LVL50%_1', // reference the data source
+        'layout': {},
+        'paint': {
+          'fill-color': '#ffff00', // blue color fill
+          'fill-opacity': 0.0
+        }
+      });
+      // Add a black outline around the polygon.
+      map.addLayer({
+        'id': 'LVL50%_1_outline',
+        'type': 'line',
+        'source': 'LVL50%_1',
+        'layout': {},
+        'paint': {
+          'line-color': '#ffff00',
+          'line-width': 3
+        }
+      });
+    });
+
+
+
+
+
+
+
+
+
+
+    // LEVEL 1
+    map.on('load', () => {
+      // Add a data source containing GeoJSON data.
+      map.addSource('LVL1_1', {
+        'type': 'geojson',
+        'data': {
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Polygon',
+            // These coordinates outline LVL1_1.
+            'coordinates': [
+              [
+                [35.3, 40.4],
+                [35.5, 39.8],
+                [35.7, 39.1],
+                [35.0, 38.4],
+                [33.3, 38.0],
+                [29.1, 38.5],
+                [27.2, 38.7],
+                [26.4, 38.9],
+                [26.0, 39.4],
+                [26.0, 40.0],
+                [26.8, 41.1],
+                [27.5, 41.5],
+                [30.1, 41.1],
+                [31.4, 40.8],
+                [34.7, 40.6],
+                [35.3, 40.4]
+              ]
+            ]
+          }
+        }
+      });
+
+      // Add a new layer to visualize the polygon.
+      map.addLayer({
+        'id': 'LVL1_1_fill',
+        'type': 'fill',
+        'source': 'LVL1_1', // reference the data source
+        'layout': {},
+        'paint': {
+          'fill-color': '#ff5c00', // blue color fill
+          'fill-opacity': 0.0
+        }
+      });
+      // Add a black outline around the polygon.
+      map.addLayer({
+        'id': 'LVL1_1_outline',
+        'type': 'line',
+        'source': 'LVL1_1',
+        'layout': {},
+        'paint': {
+          'line-color': '#ff5c00',
+          'line-width': 3
+        }
+      });
+    });
+
+
+
+
+
+
+
+
+
+
+    // LEVEL 2
+    map.on('load', () => {
+      // Add a data source containing GeoJSON data.
+      map.addSource('LVL2_1', {
+        'type': 'geojson',
+        'data': {
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Polygon',
+            // These coordinates outline LVL1_1.
+            'coordinates': [
+              [
+                [34.5, 39.9],
+                [34.5, 39.2],
+                [34.4, 38.8],
+                [33.4, 38.5],
+                [32.7, 38.7],
+                [32.0, 39.1],
+                [32.0, 39.6],
+                [32.7, 40.1],
+                [33.7, 40.2],
+                [34.5, 39.9]
+              ]
+            ]
+          }
+        }
+      });
+
+      // Add a new layer to visualize the polygon.
+      map.addLayer({
+        'id': 'LVL2_1_fill',
+        'type': 'fill',
+        'source': 'LVL2_1', // reference the data source
+        'layout': {},
+        'paint': {
+          'fill-color': '#ff0000', // blue color fill
+          'fill-opacity': 0.0
+        }
+      });
+      // Add a black outline around the polygon.
+      map.addLayer({
+        'id': 'LVL2_1_outline',
+        'type': 'line',
+        'source': 'LVL2_1',
+        'layout': {},
+        'paint': {
+          'line-color': '#ff0000',
+          'line-width': 3
+        }
+      });
+    });
+
+
+
+
+
+
+
+
+
+    // LEVEL 3
+    map.on('load', () => {
+      // Add a data source containing GeoJSON data.
+      map.addSource('LVL3_1', {
+        'type': 'geojson',
+        'data': {
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Polygon',
+            // These coordinates outline LVL1_1.
+            'coordinates': [
+              [
+                [34.5, 39.9],
+                [34.5, 39.2],
+                [34.4, 38.8],
+                [33.4, 38.5],
+                [32.7, 38.7],
+                [32.0, 39.1],
+                [32.0, 39.6],
+                [32.7, 40.1],
+                [33.7, 40.2],
+                [34.5, 39.9]
+              ]
+            ]
+          }
+        }
+      });
+
+      // Add a new layer to visualize the polygon.
+      map.addLayer({
+        'id': 'LVL3_1_fill',
+        'type': 'fill',
+        'source': 'LVL3_1', // reference the data source
+        'layout': {},
+        'paint': {
+          'fill-color': '#ff00ff', // blue color fill
+          'fill-opacity': 0.0
+        }
+      });
+      // Add a black outline around the polygon.
+      map.addLayer({
+        'id': 'LVL3_1_outline',
+        'type': 'line',
+        'source': 'LVL3_1',
+        'layout': {},
+        'paint': {
+          'line-color': '#ff00ff',
+          'line-width': 3
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

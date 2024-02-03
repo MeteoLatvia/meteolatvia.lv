@@ -144,24 +144,23 @@
       }
     }
 
-    .noverojumu_karte {
-  border-radius: 4px !important;
-  width: 80% !important;
-  height: 800px !important;
-  display: block !important;
-  margin: 0 auto !important; /* Center horizontally */
-}
+    .noverojumu_tabula_standarta {
+      max-width: 100%;
+      border: none;
+      border-radius: 4px;
+      margin: 0px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.0);
+      height: 970px;
+      margin-left: 11%;
+    }
 
-@media (max-width: 767px) {
-  .noverojumu_karte {
-    height: 700px !important;
-    width: 140% !important; /* Set width to 100% to make it responsive */
-    max-width: 140% !important;
-    display: block !important;
-    margin: 10% auto !important; /* Adjust the vertical margin to center vertically */
-    margin-left: -20% !important;
-  }
-}
+    @media (max-width: 767px) {
+      .noverojumu_tabula_standarta {
+        height: 1470px;
+        width: 150%;
+        margin-left: 0%;
+      }
+    }
   </style>
 </head>
 
@@ -217,7 +216,7 @@
     <h2>Vēja brāzmas (m/s)</h2>
     <div class="noverojumu_karte_LVGMC">
       <iframe src="map_vejabrazmas.html" width="1280" height="720" class="noverojumu_karte"></iframe>
-      <div class="color-scale">
+      <!--<div class="color-scale">
         <div class="color-gradient"></div>
         <div class="color-values">
           <span>5 m/s</span>
@@ -225,12 +224,13 @@
           <span>20 m/s</span>
           <span>30 m/s</span>
           <span>40 m/s</span>
-        </div>
-      </div>
-      <iframe src="Observation_data/table_vejabrazmas.html" width="1280" height="980" class="noverojumu_tabula_standarta"></iframe>
-      <iframe src="Observation_data/chart_vejabrazmas.html" width="1280" height="420" class="noverojumu_grafiks"></iframe>
-      <script src="app.js"></script>
+        </div>-->
     </div>
+    <iframe src="Observation_data/table_vejabrazmas.html" width="1280" height="980"
+      class="noverojumu_tabula_standarta"></iframe>
+    <iframe src="Observation_data/chart_vejabrazmas.html" width="1280" height="420" class="noverojumu_grafiks"></iframe>
+    <script src="app.js"></script>
+  </div>
   </div>
 
   <script src="app.js"></script>
