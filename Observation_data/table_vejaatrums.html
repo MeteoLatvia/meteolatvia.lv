@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>table_videja_veja_atrums</title>
+  <title>Vidēja vēja ātruma tabula</title>
   <style>
     table {
       width: 100%;
@@ -28,6 +28,7 @@
       /* Allow text to wrap */
       word-wrap: break-word;
       /* Added to ensure long words are wrapped */
+      text-shadow: 0px 0px 3px rgba(0, 0, 0, 1.0), 0px 0px 3px rgba(0, 0, 0, 1.0), 0px 0px 3px rgba(0, 0, 0, 1.0);
     }
 
     th {
@@ -294,11 +295,18 @@
 
       data.sort((a, b) => {
         // Sort by numeric values based on sorting direction
-        return (
-          sortDirections[columnIndex] *
-          (parseFloat(a[Object.keys(a)[columnIndex]]) -
-            parseFloat(b[Object.keys(b)[columnIndex]]))
-        );
+        const columnKey = Object.keys(a)[columnIndex];
+        const valueA = parseFloat(a[columnKey]);
+        const valueB = parseFloat(b[columnKey]);
+
+        // Handle NaN values by placing them at the end
+        if (isNaN(valueA)) return 1;
+        if (isNaN(valueB)) return -1;
+
+        console.log(`Station A: ${a.stacijas_kods}, Value A: ${valueA}`);
+        console.log(`Station B: ${b.stacijas_kods}, Value B: ${valueB}`);
+
+        return sortDirections[columnIndex] * (valueA - valueB);
       });
 
       renderTable(data);

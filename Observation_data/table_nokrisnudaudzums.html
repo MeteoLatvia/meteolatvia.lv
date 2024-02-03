@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Weather Station Data</title>
+  <title>Nokrišņu daudzuma tabula</title>
   <style>
     table {
       width: 100%;
@@ -28,6 +28,7 @@
       /* Allow text to wrap */
       word-wrap: break-word;
       /* Added to ensure long words are wrapped */
+      text-shadow: 0px 0px 3px rgba(0, 0, 0, 1.0), 0px 0px 3px rgba(0, 0, 0, 1.0), 0px 0px 3px rgba(0, 0, 0, 1.0);
     }
 
     th {
@@ -115,67 +116,67 @@
 
     // Color values based on wind gust speed and corresponding ranges
     const windColors = [
-      { color: "rgb(200,200,200)", min: 0, max: 0.5 },
-      { color: "rgb(0,255,0)", min: 0, max: 1.0 },
-      { color: "rgb(0,244,0)", min: 0, max: 1.5 },
-      { color: "rgb(0,220,0)", min: 0, max: 2.0 },
-      { color: "rgb(0,204,0)", min: 0, max: 2.5 },
-      { color: "rgb(0,187,0)", min: 0, max: 3.0 },
-      { color: "rgb(0,171,0)", min: 0, max: 3.5 },
-      { color: "rgb(0,156,0)", min: 0, max: 4.0 },
-      { color: "rgb(0,141,0)", min: 0, max: 4.5 },
-      { color: "rgb(0,128,0)", min: 0, max: 5.0 },
-      { color: "rgb(0,116,0)", min: 0, max: 5.5 },
-      { color: "rgb(0,104,0)", min: 0, max: 6.0 },
-      { color: "rgb(0,90,0)", min: 0, max: 6.5 },
-      { color: "rgb(0,76,0)", min: 0, max: 7.0 },
-      { color: "rgb(0,63,0)", min: 0, max: 7.5 },
-      { color: "rgb(0,52,0)", min: 0, max: 8.0 },
-      { color: "rgb(0,44,0)", min: 0, max: 8.5 },
-      { color: "rgb(0,38,0)", min: 0, max: 9.0 },
-      { color: "rgb(0,30,0)", min: 0, max: 9.5 },
-      { color: "rgb(0,24,0)", min: 0, max: 10.0 },
-      { color: "rgb(255,255,0)", min: 0, max: 10.5 },
-      { color: "rgb(255,248,0)", min: 0, max: 11.0 },
-      { color: "rgb(255,235,0)", min: 0, max: 11.5 },
-      { color: "rgb(255,212,0)", min: 0, max: 12.0 },
-      { color: "rgb(255,186,0)", min: 0, max: 12.5 },
-      { color: "rgb(255,160,0)", min: 0, max: 13.0 },
-      { color: "rgb(255,135,0)", min: 0, max: 13.5 },
-      { color: "rgb(255,121,0)", min: 0, max: 14.0 },
-      { color: "rgb(255,106,0)", min: 0, max: 14.5 },
-      { color: "rgb(255,93,0)", min: 0, max: 15.0 },
-      { color: "rgb(255,78,0)", min: 0, max: 15.5 },
-      { color: "rgb(255,63,0)", min: 0, max: 16.0 },
-      { color: "rgb(255,45,0)", min: 0, max: 16.5 },
-      { color: "rgb(255,23,0)", min: 0, max: 17.0 },
-      { color: "rgb(255,0,0)", min: 0, max: 17.5 },
-      { color: "rgb(237,0,0)", min: 0, max: 18.0 },
-      { color: "rgb(218,0,0)", min: 0, max: 18.5 },
-      { color: "rgb(197,0,0)", min: 0, max: 19.0 },
-      { color: "rgb(176,0,0)", min: 0, max: 19.5 },
-      { color: "rgb(155,0,0)", min: 0, max: 20.0 },
-      { color: "rgb(137,0,0)", min: 0, max: 20.5 },
-      { color: "rgb(124,0,0)", min: 0, max: 21.0 },
-      { color: "rgb(114,0,0)", min: 0, max: 21.5 },
-      { color: "rgb(102,0,0)", min: 0, max: 22.0 },
-      { color: "rgb(96,0,0)", min: 0, max: 22.5 },
-      { color: "rgb(88,0,0)", min: 0, max: 23.0 },
-      { color: "rgb(80,0,0)", min: 0, max: 23.5 },
-      { color: "rgb(72,0,0)", min: 0, max: 24.0 },
-      { color: "rgb(64,0,0)", min: 0, max: 24.5 },
-      { color: "rgb(54,0,0)", min: 0, max: 25.0 },
-      { color: "rgb(54,0,54)", min: 0, max: 25.5 },
-      { color: "rgb(64,0,64)", min: 0, max: 26.0 },
-      { color: "rgb(71,0,71)", min: 0, max: 26.5 },
-      { color: "rgb(81,0,81)", min: 0, max: 27.0 },
-      { color: "rgb(93,0,93)", min: 0, max: 27.5 },
-      { color: "rgb(107,0,112)", min: 0, max: 28.0 },
-      { color: "rgb(122,0,122)", min: 0, max: 28.5 },
-      { color: "rgb(140,0,140)", min: 0, max: 29.0 },
-      { color: "rgb(156,0,156)", min: 0, max: 29.5 },
-      { color: "rgb(171,0,171)", min: 0, max: 30.0 },
-      { color: "rgb(190,190,190)", min: 0, max: 30.0 },
+      { color: "rgb(200,200,200)", min: 0, max: 0.1 },
+      { color: "rgb(0,255,0)", min: 0, max: 0.2 },
+      { color: "rgb(0,244,0)", min: 0, max: 0.3 },
+      { color: "rgb(0,220,0)", min: 0, max: 0.4 },
+      { color: "rgb(0,204,0)", min: 0, max: 0.5 },
+      { color: "rgb(0,187,0)", min: 0, max: 0.6 },
+      { color: "rgb(0,171,0)", min: 0, max: 0.7 },
+      { color: "rgb(0,156,0)", min: 0, max: 0.8 },
+      { color: "rgb(0,141,0)", min: 0, max: 0.9 },
+      { color: "rgb(0,128,0)", min: 0, max: 1.0 },
+      { color: "rgb(0,116,0)", min: 0, max: 1.2 },
+      { color: "rgb(0,104,0)", min: 0, max: 1.4 },
+      { color: "rgb(0,90,0)", min: 0, max: 1.6 },
+      { color: "rgb(0,76,0)", min: 0, max: 1.8 },
+      { color: "rgb(0,63,0)", min: 0, max: 2.0 },
+      { color: "rgb(0,52,0)", min: 0, max: 2.2 },
+      { color: "rgb(0,44,0)", min: 0, max: 2.4 },
+      { color: "rgb(0,38,0)", min: 0, max: 2.6 },
+      { color: "rgb(0,30,0)", min: 0, max: 2.8 },
+      { color: "rgb(0,24,0)", min: 0, max: 3.0 },
+      { color: "rgb(255,255,0)", min: 0, max: 3.3 },
+      { color: "rgb(255,248,0)", min: 0, max: 3.6 },
+      { color: "rgb(255,235,0)", min: 0, max: 3.9 },
+      { color: "rgb(255,212,0)", min: 0, max: 4.2 },
+      { color: "rgb(255,186,0)", min: 0, max: 4.5 },
+      { color: "rgb(255,160,0)", min: 0, max: 4.8 },
+      { color: "rgb(255,135,0)", min: 0, max: 5.1 },
+      { color: "rgb(255,121,0)", min: 0, max: 5.4 },
+      { color: "rgb(255,106,0)", min: 0, max: 5.7 },
+      { color: "rgb(255,93,0)", min: 0, max: 6.0 },
+      { color: "rgb(255,78,0)", min: 0, max: 6.4 },
+      { color: "rgb(255,63,0)", min: 0, max: 6.8 },
+      { color: "rgb(255,45,0)", min: 0, max: 7.2 },
+      { color: "rgb(255,23,0)", min: 0, max: 7.6 },
+      { color: "rgb(255,0,0)", min: 0, max: 8.0 },
+      { color: "rgb(237,0,0)", min: 0, max: 8.4 },
+      { color: "rgb(218,0,0)", min: 0, max: 8.8 },
+      { color: "rgb(197,0,0)", min: 0, max: 9.2 },
+      { color: "rgb(176,0,0)", min: 0, max: 9.5 },
+      { color: "rgb(155,0,0)", min: 0, max: 10.0 },
+      { color: "rgb(137,0,0)", min: 0, max: 10.5 },
+      { color: "rgb(124,0,0)", min: 0, max: 11.0 },
+      { color: "rgb(114,0,0)", min: 0, max: 11.5 },
+      { color: "rgb(102,0,0)", min: 0, max: 12.0 },
+      { color: "rgb(96,0,0)", min: 0, max: 12.5 },
+      { color: "rgb(88,0,0)", min: 0, max: 13.0 },
+      { color: "rgb(80,0,0)", min: 0, max: 14.0 },
+      { color: "rgb(72,0,0)", min: 0, max: 15.0 },
+      { color: "rgb(64,0,0)", min: 0, max: 16.0 },
+      { color: "rgb(54,0,0)", min: 0, max: 17.0 },
+      { color: "rgb(54,0,54)", min: 0, max: 18.0 },
+      { color: "rgb(64,0,64)", min: 0, max: 19.0 },
+      { color: "rgb(71,0,71)", min: 0, max: 20.0 },
+      { color: "rgb(81,0,81)", min: 0, max: 25.0 },
+      { color: "rgb(93,0,93)", min: 0, max: 30.0 },
+      { color: "rgb(107,0,112)", min: 0, max: 35.0 },
+      { color: "rgb(122,0,122)", min: 0, max: 40.0 },
+      { color: "rgb(140,0,140)", min: 0, max: 45.0 },
+      { color: "rgb(156,0,156)", min: 0, max: 50.5 },
+      { color: "rgb(171,0,171)", min: 0, max: 55.0 },
+      { color: "rgb(190,190,190)", min: 0, max: 60.0 },
       // Add more color ranges as needed
     ];
 
@@ -274,7 +275,7 @@
       // Filter the data to exclude stations in the 'excludedStations' array
       const filteredData = data.filter((stationData) => !excludedStations.includes(stationData.stacijas_kods));
 
-      for (const stationData of data) {
+      for (const stationData of filteredData) {  // Change 'data' to 'filteredData' here
         const row = document.createElement("tr");
         const windSpeed = parseFloat(stationData.nokrisnu_daudzums);
 
@@ -285,10 +286,10 @@
         const cellColor = getColorByWindSpeed(windSpeed);
 
         row.innerHTML = `
-                    <td>${stationData.stacijas_kods}</td>
-                    <td>${stationData.laiks}</td>
-                    <td style="background-color: ${cellColor};">${stationData.nokrisnu_daudzums}</td>
-                `;
+                <td>${stationName}</td>
+                <td>${stationData.laiks}</td>
+                <td style="background-color: ${cellColor};">${stationData.nokrisnu_daudzums}</td>
+            `;
         tbody.appendChild(row);
       }
     }
@@ -304,11 +305,18 @@
 
       data.sort((a, b) => {
         // Sort by numeric values based on sorting direction
-        return (
-          sortDirections[columnIndex] *
-          (parseFloat(a[Object.keys(a)[columnIndex]]) -
-            parseFloat(b[Object.keys(b)[columnIndex]]))
-        );
+        const columnKey = 'nokrisnu_daudzums'; // consistent property key
+        const valueA = parseFloat(a[columnKey]);
+        const valueB = parseFloat(b[columnKey]);
+
+        // Handle NaN values by placing them at the end
+        if (isNaN(valueA)) return 1;
+        if (isNaN(valueB)) return -1;
+
+        console.log(`Station A: ${a.stacijas_kods}, Value A: ${valueA}`);
+        console.log(`Station B: ${b.stacijas_kods}, Value B: ${valueB}`);
+
+        return sortDirections[columnIndex] * (valueA - valueB);
       });
 
       renderTable(data);

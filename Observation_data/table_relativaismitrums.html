@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>table_relativaismitrums</title>
+  <title>Relatīvā mitruma tabula</title>
   <style>
     table {
       width: 100%;
@@ -28,6 +28,7 @@
       /* Allow text to wrap */
       word-wrap: break-word;
       /* Added to ensure long words are wrapped */
+      text-shadow: 0px 0px 3px rgba(0, 0, 0, 1.0), 0px 0px 3px rgba(0, 0, 0, 1.0), 0px 0px 3px rgba(0, 0, 0, 1.0);
     }
 
     th {
@@ -234,9 +235,9 @@
         // Get the station name from the mapping
         const stationName = stationNameMapping[stationData.stacijas_kods] || stationData.stacijas_kods;
 
-// Find the color based on temperature
-let colorIndex = Math.floor((temperature / 100) * temperatureColors.length);
-colorIndex = Math.min(Math.max(colorIndex, 0), temperatureColors.length - 1);
+        // Find the color based on temperature
+        let colorIndex = Math.floor((temperature / 100) * temperatureColors.length);
+        colorIndex = Math.min(Math.max(colorIndex, 0), temperatureColors.length - 1);
 
         row.innerHTML = `
               <td>${stationName}</td>
@@ -249,6 +250,7 @@ colorIndex = Math.min(Math.max(colorIndex, 0), temperatureColors.length - 1);
 
 
 
+    // Function to sort the table by column
     function sortTable(columnIndex) {
       if (columnIndex === 1) {
         return; // Do not sort the "Time" column
@@ -258,28 +260,19 @@ colorIndex = Math.min(Math.max(colorIndex, 0), temperatureColors.length - 1);
       sortDirections[columnIndex] *= -1;
 
       data.sort((a, b) => {
-        if (columnIndex === 2) {
-          // Sort based on the temperature column
-          const tempA = parseFloat(a.relativais_mitrums);
-          const tempB = parseFloat(b.relativais_mitrums);
+        // Sort by numeric values based on sorting direction
+        const columnKey = 'relativais_mitrums'; // consistent property key
+        const valueA = parseFloat(a[columnKey]);
+        const valueB = parseFloat(b[columnKey]);
 
-          if (a.stacijas_kods === "DAUGAVGR") {
-            return sortDirections[columnIndex] * (tempA - tempB);
-          } else if (b.stacijas_kods === "DAUGAVGR") {
-            return sortDirections[columnIndex] * (tempA - tempB);
-          } else {
-            return sortDirections[columnIndex] * (tempA - tempB);
-          }
-        } else {
-          // Sort based on station names or other columns
-          if (a.stacijas_kods === "DAUGAVGR") {
-            return -1; // "Daugavgrīva" is always first
-          } else if (b.stacijas_kods === "DAUGAVGR") {
-            return 1; // "Daugavgrīva" is always first
-          } else {
-            return sortDirections[columnIndex] * a.stacijas_kods.localeCompare(b.stacijas_kods);
-          }
-        }
+        // Handle NaN values by placing them at the end
+        if (isNaN(valueA)) return 1;
+        if (isNaN(valueB)) return -1;
+
+        console.log(`Station A: ${a.stacijas_kods}, Value A: ${valueA}`);
+        console.log(`Station B: ${b.stacijas_kods}, Value B: ${valueB}`);
+
+        return sortDirections[columnIndex] * (valueA - valueB);
       });
 
       renderTable(data);
