@@ -166,31 +166,21 @@
   <!-- Load the navbar using JavaScript -->
   <script>
     function includeHTML() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("navbar-placeholder").innerHTML = this.responseText;
+      fetch("navbar.html")
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.text();
+        })
+        .then(html => {
+          document.getElementById("navbar-placeholder").innerHTML = html;
 
           // Call the function to initialize the mobile menu after loading the navbar
           initMobileMenu();
-        }
-      };
-      xhttp.open("GET", "navbar.html", true);
-      xhttp.send();
+        })
+        .catch(error => console.error("Error fetching HTML:", error));
     }
-
-    function initMobileMenu() {
-      var mobileMenuButton = document.getElementById("mobile-menu");
-      var navbarMenu = document.querySelector(".navbar__menu");
-
-      mobileMenuButton.addEventListener("click", function () {
-        navbarMenu.classList.toggle("active");
-      });
-    }
-
-    window.onload = function () {
-      includeHTML();
-    };
   </script>
 
   <!-- Observation map Section -->
