@@ -25,9 +25,11 @@
       font-size: 16px;
       font-weight: 700;
       font-family: Arial, Helvetica, sans-serif;
+      color: rgb(255, 255, 255);
+      text-shadow: 0px 0px 3px rgba(0, 0, 0, 1.0), 0px 0px 3px rgba(0, 0, 0, 1.0), 0px 0px 3px rgba(0, 0, 0, 1.0);
       background-color: white;
-      padding: 10px;
-      border-radius: 5px;
+      padding: 8px;
+      border-radius: 4px;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     }
 
@@ -43,25 +45,61 @@
       margin-right: 5px;
     }
 
-    .controls {
-      position: absolute;
-      top: 10px;
-      left: 10px;
+    #toggleMenuButton {
+      position: fixed;
+      top: 185px;
+      right: 8px;
       z-index: 2;
-      background-color: white;
+      background-color: rgb(255, 255, 255);
+      border-radius: 4px;
+      padding: 8px;
+    }
+
+    #menu {
+      position: fixed;
+      top: 185px;
+      right: 50px;
+      z-index: 2;
+      background-color: rgb(255, 255, 255);
       padding: 10px;
       border-radius: 5px;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      display: none;
+    }
+
+    @media screen and (max-width: 500px) {
+      #toggleMenuButton {
+        position: absolute;
+        top: 22.0%;
+        left: 89.6%;
+        z-index: 2;
+        background-color: rgb(255, 255, 255);
+        border-radius: 4px;
+        padding: 8px;
+      }
+
+      #menu {
+        position: absolute;
+        top: 19.7%;
+        left: 37.9%;
+        z-index: 2;
+        background-color: rgb(255, 255, 255);
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        display: none;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div id="map"></div>
+  <!-- Add a button to toggle the menu -->
+  <button id="toggleMenuButton"><i class="fas fa-bars"></i></button>
 
-  <!-- Controls for toggling markers -->
-  <div class="controls">
+  <!-- Controls for toggling markers (wrapped in a div with an id) -->
+  <div id="menu" class="controls">
     <h3>Parametri</h3>
     <label>
       <input type="checkbox" id="temperatureCheckbox"> Temperatūra
@@ -103,8 +141,33 @@
       <input type="checkbox" id="uvIndexCheckbox"> UV indekss
     </label>
   </div>
+  <!-- ... (rest of your controls) ... -->
+  </div>
+
+  <div id="map"></div>
 
   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Get references to the button and menu elements
+      var toggleMenuButton = document.getElementById("toggleMenuButton");
+      var menu = document.getElementById("menu");
+
+      // Initially hide the menu
+      menu.style.display = "none";
+
+      // Add a click event listener to the button
+      toggleMenuButton.addEventListener("click", function () {
+        // Toggle the visibility of the menu
+        if (menu.style.display === "none") {
+          menu.style.display = "block";
+        } else {
+          menu.style.display = "none";
+        }
+      });
+    });
+
+
+
     mapboxgl.accessToken = 'pk.eyJ1IjoibWV0ZW9sYXR2aWEiLCJhIjoiY2xjcWF3ajRkMDQ0NDNucDE4aTdkZ3h2NSJ9.L0yigObs_66n45KR3oLfUQ';
 
 
@@ -359,9 +422,12 @@
 
       // Toggle marker visibility based on checkbox state
       var temperatureCheckbox = document.getElementById('temperatureCheckbox');
+      temperatureCheckbox.checked = true;
       temperatureCheckbox.addEventListener('change', function () {
         toggleMarkers(temperatureMarkers, temperatureCheckbox.checked);
       });
+      temperatureCheckbox.dispatchEvent(new Event('change'));
+
 
       var windDirectionCheckbox = document.getElementById('windDirectionCheckbox');
       windDirectionCheckbox.addEventListener('change', function () {

@@ -22,19 +22,19 @@
       background: linear-gradient(to right,
           rgb(0, 1, 198),
           rgb(0, 51, 255),
-          rgb(1,121,252),
-          rgb(28,162,252),
-          rgb(86,207,254),
-          rgb(130,241,250),
-          rgb(255,253,255),
-          rgb(255,246,193),
-          rgb(254,228,1),
-          rgb(254,187,1),
-          rgb(251,116,0),
-          rgb(253,64,0),
-          rgb(199,1,0),
-          rgb(162,0,1),
-          rgb(126,1,0));
+          rgb(1, 121, 252),
+          rgb(28, 162, 252),
+          rgb(86, 207, 254),
+          rgb(130, 241, 250),
+          rgb(255, 253, 255),
+          rgb(255, 246, 193),
+          rgb(254, 228, 1),
+          rgb(254, 187, 1),
+          rgb(251, 116, 0),
+          rgb(253, 64, 0),
+          rgb(199, 1, 0),
+          rgb(162, 0, 1),
+          rgb(126, 1, 0));
       border-radius: 5px;
       margin: 10px 0;
     }
@@ -130,98 +130,74 @@
 </head>
 
 <body>
-  <!-- Navbar Section -->
-  <nav class="navbar">
-    <div class="navbar__container">
-      <a href="index.html" id="navbar__logo"><img src="https://fv9-7.failiem.lv/down.php?i=p2kgbydxw&view"
-          alt="Meteo Logo" />METEO LATVIA</a>
-      <div class="navbar__toggle" id="mobile-menu">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </div>
-      <ul class="navbar__menu">
-        <li class="navbar__item">
-          <a href="index.html" class="navbar__links">Sākumlapa</a>
-        </li>
-        <li class="navbar__item navbar__dropdown">
-          <a href="#" class="navbar__links">Novērojumi</a>
-          <ul class="navbar__submenu">
-            <li class="navbar__submenu-item">
-              <a href="Meteo_noverojumi_temperatura.html">Novērojumu stacijas</a>
-            </li>
-            <li class="navbar__submenu-item">
-              <a href="Meteo_noverojumi_radars.html">Meteoroloģiskais radars</a>
-            </li>
-            <li class="navbar__submenu-item">
-              <a href="Meteo_noverojumi_satelitsIR10.8.html">Meteoroloģiskais satelīts</a>
-            </li>
-          </ul>
-        </li>
-        <li class="navbar__item navbar__dropdown">
-          <a href="#" class="navbar__links">Prognozes</a>
-          <ul class="navbar__submenu">
-            <li class="navbar__submenu-item">
-              <a href="Meteo_prognozes.html">"MeteoLatvia" prognoze</a>
-            </li>
-          </ul>
-        </li>
-        <li class="navbar__item">
-          <a href="Meteo_kosmosaapstakli.html" class="navbar__links">Kosmosa apstākļi</a>
-        </li>
-        <li class="navbar__item">
-          <a href="Meteo_blog.html" class="navbar__links">Ziņas</a>
-        </li>
-      </ul>
-    </div>
-  </nav>>
-  </nav>
+   <!-- Placeholder for the navbar -->
+   <div id="navbar-placeholder"></div>
+
+   <!-- Load the navbar using JavaScript -->
+   <script>
+     function includeHTML() {
+       var xhttp = new XMLHttpRequest();
+       xhttp.onreadystatechange = function () {
+         if (this.readyState == 4 && this.status == 200) {
+           document.getElementById("navbar-placeholder").innerHTML = this.responseText;
+ 
+           // Call the function to initialize the mobile menu after loading the navbar
+           initMobileMenu();
+         }
+       };
+       xhttp.open("GET", "navbar.html", true);
+       xhttp.send();
+     }
+ 
+     function initMobileMenu() {
+       var mobileMenuButton = document.getElementById("mobile-menu");
+       var navbarMenu = document.querySelector(".navbar__menu");
+ 
+       mobileMenuButton.addEventListener("click", function () {
+         navbarMenu.classList.toggle("active");
+       });
+     }
+ 
+     window.onload = function () {
+       includeHTML();
+     };
+   </script>
 
   <!-- Radar map Section -->
   <div class="group_container_LVGMC">
     <h2>Meteoroloģiskais radars</h2>
     <div class="noverojumu_karte_LVGMC">
-      <iframe src="Radar_data/radar_map.html" width="1280" height="720" class="noverojumu_karte"></iframe>
+      <iframe src="Radar_data/radar_map.html" class="noverojumu_karte"></iframe>
       <p2><br>Dati: Latvijas Vides ģeoloģijas un meteorloģijas centrs</p2>
-      <div class="color-scale">
-        <div class="color-gradient"></div>
-        <div class="color-values">
-          <span>0,1 mm/h</span>
-          <span>1 mm/h</span>
-          <span>5 mm/h</span>
-          <span>15 mm/h</span>
-          <span>30 mm/h</span>
-        </div>
-      </div>
     </div>
   </div>
-<!-- Kajene sadala -->
+  <!-- Kajene sadala -->
   <div class="footer__container">
     <div class="footer__links">
       <div class="footer__link--wrapper">
         <div class="footer__link--items">
           <!-- <h2>About Us</h2>
-          <a href="/sign__up">How it works</a> <a href="/">Testimonials</a>
-          <a href="/">Careers</a> <a href="/">Investments</a>
-          <a href="/">Terms of Service</a>
-        </div>
-        <div class="footer__link--items">
-          <h2>Contact Us</h2>
-          <a href="/">Contact</a> <a href="/">Support</a>
-          <a href="/">Destinations</a> <a href="/">Sponsorships</a>
-        </div>
+        <a href="/sign__up">How it works</a> <a href="/">Testimonials</a>
+        <a href="/">Careers</a> <a href="/">Investments</a>
+        <a href="/">Terms of Service</a>
       </div>
-      <div class="footer__link--wrapper">
-        <div class="footer__link--items">
-          <h2>Videos</h2>
-          <a href="/">Submit Video</a> <a href="/">Ambassadors</a>
-          <a href="/">Agency</a> <a href="/">Influencer</a>
-        </div>
-        <div class="footer__link--items">
-          <h2>Social Media</h2>
-          <a href="/">Instagram</a> <a href="/">Facebook</a>
-          <a href="/">Youtube</a> <a href="/">Twitter</a>
-        </div>-->
+      <div class="footer__link--items">
+        <h2>Contact Us</h2>
+        <a href="/">Contact</a> <a href="/">Support</a>
+        <a href="/">Destinations</a> <a href="/">Sponsorships</a>
+      </div>
+    </div>
+    <div class="footer__link--wrapper">
+      <div class="footer__link--items">
+        <h2>Videos</h2>
+        <a href="/">Submit Video</a> <a href="/">Ambassadors</a>
+        <a href="/">Agency</a> <a href="/">Influencer</a>
+      </div>
+      <div class="footer__link--items">
+        <h2>Social Media</h2>
+        <a href="/">Instagram</a> <a href="/">Facebook</a>
+        <a href="/">Youtube</a> <a href="/">Twitter</a>
+      </div>-->
         </div>
       </div>
       <section class="social__media">
@@ -250,7 +226,7 @@
         </div>
       </section>
     </div>
-  <script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Novērojumu stacijas</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+    integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+<!-- Placeholder for the navbar -->
+<div id="navbar-placeholder"></div>
+
+<!-- Load the navbar using JavaScript -->
+<script>
+  function includeHTML() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("navbar-placeholder").innerHTML = this.responseText;
+
+        // Call the function to initialize the mobile menu after loading the navbar
+        initMobileMenu();
+      }
+    };
+    xhttp.open("GET", "navbar.html", true);
+    xhttp.send();
+  }
+
+  function initMobileMenu() {
+    var mobileMenuButton = document.getElementById("mobile-menu");
+    var navbarMenu = document.querySelector(".navbar__menu");
+
+    mobileMenuButton.addEventListener("click", function () {
+      navbarMenu.classList.toggle("active");
+    });
+  }
+
+  window.onload = function () {
+    includeHTML();
+  };
+</script>
+
+  <!-- Camera secrtion -->
+  <div class="group_container_kameras">
+    <h2>Jelgava</h2>
+    <hr class="title_separator_kameras">
+    <iframe width="640" height="340" src="https://www.youtube.com/embed/9vupoDHPw_k?si=feGDwZ4zKMHI94Sr"
+      title="YouTube video player" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen></iframe>
+
+    <iframe width="640" height="340" src="https://www.youtube.com/embed/TqEY9jyulo8?si=PVns1TSzGrY8MWhG"
+      title="YouTube video player" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen></iframe>
+  </div>
+</body>
+
+</html>

@@ -263,6 +263,21 @@
         z-index: 999;
       }
     }
+
+    .custom-popup {
+      max-width: 200px;
+      text-align: center;
+      padding: 0px;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      margin-left: 15% !important;
+    }
+
+    .leaflet-popup-tip {
+      display: none;
+      /* Hide the popup tip */
+    }
   </style>
 </head>
 
@@ -421,6 +436,65 @@
 
     L.control.watermark({ position: "bottomleft" }).addTo(map);
 
+
+
+
+
+    // Create a dictionary to map station codes to names
+    var stationNames = {
+      "DAUGAVGR": "Daugavgrīva",
+      "KALNCIEM": "Kalnciems",
+      "KULDIGA": "Kuldīga",
+      "LIELPECI": "Lielpeči",
+      "PIEDRUJA": "Piedruja",
+      "RIAI99PA": "Ainaži",
+      "RIAL99MS": "Alūksne",
+      "RIBA99PA": "Bauska",
+      "RIDAGDA": "Dagda",
+      "RIDM99MS": "Daugavpils",
+      "RIDO99MS": "Dobele",
+      "RIGASLU": "Rīga (LU)",
+      "RIGU99MS": "Gulbene",
+      "RIJE99PA": "Jelgava",
+      "RIKO99PA": "Kolka",
+      "RILP99PA": "Liepāja",
+      "RIMADONA": "Madona",
+      "RIME99MS": "Mērsrags",
+      "RIPA99PA": "Pāvilosta",
+      "RIPR99PA": "Priekuļi",
+      "RIREZEKN": "Rēzekne",
+      "RIRU99PA": "Rūjiena",
+      "RISA99PA": "Saldus",
+      "RISE99MS": "Skulte",
+      "RISI99PA": "Skrīveri",
+      "RIST99PA": "Stende",
+      "RIVE99PA": "Ventspils",
+      "RIZI99PA": "Zīlāni",
+      "RIZO99MS": "Zosēni",
+      "RUCAVA": "Rucava",
+      "SIGULDA": "Sigulda",
+      "SILI": "Sīļi",
+      "VICAKI": "Vičaki",
+    };
+
+    // Fetch station names from the weather_monitoring_points URL
+    $.ajax({
+      type: "GET",
+      url: "https://videscentrs.lvgmc.lv/data/weather_monitoring_points",
+      traditional: true,
+      dataType: "json",
+      success: function (response) {
+        response.forEach(function (station) {
+          stationNames[station.kods] = station.nosaukums;
+        });
+      },
+    });
+
+
+
+
+
+
     /*Create GeoJSON*/
     var gj = {
       name: "MyFeatureType",
@@ -466,6 +540,22 @@
               //console.log(atslega)
               var temp = myObj[atslega];
               //console.log(temp)
+              var stationName = stationNames[atslega]; // Get station name from the dictionary
+              geojsonFeature = {
+                type: "Feature",
+                geometry: {
+                  type: "Point",
+                  coordinates: [
+                    parseFloat(tabledata.lon),
+                    parseFloat(tabledata.lat),
+                  ],
+                },
+                properties: {
+                  kods: tabledata.kods,
+                  temperatura: temp,
+                  nosaukums: stationName,
+                },
+              };
               geojsonFeature = {
                 type: "Feature",
                 geometry: {
@@ -597,6 +687,15 @@
               );
               marker.addTo(map);
             }
+            // Create a unique pop-up for each marker
+            var popupContent = `<strong>${stationName}</strong><br>Temperatūra: ${temp}°C`;
+            marker.bindPopup(popupContent, {
+              className: 'custom-popup',
+              closeButton: false,
+              closeOnClick: false,
+            });
+
+            marker.addTo(map);
           });
         },
       });

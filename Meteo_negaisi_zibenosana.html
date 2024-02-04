@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Novērojumu stacijas</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+    integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .navbar_obs {
+      width: 69%;
+      background-color: rgb(23, 25, 26);
+      overflow: auto;
+      margin: 0 auto;
+      /* Center the div horizontally */
+      border-radius: 4px;
+    }
+
+    .navbar_obs a {
+      float: left;
+      padding: 12px;
+      color: white;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .navbar_obs a:hover {
+      background-color: #000;
+      border-radius: 4px;
+    }
+
+    .active {
+      background-color: rgb(0, 40, 255);
+      border-radius: 4px;
+    }
+
+    @media screen and (max-width: 500px) {
+      .navbar_obs a {
+        float: none;
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<!-- Placeholder for the navbar -->
+<div id="navbar-placeholder"></div>
+
+<!-- Load the navbar using JavaScript -->
+<script>
+  function includeHTML() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("navbar-placeholder").innerHTML = this.responseText;
+
+        // Call the function to initialize the mobile menu after loading the navbar
+        initMobileMenu();
+      }
+    };
+    xhttp.open("GET", "navbar.html", true);
+    xhttp.send();
+  }
+
+  function initMobileMenu() {
+    var mobileMenuButton = document.getElementById("mobile-menu");
+    var navbarMenu = document.querySelector(".navbar__menu");
+
+    mobileMenuButton.addEventListener("click", function () {
+      navbarMenu.classList.toggle("active");
+    });
+  }
+
+  window.onload = function () {
+    includeHTML();
+  };
+</script>
+
+  <!-- Satellite map Section -->
+  <div class="group_container_LVGMC">
+    <h2>Zibens izlādes (tiešsaiste)</h2>
+    <div class="noverojumu_karte_LVGMC">
+      
+      </div>
+      <iframe src="https://map.blitzortung.org/index.php?interactive=0
+      &interactive=1
+      &NavigationControl=1
+      &FullScreenControl=1
+      &ScaleControl=1
+      &InfoDiv=1
+      &Cookies=0
+      &MapStyle=0
+      &MapStyleRangeValue=11
+      &LightningRangeValue=23
+      &LightningCheckboxChecked=1
+      &CourseRangeValue=10
+      &CourseCheckboxChecked=1
+      &CountingRangeValue=1
+      &CountingCheckboxChecked=1
+      &CirclesCheckboxChecked=1
+      &CirclesRangeValue=1
+      &SpeedRangeValue=1
+      &SpeedCheckboxChecked=1
+      &LinksRangeValue=10
+      &LinksCheckboxChecked=0
+      &DetectorsRangeValue=12
+      &DetectorsCheckboxChecked=0
+      &CoverageRangeValue=10
+      &CoverageCheckboxChecked=0
+      &DayNightRangeValue=5
+      &DayNightCheckboxChecked=1
+      &AudioRangeValue=10
+      &AudioCheckboxChecked=1
+      &RegionRangeValue=9
+      &RegionCheckboxChecked=1
+      &Advertisment=0#6.5/56.85/24.55" width="1280" height="720" class="noverojumu_karte"></iframe>
+      <script src="app.js"></script>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

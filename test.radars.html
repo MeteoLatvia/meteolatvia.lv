@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 0; }
+        #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        // Your Mapbox access token
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWV0ZW9sYXR2aWEiLCJhIjoiY2xjcWF3ajRkMDQ0NDNucDE4aTdkZ3h2NSJ9.L0yigObs_66n45KR3oLfUQ';
+
+        // Initialize the map
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [0, 0],
+            zoom: 2
+        });
+
+        // Fetch XML data from the URL
+        var url = 'https://www.estofex.org/cgi-bin/polygon/showforecast.cgi?xml=yes';
+
+        fetch(url)
+            .then(response => response.text())
+            .then(data => {
+                try {
+                    // Replace special characters before parsing XML
+                    data = data.replace(/<BR>/g, ''); // Replace <BR> with an empty string
+
+                    // Parse XML data
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(data, 'text/xml');
+
+                    // Function to extract coordinates from XML
+                    function getCoordinates(area) {
+                        var points = area.getElementsByTagName('point');
+                        var coordinates = [];
+                        for (var i = 0; i < points.length; i++) {
+                            var lat = parseFloat(points[i].getAttribute('lat'));
+                            var lon = parseFloat(points[i].getAttribute('lon'));
+                            coordinates.push([lon, lat]);
+                        }
+                        return coordinates;
+                    }
+
+                    // Log XML data
+                    console.log(xmlDoc);
+
+                    // Extract areas from XML
+                    var areas = xmlDoc.getElementsByTagName('area');
+                    // Log the number of areas found
+                    console.log('Number of Areas:', areas.length);
+
+                    // Loop through areas and log coordinates and risk type
+                    for (var i = 0; i < areas.length; i++) {
+                        var coordinates = getCoordinates(areas[i]);
+                        var riskType = areas[i].getAttribute('risktype');
+
+                        // Log coordinates and risk type for each area
+                        console.log('Area ' + i + ':', coordinates, riskType);
+                    }
+
+                    // Now try to display a simple marker on the map
+                    map.on('load', function () {
+                        map.addLayer({
+                            'id': 'marker',
+                            'type': 'symbol',
+                            'source': {
+                                'type': 'geojson',
+                                'data': {
+                                    'type': 'FeatureCollection',
+                                    'features': [{
+                                        'type': 'Feature',
+                                        'geometry': {
+                                            'type': 'Point',
+                                            'coordinates': [0, 0]
+                                        },
+                                        'properties': {
+                                            'title': 'Marker',
+                                            'icon': 'marker'
+                                        }
+                                    }]
+                                }
+                            },
+                            'layout': {
+                                'icon-image': '{icon}-15',
+                                'text-field': '{title}',
+                                'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+                                'text-offset': [0, 0.6],
+                                'text-anchor': 'top'
+                            }
+                        });
+                    });
+                } catch (error) {
+                    // Log XML parsing error
+                    console.error('Error parsing XML data:', error);
+                }
+            })
+            .catch(error => console.error('Error fetching XML data:', error));
+    </script>
+</body>
+</html>
