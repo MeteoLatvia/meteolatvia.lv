@@ -26,7 +26,7 @@
           var navbarContent = this.responseText;
           document.getElementById("navbar-placeholder").innerHTML = navbarContent;
 
-          // Extract and apply styles from the fetched content
+          // Extract and apply styles from the fetched content asynchronously
           var styles = navbarContent.match(/<style>([\s\S]*?)<\/style>/);
           if (styles && styles.length > 1) {
             var styleTag = document.createElement("style");
