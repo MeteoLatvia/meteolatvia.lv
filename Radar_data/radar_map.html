@@ -173,6 +173,79 @@
             z-index: 1000;
         }
 
+        #opacityControlBtn {
+            position: absolute;
+            font-size: 12px;
+            bottom: 10px;
+            left: 37%;
+            transform: translateX(-50%);
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: rgb(0, 40, 255);
+            color: rgb(255, 255, 255);
+            transition: background-color 0.3s;
+            z-index: 1000;
+        }
+
+        #opacityControlBtn:hover {
+            background-color: rgb(0, 29, 191);
+        }
+
+        #opacitySliderContainer {
+            position: absolute;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 300px;
+            z-index: 1001;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 10px;
+            display: none;
+            /* Initial display set to none */
+        }
+
+        #opacitySliderTitle {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        #opacitySlider {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.5);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            border-radius: 10px;
+        }
+
+        #opacitySlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #007bff;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        #opacitySlider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #007bff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+        }
+
+
         /* Media query for smaller screens */
         @media (max-width: 600px) {
             .legend {
@@ -215,10 +288,41 @@
                 z-index: 1000;
             }
 
+            #opacityControlBtn {
+                position: absolute;
+                font-size: 10px;
+                bottom: 60px;
+                left: 35%;
+                transform: translateX(-50%);
+                padding: 10px;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+                background-color: rgb(0, 40, 255);
+                color: rgb(255, 255, 255);
+                transition: background-color 0.3s;
+                z-index: 1000;
+            }
+
+            #opacitySliderContainer {
+                position: absolute;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80%;
+                max-width: 300px;
+                z-index: 1001;
+                background-color: rgba(0, 0, 0, 0.8);
+                border-radius: 10px;
+                padding: 10px;
+                display: none;
+                /* Initial display set to none */
+            }
+
             .save-button-container {
                 position: absolute;
                 bottom: 60px;
-                right: 15px;
+                right: -25px;
                 /* Adjust the right position as needed */
                 z-index: 1000;
                 margin-right: 30%;
@@ -228,6 +332,19 @@
 </head>
 
 <body style="height: 100%;">
+
+
+    <!-- Add a button to toggle the opacity slider -->
+    <button id="opacityControlBtn" onclick="toggleOpacitySlider()"><i class="fas fa-eye"></i>Slāņa
+        caurspīdīgums</button>
+
+    <!-- Add the opacity slider container -->
+    <div id="opacitySliderContainer">
+        <div id="opacitySliderTitle">Slāņa caurspīdīgums:</div>
+        <input type="range" min="0" max="1" step="0.1" value="1" id="opacitySlider" onchange="updateLayerOpacity()">
+    </div>
+
+
     <div id="legend" class="legend">
         <div class="legend-title">mm/h</div>
         <div class="legend-colors">
@@ -502,6 +619,7 @@
                 'type': 'raster',
                 'source': 'radarLV',
                 'paint': {
+                    'raster-opacity': 1, // Default opacity
                     'raster-fade-duration': 0
                 }
             });
@@ -548,6 +666,23 @@
         // Call setInitialTimestamp once the map is loaded
         currentTimestamp = setInitialTimestamp();
         updateTimestampDisplay(); // Call the function to initially display the timestamp
+
+
+        function updateLayerOpacity() {
+            const opacity = parseFloat(document.getElementById('opacitySlider').value);
+            map.setPaintProperty('radar-layer1', 'raster-opacity', opacity);
+        }
+
+
+
+        // Function to toggle the visibility of the opacity slider
+        function toggleOpacitySlider() {
+            const sliderContainer = document.getElementById('opacitySliderContainer');
+            // Check the current display value
+            const currentDisplay = window.getComputedStyle(sliderContainer).getPropertyValue('display');
+            // Toggle the display value
+            sliderContainer.style.display = currentDisplay === 'none' ? 'block' : 'none';
+        }
     </script>
 </body>
 
