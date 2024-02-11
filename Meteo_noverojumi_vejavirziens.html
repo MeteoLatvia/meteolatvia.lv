@@ -2,16 +2,25 @@
 <html lang="en">
 
 <head>
+  <!-- Meta Tags -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Title -->
   <title>Novērojumu stacijas</title>
+
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
-    integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
   <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- JavaScript -->
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
   <style>
     .obs_map {
       border: none;
@@ -104,50 +113,49 @@
 </head>
 
 <body>
-    <!-- Placeholder for the navbar -->
-    <div id="navbar-placeholder"></div>
+  <!-- Navigation bar -->
+  <div id="navbar-placeholder"></div>
 
-    <!-- Load the navbar using JavaScript -->
-    <script>
-      function includeHTML() {
-        fetch("navbar.html")
-          .then(response => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return response.text();
-          })
-          .then(html => {
-            document.getElementById("navbar-placeholder").innerHTML = html;
-  
-            // Call the function to initialize the mobile menu after loading the navbar
-            initMobileMenu();
-          })
-          .catch(error => console.error("Error fetching HTML:", error));
-      }
-  
-      function initMobileMenu() {
-        var mobileMenuButton = document.getElementById("mobile-menu");
-        var navbarMenu = document.querySelector(".navbar__menu");
-  
-        if (mobileMenuButton) {
-          mobileMenuButton.addEventListener("click", toggleMenu);
-        }
-  
-        function toggleMenu() {
-          navbarMenu.classList.toggle("active");
-        }
-      }
-  
-      // Call the includeHTML function to load the navbar
-      includeHTML();
-    </script>
+  <script>
+    function includeHTML() {
+      fetch("navbar.html")
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.text();
+        })
+        .then(html => {
+          document.getElementById("navbar-placeholder").innerHTML = html;
 
-  <div class="group_container_LVGMC">
+
+          initMobileMenu();
+        })
+        .catch(error => console.error("Error fetching HTML:", error));
+    }
+
+    function initMobileMenu() {
+      var mobileMenuButton = document.getElementById("mobile-menu");
+      var navbarMenu = document.querySelector(".navbar__menu");
+
+      if (mobileMenuButton) {
+        mobileMenuButton.addEventListener("click", toggleMenu);
+      }
+
+      function toggleMenu() {
+        navbarMenu.classList.toggle("active");
+      }
+    }
+    includeHTML();
+  </script>
+
+
+
+  <div class="group-container-LVGMC">
     <!-- Observation map Section -->
     <h2>Vēja virziens (°)</h2>
-    <div class="noverojumu_karte_LVGMC">
-      <iframe src="map_vejavirziens.html" width="1280" height="720" class="noverojumu_karte"></iframe>
+    <div class="observation-map-LVGMC">
+      <iframe src="map_vejavirziens.html" width="1280" height="720" class="observation-map"></iframe>
       <script src="app.js"></script>
     </div>
   </div>
