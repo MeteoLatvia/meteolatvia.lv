@@ -17,6 +17,9 @@
   <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
   <link rel="stylesheet" href="path-to-fancybox/jquery.fancybox.min.css">
   <script src="path-to-fancybox/jquery.fancybox.min.js"></script>
+
+  <style>
+  </style>
 </head>
 
 
@@ -24,591 +27,127 @@
 
 
 <body>
-<!-- Placeholder for the navbar -->
-<div id="navbar-placeholder"></div>
+  <!-- Placeholder for the navbar -->
+  <div id="navbar-placeholder"></div>
 
-<!-- Load the navbar using JavaScript -->
-<script>
-  function includeHTML() {
-    fetch("navbar.html")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.text();
-      })
-      .then(html => {
-        document.getElementById("navbar-placeholder").innerHTML = html;
-
-        // Call the function to initialize the mobile menu after loading the navbar
-        initMobileMenu();
-      })
-      .catch(error => console.error("Error fetching HTML:", error));
-  }
-
-  function initMobileMenu() {
-    var mobileMenuButton = document.getElementById("mobile-menu");
-    var navbarMenu = document.querySelector(".navbar__menu");
-
-    if (mobileMenuButton) {
-      mobileMenuButton.addEventListener("click", toggleMenu);
-    }
-
-    function toggleMenu() {
-      navbarMenu.classList.toggle("active");
-    }
-  }
-
-  // Call the includeHTML function to load the navbar
-  includeHTML();
-</script>
-
-
-
-
-
-  <!-- Ziemelblazmas ovals un intensitate -->
-  <div class="group_container_OVATION">
-    <h2>Ziemeļblāzmas ovāls un intensitāte</h2>
-    <hr class="title_separator_OVATION">
-    <div class="image_container">
-      <img src="https://services.swpc.noaa.gov/images/animations/ovation/north/latest.jpg" alt="Aurora Image" class="ovation1">
-    </div>
-
-    <div class="chart_container">
-      <div class="chart">
-        <iframe class="iframeHMPIKP" src="SpaceWeather/chart_KP.html" frameborder="0"></iframe>
-      </div>
-      <div class="chart">
-        <iframe class="iframeHMPIKP" src="SpaceWeather/chart_HMPI.html" frameborder="0"></iframe>
-      </div>
-    </div>
-    <iframe class="kirunachart" src="SpaceWeather/chart_Kiruna.html" frameborder="0"></iframe>
-    <div class="ovation_legend_container">
-      <h3>Intensitāte</h3>
-      <div class="ovation_legend_item">
-        <div class="ovation_legend_color ovation_legend_g0"></div>
-        <div class="ovation_legend_text">G0 (Nav aktiviāte)</div>
-      </div>
-      <div class="ovation_legend_item">
-        <div class="ovation_legend_color ovation_legend_g1"></div>
-        <div class="ovation_legend_text">G1 (Neliela ģeomagnētiskā vētra)</div>
-      </div>
-      <div class="ovation_legend_item">
-        <div class="ovation_legend_color ovation_legend_g2"></div>
-        <div class="ovation_legend_text">G2 (Mērena ģeomagnētiskā vētra)</div>
-      </div>
-      <div class="ovation_legend_item">
-        <div class="ovation_legend_color ovation_legend_g3"></div>
-        <div class="ovation_legend_text">G3 (Specīga ģeomagnētiskā vētra)</div>
-      </div>
-      <div class="ovation_legend_item">
-        <div class="ovation_legend_color ovation_legend_g4"></div>
-        <div class="ovation_legend_text">G4 (Īpaši spēcīga ģeomagnētiskā vētra)</div>
-      </div>
-      <div class="ovation_legend_item">
-        <div class="ovation_legend_color ovation_legend_g5"></div>
-        <div class="ovation_legend_text">G5 (Ekstremāli spēcīga ģeomagnētiskā vētra)</div>
-      </div>
-    </div>
-  </div>
-  <div class="lightbox_overlay_ovation">
-    <img class="lightbox_image_ovation" src="" alt="Lightbox Image">
-  </div>
-
-
+  <!-- Load the navbar using JavaScript -->
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const images = document.querySelectorAll(".ovation1");
-      const lightboxOverlay = document.querySelector(".lightbox_overlay_ovation");
-      const lightboxImage = document.querySelector(".lightbox_image_ovation");
-
-      images.forEach(function (image) {
-        image.addEventListener("click", function () {
-          lightboxImage.src = image.src;
-          lightboxOverlay.style.display = "block";
-        });
-      });
-
-      lightboxOverlay.addEventListener("click", function () {
-        lightboxOverlay.style.display = "none";
-      });
-    });
-  </script>
-  </div>
-
-
-
-
-
-  <!-- Saules vejs un magnetiskais lauks -->
-  <div class="group_container_DSCOVR">
-    <h2>Saules vējš un magnētiskais lauks</h2>
-    <hr class="title_separator_DSCOVR">
-    <div class="toggle_container_DSCOVR">
-      <div class="table-scroll-container">
-        <div class="ACE_data" id="ACE_data"></div>
-      </div>
-    </div>
-    <div class="tab-container">
-      <ul class="tabs">
-        <li class="active"><a href="javascript:void(0)" onclick="showCharts('DSCOVR_tables_3hour')">2 stundas</a></li>
-        <li><a href="javascript:void(0)" onclick="showCharts('DSCOVR_tables_6hour')">6 stundas</a></li>
-        <li><a href="javascript:void(0)" onclick="showCharts('DSCOVR_tables_24hour')">24 stundas</a></li>
-      </ul>
-
-      <div class="DSCOVR_tables_3hour tab-content">
-        <div class="grid-container">
-          <iframe src="SpaceWeather/chart_speed.html" width="820" height="420" class="iframe_ACE"
-            style="border: none"></iframe>
-          <iframe src="SpaceWeather/chart_density.html" width="820" height="420" class="iframe_ACE"
-            style="border: none"></iframe>
-          <iframe src="SpaceWeather/chart_bT.html" width="820" height="420" class="iframe_ACE"
-            style="border: none"></iframe>
-          <iframe src="SpaceWeather/chart_bZ.html" width="820" height="420" class="iframe_ACE"
-            style="border: none"></iframe>
-        </div>
-      </div>
-
-      <div class="DSCOVR_tables_6hour tab-content" style="display: none;">
-        <div class="grid-container">
-          <iframe src="SpaceWeather/chart_speed_6hour.html" width="820" height="420" class="iframe_ACE"
-            style="border: none"></iframe>
-          <iframe src="SpaceWeather/chart_density_6hour.html" width="820" height="420" class="iframe_ACE"
-            style="border: none"></iframe>
-          <iframe src="SpaceWeather/chart_bT_6hour.html" width="820" height="420" class="iframe_ACE"
-            style="border: none"></iframe>
-          <iframe src="SpaceWeather/chart_bZ_6hour.html" width="820" height="420" class="iframe_ACE"
-            style="border: none"></iframe>
-        </div>
-      </div>
-
-      <div class="DSCOVR_tables_24hour tab-content" style="display: none;">
-        <div class="grid-container">
-          <iframe src="SpaceWeather/chart_speed_24hour.html" width="820" height="420" class="iframe_ACE"
-            style="border: none"></iframe>
-          <iframe src="SpaceWeather/chart_density_24hour.html" width="820" height="420" class="iframe_ACE"
-            style="border: none"></iframe>
-          <iframe src="SpaceWeather/chart_bT_24hour.html" width="820" height="420" class="iframe_ACE"
-            style="border: none"></iframe>
-          <iframe src="SpaceWeather/chart_bZ_24hour.html" width="820" height="420" class="iframe_ACE"
-            style="border: none"></iframe>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      function showCharts(className) {
-        var tabContents = document.querySelectorAll('.tab-content');
-        tabContents.forEach(function (content) {
-          content.style.display = 'none';
-        });
-
-        var tabs = document.querySelectorAll('.tabs li');
-        tabs.forEach(function (tab) {
-          tab.classList.remove('active');
-        });
-
-        var selectedContent = document.querySelector('.' + className);
-        var selectedTab = document.querySelector('li a[href="javascript:void(0)"][onclick="showCharts(\'' + className + '\')"]');
-        if (selectedContent && selectedTab) {
-          selectedContent.style.display = 'block';
-          selectedTab.parentNode.classList.add('active');
-        }
-      }
-      showCharts('DSCOVR_tables_3hour');
-    </script>
-  </div>
-
-
-
-
-
-  <!-- Saules plankumi -->
-  <div class="group_container_sunspots">
-    <h2>Saules plankumi</h2>
-    <hr class="title_separator_sunspots">
-    <div class="image_grid_sunspots">
-      <div class="grid_item_sunspots">
-        <img decoding="async" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_HMIIF.jpg" alt="Image 1"
-          class="sunspots1">
-        <div class="tooltip_container">
-          <p>HMIIC</p>
-          <span class="tooltip_text">?</span>
-          <div class="tooltip_explanation">Šis kanāls ir paradzēts lai pētītu saules plankumums (tumšie reģioni).
-          </div>
-        </div>
-      </div>
-      <div class="grid_item_sunspots">
-        <img decoding="async" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_HMIBC.jpg" alt="Image 2"
-          class="sunspots1">
-        <div class="tooltip_container">
-          <p>HMIBC</p>
-          <span class="tooltip_text">?</span>
-          <div class="tooltip_explanation">Šis kanāls ir paradzēts lai pētītu saules plankumu magnētisko polaritāti (+
-            vai -)
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="iframe_container_sunspots">
-      <iframe src="SpaceWeather/table_sunspots.html" class="table_sun_data" style="border: none"></iframe>
-    </div>
-    <div class="sunspot_legend_container">
-      <h3>Plankuma tips</h3>
-      <div class="sunspot_legend_item">
-        <div class="sunspot_legend_color sunspot_legend_green"></div>
-        <div class="sunspot_legend_text">Vienkāršs / neliels</div>
-      </div>
-      <div class="sunspot_legend_item">
-        <div class="sunspot_legend_color sunspot_legend_orange"></div>
-        <div class="sunspot_legend_text">Komplekss / liels</div>
-      </div>
-      <div class="sunspot_legend_item">
-        <div class="sunspot_legend_color sunspot_legend_red"></div>
-        <div class="sunspot_legend_text">Īpaši komplekss / īpaši liels</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="lightbox_overlay_sunspots">
-    <img class="lightbox_image_sunspots" src="" alt="Lightbox Image">
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const images = document.querySelectorAll(".sunspots1");
-      const lightboxOverlay = document.querySelector(".lightbox_overlay_sunspots");
-      const lightboxImage = document.querySelector(".lightbox_image_sunspots");
-
-      images.forEach(function (image) {
-        image.addEventListener("click", function () {
-          lightboxImage.src = image.src;
-          lightboxOverlay.style.display = "block";
-        });
-      });
-
-      lightboxOverlay.addEventListener("click", function () {
-        lightboxOverlay.style.display = "none";
-      });
-    });
-  </script>
-
-
-
-
-
-  <!-- Saules uzliesmojumi un izvirdumi -->
-  <div class="group_container_CME">
-    <h2>Saules uzliesmojumi un izvirdumi</h2>
-    <hr class="title_separator_CME">
-    <div class="iframe-container">
-      <iframe src="SpaceWeather/chart_solarflare.html" class="KP_explanation2"></iframe>
-    </div>
-    <iframe src="SpaceWeather/table_solarflare.html" width="1800" height="360" class="table_cme"
-      style="border: none"></iframe>
-    <div class="solarflare_legend_container">
-      <h3>Solārā starojuma intensitāte</h3>
-      <div class="solarflare_legend_item">
-        <div class="solarflare_legend_color solarflare_legend_x10"></div>
-        <div class="solarflare_legend_text">X10 (Ekstremāli liela)</div>
-      </div>
-      <div class="solarflare_legend_item">
-        <div class="solarflare_legend_color solarflare_legend_x"></div>
-        <div class="solarflare_legend_text">X (ļoti liela)</div>
-      </div>
-      <div class="solarflare_legend_item">
-        <div class="solarflare_legend_color solarflare_legend_m"></div>
-        <div class="solarflare_legend_text">M (liela)</div>
-      </div>
-      <div class="solarflare_legend_item">
-        <div class="solarflare_legend_color solarflare_legend_c"></div>
-        <div class="solarflare_legend_text">C (vidēja)</div>
-      </div>
-      <div class="solarflare_legend_item">
-        <div class="solarflare_legend_color solarflare_legend_b"></div>
-        <div class="solarflare_legend_text">B (neliela)</div>
-      </div>
-      <div class="solarflare_legend_item">
-        <div class="solarflare_legend_color solarflare_legend_a"></div>
-        <div class="solarflare_legend_text">A (fona)</div>
-      </div>
-    </div>
-    <div class="image_grid_CME">
-      <div class="grid_item_CME">
-        <img decoding="async" src="https://soho.nascom.nasa.gov/data/realtime/c2/1024/latest.jpg" alt="Image 1" class="lasco1">
-        <div class="tooltip-container">
-          <p>LASCO C2</p>
-          <span class="tooltip-text">?</span>
-          <div class="tooltip-explanation">Šis kanāls ir paradzēts lai pētītu koronārās masas izvirdumus.</div>
-        </div>
-      </div>
-      <div class="grid_item_CME">
-        <img decoding="async" src="https://soho.nascom.nasa.gov/data/realtime/c3/1024/latest.jpg" alt="Image 1" class="lasco1">
-        <div class="tooltip-container">
-          <p>LASCO C3</p>
-          <span class="tooltip-text">?</span>
-          <div class="tooltip-explanation">Šis kanāls ir paradzēts lai pētītu koronārās masas izvirdumus.
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="iframe_container_sunspots">
-      <iframe src="SpaceWeather/table_CME.html" width="1800" height="500" class="obs_map" style="border: none"></iframe>
-    </div>
-    <div class="lightbox_overlay_lasco">
-      <img class="lightbox_image_lasco" src="" alt="Lightbox Image">
-    </div>
-  
-  
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const images = document.querySelectorAll(".lasco1");
-        const lightboxOverlay = document.querySelector(".lightbox_overlay_lasco");
-        const lightboxImage = document.querySelector(".lightbox_image_lasco");
-  
-        images.forEach(function (image) {
-          image.addEventListener("click", function () {
-            lightboxImage.src = image.src;
-            lightboxOverlay.style.display = "block";
-          });
-        });
-  
-        lightboxOverlay.addEventListener("click", function () {
-          lightboxOverlay.style.display = "none";
-        });
-      });
-    </script>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <!--SDO data -->
-  <div class="group_container_SDO">
-    <h2>Saules attēli un video</h2>
-    <hr class="title_separator_SDO">
-
-    <!-- Buttons for Photos and Videos -->
-    <div>
-      <button onclick="showContent('photos')">Photos</button>
-      <button onclick="showContent('videos')">Videos</button>
-    </div>
-
-    <!-- Container for content -->
-    <div class="sdo-tab-container">
-
-      <!-- Photos Content -->
-      <div id="photosContent" class="sdo_tables_3hour tab-content">
-        <div class="image_grid_SDO">
-          <div class="grid_item_SDO">
-            <img decoding="async" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0094.jpg" alt="Image 1" class="sdo1">
-            <div class="tooltip-container">
-              AIA 094
-              <span class="tooltip-text">?</span>
-              <div class="tooltip-explanation">Šis kanāls ir paradzēts lai pētītu Saules uzliesmojumus.</div>
-            </div>
-          </div>
-          <div class="grid_item_SDO">
-            <img decoding="async" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0131.jpg" alt="Image 1"  class="sdo1">
-            <div class="tooltip-container">
-              AIA 131
-              <span class="tooltip-text">?</span>
-              <div class="tooltip-explanation">Šis kanāls ir paradzēts lai pētītu Saules uzliesmojumus.</div>
-            </div>
-          </div>
-          <div class="grid_item_SDO">
-            <img decoding="async" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0171.jpg" alt="Image 1"  class="sdo1">
-            <div class="tooltip-container">
-              AIA 171
-              <span class="tooltip-text">?</span>
-              <div class="tooltip-explanation">Šis kanāls ir paradzēts lai pētītu Saules uzliesmojumus.</div>
-            </div>
-          </div>
-          <div class="grid_item_SDO">
-            <img decoding="async" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0193.jpg" alt="Image 1"  class="sdo1">
-            <div class="tooltip-container">
-              AIA 193
-              <span class="tooltip-text">?</span>
-              <div class="tooltip-explanation">Šis kanāls ir paradzēts lai pētītu Saules uzliesmojumus.</div>
-            </div>
-          </div>
-          <div class="grid_item_SDO">
-            <img decoding="async" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0211.jpg" alt="Image 1"  class="sdo1">
-            <div class="tooltip-container">
-              AIA 211
-              <span class="tooltip-text">?</span>
-              <div class="tooltip-explanation">Šis kanāls ir paradzēts lai pētītu Saules uzliesmojumus.</div>
-            </div>
-          </div>
-          <div class="grid_item_SDO">
-            <img decoding="async" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0304.jpg" alt="Image 1"  class="sdo1">
-            <div class="tooltip-container">
-              AIA 304
-              <span class="tooltip-text">?</span>
-              <div class="tooltip-explanation">Šis kanāls ir paradzēts lai pētītu Saules uzliesmojumus.</div>
-            </div>
-          </div>
-          <div class="grid_item_SDO">
-            <img decoding="async" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0335.jpg" alt="Image 1"  class="sdo1">
-            <div class="tooltip-container">
-              AIA 335
-              <span class="tooltip-text">?</span>
-              <div class="tooltip-explanation">Šis kanāls ir paradzēts lai pētītu Saules uzliesmojumus.</div>
-            </div>
-          </div>
-          <div class="grid_item_SDO">
-            <img decoding="async" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_1600.jpg" alt="Image 1"  class="sdo1">
-            <div class="tooltip-container">
-              AIA 1600
-              <span class="tooltip-text">?</span>
-              <div class="tooltip-explanation">Šis kanāls ir paradzēts lai pētītu Saules uzliesmojumus.</div>
-            </div>
-          </div>
-          <div class="grid_item_SDO">
-            <img decoding="async" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_1700.jpg" alt="Image 1"  class="sdo1">
-            <div class="tooltip-container">
-              AIA 1700
-              <span class="tooltip-text">?</span>
-              <div class="tooltip-explanation">Šis kanāls ir paradzēts lai pētītu Saules uzliesmojumus.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="lightbox_overlay_sdo">
-        <img class="lightbox_image_sdo" src="" alt="Lightbox Image">
-      </div>
-
-
-      <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          const images = document.querySelectorAll(".sdo1");
-          const lightboxOverlay = document.querySelector(".lightbox_overlay_sdo");
-          const lightboxImage = document.querySelector(".lightbox_image_sdo");
-    
-          images.forEach(function (image) {
-            image.addEventListener("click", function () {
-              lightboxImage.src = image.src;
-              lightboxOverlay.style.display = "block";
-            });
-          });
-    
-          lightboxOverlay.addEventListener("click", function () {
-            lightboxOverlay.style.display = "none";
-          });
-        });
-      </script>
-
-      <!-- Videos Content -->
-      <div id="videosContent" class="sdo_tables_6hour tab-content" style="display: none;">
-        <div class="video_grid_SDO">
-          <div class="grid_item_SDO">
-            <video controls crossorigin playsinline
-              data-plyr-src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_4096_0094.mp4">
-              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_0094.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="grid_item_SDO">
-            <video controls crossorigin playsinline
-              data-plyr-src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_4096_0131.mp4">
-              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_0131.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="grid_item_SDO">
-            <video controls crossorigin playsinline
-              data-plyr-src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_4096_0171.mp4">
-              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_0171.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="grid_item_SDO">
-            <video controls crossorigin playsinline
-              data-plyr-src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_4096_0193.mp4">
-              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_0193.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="grid_item_SDO">
-            <video controls crossorigin playsinline
-              data-plyr-src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_4096_0211.mp4">
-              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_0211.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="grid_item_SDO">
-            <video controls crossorigin playsinline
-              data-plyr-src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_4096_0304.mp4">
-              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_0304.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="grid_item_SDO">
-            <video controls crossorigin playsinline
-              data-plyr-src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_4096_0335.mp4">
-              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_0335.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="grid_item_SDO">
-            <video controls crossorigin playsinline
-              data-plyr-src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_4096_1600.mp4">
-              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_1600.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="grid_item_SDO">
-            <video controls crossorigin playsinline
-              data-plyr-src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_4096_1700.mp4">
-              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_1700.mp4" type="video/mp4">
-            </video>
-          </div>
-        </div>
-        <script>
-          document.addEventListener('DOMContentLoaded', () => {
-            const players = Plyr.setup('video'); // Use Plyr.setup to select all video elements
-            showContent('photos'); // Set the initial visibility to 'Photos'
-          });
-
-          // Function to show/hide content based on button click
-          function showContent(contentType) {
-            const photosContent = document.getElementById('photosContent');
-            const videosContent = document.getElementById('videosContent');
-
-            if (contentType === 'photos') {
-              photosContent.style.display = 'block';
-              videosContent.style.display = 'none';
-            } else if (contentType === 'videos') {
-              photosContent.style.display = 'none';
-              videosContent.style.display = 'block';
-            }
+    function includeHTML() {
+      fetch("navbar.html")
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
           }
-        </script>
+          return response.text();
+        })
+        .then(html => {
+          document.getElementById("navbar-placeholder").innerHTML = html;
+
+          // Call the function to initialize the mobile menu after loading the navbar
+          initMobileMenu();
+        })
+        .catch(error => console.error("Error fetching HTML:", error));
+    }
+
+    function initMobileMenu() {
+      var mobileMenuButton = document.getElementById("mobile-menu");
+      var navbarMenu = document.querySelector(".navbar__menu");
+
+      if (mobileMenuButton) {
+        mobileMenuButton.addEventListener("click", toggleMenu);
+      }
+
+      function toggleMenu() {
+        navbarMenu.classList.toggle("active");
+      }
+    }
+
+    // Call the includeHTML function to load the navbar
+    includeHTML();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  <!-- KP-index and OVATION -->
+  <div class="group-container-OVATION">
+    <h2>Ziemeļblāzmas aktivitāte</h2>
+    <hr class="title-separator-OVATION">
+    <div class="OVATION-chart-container">
+      <div class="OVATION-chart">
+        <iframe src="SpaceWeatherNEW/SWPC_KP.html" style="border: none"></iframe>
+        <iframe src="SpaceWeatherNEW/SWPC_HMPI.html" style="border: none"></iframe>
       </div>
+      <img src="https://services.swpc.noaa.gov/images/animations/ovation/north/latest.jpg" alt="OVATION Image">
     </div>
   </div>
 
 
 
-  <!-- Live cameras -->
-  <div class="group_container_SDO">
-    <h2>Tiešsaistes kameras</h2>
-    <hr class="title-separator_SDO">
-    <div class="image-grid_SDO">
-      <div class="grid-item_SDO">
-        <img decoding="async" src="https://www.irf.se/alis/allsky/krn/latest_medium.jpeg" alt="Image 1">
-        <div class="tooltip-container_SDO">
-          Kiruna, Zviedrija
-          <span class="tooltip-text_SDO">?</span>
-          <div class="tooltip-explanation_SDO">Šis kanāls ir paradzēts lai pētītu Saules uzliesmojumus.</div>
+
+
+
+
+
+
+
+  <!-- Solar wind and magnetic field (DSCOVR) -->
+  <div class="group-container-DSCOVR">
+    <h2>Saules vējš un magnētiskais lauks</h2>
+    <hr class="title-separator-DSCOVR">
+    <div class="DSCOVR-chart">
+      <iframe src="SpaceWeatherNEW/DSCOVR_speed.html" style="border: none"></iframe>
+      <iframe src="SpaceWeatherNEW/DSCOVR_density.html" style="border: none"></iframe>
+      <iframe src="SpaceWeatherNEW/DSCOVR_magnetic_bT.html" style="border: none"></iframe>
+      <iframe src="SpaceWeatherNEW/DSCOVR_magnetic_bZ.html" style="border: none"></iframe>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <!-- Solar flares -->
+  <div class="group-container-flares">
+    <h2>Saules uzliesmojumi</h2>
+    <hr class="title-separator-flares">
+    <div class="flares-chart">
+      <div class="row">
+        <div class="column">
+          <img class="flare-image" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_2048_0131.jpg"
+            alt="SDO-flare-image">
+        </div>
+        <div class="column">
+          <img class="flare-image" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0094.jpg"
+            alt="SDO-flare-image">
         </div>
       </div>
-      <script src="app.js"></script>
+      <iframe src="SpaceWeatherNEW/GOES_SolarFlux.html" style="border: none"></iframe>
+      <iframe src="SpaceWeatherNEW/GOES_SolarFlux_table.html" style="border: none"></iframe>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <script src="app.js"></script>
 </body>
 
 </html>

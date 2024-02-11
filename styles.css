@@ -275,13 +275,13 @@
 
 
 
-/* MAIN CONTENT */
+/* Main banner section */
 .main {
   background-image: linear-gradient(rgba(0, 4, 26, 0.6), rgba(0, 4, 26, 0.8)),
     url(https://fv9-3.failiem.lv/down.php?i=twqq54ua5&view);
 }
 
-.main__container {
+.main-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
@@ -296,12 +296,12 @@
   padding-left: 50px;
 }
 
-.main__content {
+.main-content {
   color: rgb(255, 255, 255);
   width: 100%;
 }
 
-.main__content h1 {
+.main-content h1 {
   font-size: 4rem;
   background-color: #ff8177;
   background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
@@ -312,7 +312,7 @@
   -moz-text-fill-color: transparent;
 }
 
-.main__content h2 {
+.main-content h2 {
   font-size: 4rem;
   margin-top: 10px;
   background-color: #ff8177;
@@ -326,13 +326,13 @@
   -moz-text-fill-color: transparent;
 }
 
-.main__content p {
+.main-content p {
   margin-top: 1rem;
   font-size: 2rem;
   font-weight: 700;
 }
 
-.main__btn {
+.main-btn {
   font-size: 1rem;
   background-image: linear-gradient(to top,
       rgb(66, 94, 255) 0%,
@@ -348,14 +348,14 @@
   outline: none;
 }
 
-.main__btn a {
+.main-btn a {
   position: relative;
   z-index: 2;
   color: #fff;
   text-decoration: none;
 }
 
-.main__btn:after {
+.main-btn:after {
   position: absolute;
   content: "";
   top: 0;
@@ -367,26 +367,26 @@
   border-radius: 4px;
 }
 
-.main__btn:hover {
+.main-btn:hover {
   color: #fff;
 }
 
-.main__btn:hover:after {
+.main-btn:hover:after {
   width: 100%;
 }
 
-.main__img--container {
+.main-img--container {
   text-align: center;
 }
 
-#main__img {
+#main-img {
   height: 100%;
   width: 100%;
   border-radius: 15px;
 }
 
 @media screen and (max-width: 768px) {
-  .main__container {
+  .main-container {
     display: grid;
     grid-template-columns: auto;
     align-items: center;
@@ -396,42 +396,42 @@
     height: 50vh;
   }
 
-  .main__content {
+  .main-content {
     text-align: center;
     margin-bottom: 4rem;
   }
 
-  .main__content h1 {
+  .main-content h1 {
     font-size: 2.5rem;
     margin-top: 2rem;
   }
 
-  .main__content h2 {
+  .main-content h2 {
     font-size: 3rem;
   }
 
-  .main__content p {
+  .main-content p {
     margin-top: 1rem;
     font-size: 1.5rem;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .main__content h1 {
+  .main-content h1 {
     font-size: 2rem;
     margin-top: 3rem;
   }
 
-  .main__content h2 {
+  .main-content h2 {
     font-size: 2rem;
   }
 
-  .main__content p {
+  .main-content p {
     margin-top: 2rem;
     font-size: 1.5rem;
   }
 
-  .main__btn {
+  .main-btn {
     padding: 12px 36px;
     margin: 2.5rem 0;
   }
@@ -447,7 +447,7 @@
 
 
 /*SAKUMLAPA*/
-/* JAUNUMI SADALA */
+/* Observations Section */
 .jaunumi {
   background: rgb(23, 25, 26);
   display: flex;
@@ -464,13 +464,13 @@
   font-weight: 700;
 }
 
-.jaunumi__container {
+.jaunumi-container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.jaunumi__card {
+.jaunumi-card {
   margin: 1rem;
   height: 525px;
   width: 400px;
@@ -482,7 +482,7 @@
   overflow: hidden;
 }
 
-.jaunumi__card:before {
+.jaunumi-card:before {
   content: "";
   position: absolute;
   top: 0;
@@ -493,19 +493,19 @@
   opacity: 0.8;
 }
 
-.jaunumi__card h2 {
+.jaunumi-card h2 {
   position: absolute;
   top: 350px;
   left: 30px;
 }
 
-.jaunumi__card p {
+.jaunumi-card p {
   position: absolute;
   top: 400px;
   left: 30px;
 }
 
-.jaunumi__card button {
+.jaunumi-card button {
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -518,18 +518,18 @@
   font-size: 1rem;
 }
 
-.jaunumi__card button:hover {
+.jaunumi-card button:hover {
   cursor: pointer;
 }
 
-.jaunumi__card:hover {
+.jaunumi-card:hover {
   transform: scale(1.075);
   transition: 0.2s ease-in;
   cursor: pointer;
   box-shadow: 0 0 25px 5px rgba(0, 40, 255, 0.2);
 }
 
-.jaunumi__card_img {
+.jaunumi-card_img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -556,7 +556,7 @@
     font-size: 1.2rem;
   }
 
-  .jaunumi__card {
+  .jaunumi-card {
     width: 300px;
   }
 }
@@ -565,8 +565,8 @@
 
 
 
-/* NOVEROJUMI SADALA */
-.noverojumi {
+/* Observations Section */
+.observations {
   background: rgb(23, 25, 26);
   display: flex;
   flex-direction: column;
@@ -575,20 +575,20 @@
   height: 100vh;
 }
 
-.noverojumi h1 {
+.observations h1 {
   color: rgb(250, 252, 255);
   margin-bottom: 5rem;
   font-size: 2.5rem;
   font-weight: 700;
 }
 
-.noverojumi__container {
+.observations-container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.noverojumi__card {
+.observations-card {
   margin: 1rem;
   height: 525px;
   width: 400px;
@@ -600,7 +600,7 @@
   overflow: hidden;
 }
 
-.noverojumi__card:before {
+.observations-card:before {
   content: "";
   position: absolute;
   top: 0;
@@ -611,19 +611,19 @@
   opacity: 0.8;
 }
 
-.noverojumi__card h2 {
+.observations-card h2 {
   position: absolute;
   top: 350px;
   left: 30px;
 }
 
-.noverojumi__card p {
+.observations-card p {
   position: absolute;
   top: 400px;
   left: 30px;
 }
 
-.noverojumi__card button {
+.observations-card button {
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -636,18 +636,18 @@
   font-size: 1rem;
 }
 
-.noverojumi__card button:hover {
+.observations-card button:hover {
   cursor: pointer;
 }
 
-.noverojumi__card:hover {
+.observations-card:hover {
   transform: scale(1.075);
   transition: 0.2s ease-in;
   cursor: pointer;
   box-shadow: 0 0 25px 5px rgba(0, 40, 255, 0.2);
 }
 
-.noverojumi__card_img {
+.observations-card-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -655,26 +655,26 @@
 }
 
 @media screen and (max-width: 960px) {
-  .noverojumi {
+  .observations {
     height: 1600px;
   }
 
-  .noverojumi h1 {
+  .observations h1 {
     font-size: 2rem;
     margin-top: 12rem;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .noverojumi {
+  .observations {
     height: 1400px;
   }
 
-  .noverojumi h1 {
+  .observations h1 {
     font-size: 1.2rem;
   }
 
-  .noverojumi__card {
+  .observations-card {
     width: 300px;
   }
 }
@@ -683,8 +683,8 @@
 
 
 
-/* PROGNOZES SADALA */
-.prognozes {
+/* Forecasts Section */
+.forecasts {
   background: rgb(23, 25, 26);
   display: flex;
   flex-direction: column;
@@ -693,19 +693,19 @@
   height: 100vh;
 }
 
-.prognozes h1 {
+.forecasts h1 {
   color: rgb(250, 252, 255);
   margin-bottom: 5rem;
   font-size: 2.5rem;
 }
 
-.prognozes__container {
+.forecasts-container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.prognozes__card {
+.forecasts-card {
   margin: 1rem;
   height: 525px;
   width: 400px;
@@ -719,7 +719,7 @@
   color: rgb(255, 255, 255);
 }
 
-.prognozes__card:before {
+.forecasts-card:before {
   content: "";
   position: absolute;
   top: 0;
@@ -730,26 +730,26 @@
   opacity: 0.8;
 }
 
-.prognozes__card:nth-child(2) {
+.forecasts-card:nth-child(2) {
   background-image: linear-gradient(to bottom,
       rgba(0, 0, 0, 0) 0%,
       rgba(23, 25, 26, 0.6) 100%),
     url("/images/pic4.jpg");
 }
 
-.prognozes__card h2 {
+.forecasts-card h2 {
   position: absolute;
   top: 350px;
   left: 30px;
 }
 
-.prognozes__card p {
+.forecasts-card p {
   position: absolute;
   top: 400px;
   left: 30px;
 }
 
-.prognozes__card button {
+.forecasts-card button {
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -762,18 +762,18 @@
   font-size: 1rem;
 }
 
-.prognozes__card button:hover {
+.forecasts-card button:hover {
   cursor: pointer;
 }
 
-.prognozes__card:hover {
+.forecasts-card:hover {
   transform: scale(1.075);
   transition: 0.2s ease-in;
   cursor: pointer;
   box-shadow: 0 0 25px 5px rgba(0, 40, 255, 0.2);
 }
 
-.prognozes__card_img {
+.forecasts-card-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -781,26 +781,26 @@
 }
 
 @media screen and (max-width: 960px) {
-  .prognozes {
+  .forecasts {
     height: 1600px;
   }
 
-  .prognozes h1 {
+  .forecasts h1 {
     font-size: 2rem;
     margin-top: 12rem;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .prognozes {
+  .forecasts {
     height: 1400px;
   }
 
-  .prognozes h1 {
+  .forecasts h1 {
     font-size: 1.2rem;
   }
 
-  .prognozes__card {
+  .forecasts-card {
     width: 300px;
   }
 }
@@ -809,8 +809,8 @@
 
 
 
-/* KOSMOSS SADALA */
-.kosmoss {
+/* Space weather Section */
+.spaceweather {
   background: rgb(23, 25, 26);
   display: flex;
   flex-direction: column;
@@ -819,19 +819,19 @@
   height: 100vh;
 }
 
-.kosmoss h1 {
+.spaceweather h1 {
   color: rgb(250, 252, 255);
   margin-bottom: 5rem;
   font-size: 2.5rem;
 }
 
-.kosmoss__container {
+.spaceweather-container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.kosmoss__card {
+.spaceweather-card {
   margin: 1rem;
   height: 525px;
   width: 400px;
@@ -845,7 +845,7 @@
   color: rgb(255, 255, 255);
 }
 
-.kosmoss__card:before {
+.spaceweather-card:before {
   content: "";
   position: absolute;
   top: 0;
@@ -856,26 +856,26 @@
   opacity: 0.8;
 }
 
-.kosmoss__card:nth-child(2) {
+.spaceweather-card:nth-child(2) {
   background-image: linear-gradient(to bottom,
       rgba(0, 0, 0, 0) 0%,
       rgba(23, 25, 26, 0.6) 100%),
     url("/images/pic4.jpg");
 }
 
-.kosmoss__card h2 {
+.spaceweather-card h2 {
   position: absolute;
   top: 350px;
   left: 30px;
 }
 
-.kosmoss__card p {
+.spaceweather-card p {
   position: absolute;
   top: 400px;
   left: 30px;
 }
 
-.kosmoss__card button {
+.spaceweather-card button {
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -888,18 +888,18 @@
   font-size: 1rem;
 }
 
-.kosmoss__card button:hover {
+.spaceweather-card button:hover {
   cursor: pointer;
 }
 
-.kosmoss__card:hover {
+.spaceweather-card:hover {
   transform: scale(1.075);
   transition: 0.2s ease-in;
   cursor: pointer;
   box-shadow: 0 0 25px 5px rgba(0, 40, 255, 0.2);
 }
 
-.kosmoss__card_img {
+.spaceweather-card_img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -907,26 +907,26 @@
 }
 
 @media screen and (max-width: 960px) {
-  .kosmoss {
+  .spaceweather {
     height: 1600px;
   }
 
-  .kosmoss h1 {
+  .spaceweather h1 {
     font-size: 2rem;
     margin-top: 12rem;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .kosmoss {
+  .spaceweather {
     height: 1400px;
   }
 
-  .kosmoss h1 {
+  .spaceweather h1 {
     font-size: 1.2rem;
   }
 
-  .kosmoss__card {
+  .spaceweather-card {
     width: 300px;
   }
 }
@@ -935,8 +935,8 @@
 
 
 
-/* KAJENES SADALA */
-.footer__container {
+/* Footer section */
+.footer-container {
   background-color: rgb(43, 43, 51);
   padding: 5rem 0;
   display: flex;
@@ -945,7 +945,7 @@
   align-items: center;
 }
 
-#footer__logo {
+#footer-logo {
   color: #fff;
   display: flex;
   align-items: center;
@@ -954,7 +954,7 @@
   font-size: 2rem;
 }
 
-.footer__links {
+.footer-links {
   width: 100%;
   max-width: 1200px;
   /* Adjusted maximum width */
@@ -966,13 +966,13 @@
   /* Allow links to wrap on smaller screens */
 }
 
-.footer__link--wrapper {
+.footer-link--wrapper {
   display: flex;
   flex-wrap: wrap;
   /* Allow link items to wrap */
 }
 
-.footer__link--items {
+.footer-link--items {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -982,18 +982,18 @@
   box-sizing: border-box;
 }
 
-.footer__link--items h2 {
+.footer-link--items h2 {
   margin-bottom: 12px;
   /* Adjusted margin */
 }
 
-.footer__link--items>h2 {
+.footer-link--items>h2 {
   color: #fff;
   font-size: 1.2rem;
   /* Adjusted font size */
 }
 
-.footer__link--items a {
+.footer-link--items a {
   color: #fff;
   text-decoration: none;
   margin-bottom: 0.3rem;
@@ -1002,18 +1002,18 @@
   /* Adjusted font size */
 }
 
-.footer__link--items a:hover {
+.footer-link--items a:hover {
   color: #e9e9e9;
   transition: 0.3s ease-out;
 }
 
-.social__media {
+.social-media {
   max-width: 1200px;
   /* Adjusted maximum width */
   width: 100%;
 }
 
-.social__media--wrap {
+.social-media--wrap {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1023,20 +1023,20 @@
   margin: 40px auto 0 auto;
 }
 
-.social__icons {
+.social-icons {
   display: flex;
   gap: 15px;
   /* Added gap between social icons */
 }
 
-.social__icon--link {
+.social-icon--link {
   color: #fff;
   font-size: 24px;
   transition: color 0.3s ease-out;
   /* Added transition effect */
 }
 
-.social__icon--link:hover {
+.social-icon--link:hover {
   color: #e9e9e9;
 }
 
@@ -1047,29 +1047,29 @@
 }
 
 @media screen and (max-width: 820px) {
-  .footer__links {
+  .footer-links {
     padding-top: 2rem;
   }
 
-  #footer__logo {
+  #footer-logo {
     margin-bottom: 2rem;
   }
 
-  .website__rights {
+  .website-rights {
     margin-bottom: 2rem;
   }
 
-  .footer__link--wrapper {
+  .footer-link--wrapper {
     flex-direction: column;
   }
 
-  .social__media--wrap {
+  .social-media--wrap {
     flex-direction: column;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .footer__link--items {
+  .footer-link--items {
     margin: 0;
     padding: 10px;
     width: 100%;
@@ -1085,14 +1085,14 @@
 
 
 
-/* NOVEROJUMU LAPA */
-.noverojumu_karte_LVGMC {
+/* Observation page */
+.observation-map-LVGMC {
   background: transparent;
   text-align: center;
   padding: 25px;
 }
 
-.noverojumu_karte_LVGMC p {
+.observation-map-LVGMC p {
   margin-top: 1rem;
   font-size: 2rem;
   font-weight: 700;
@@ -1101,12 +1101,12 @@
 }
 
 @media (max-width: 768px) {
-  .noverojumu_karte_LVGMC__btn {
+  .observation-map-LVGMC__btn {
     flex-basis: calc(33.33% - 1rem);
   }
 }
 
-.group_container_LVGMC {
+.group-container-LVGMC {
 
   padding: 2%;
   border: 0px solid #ccc;
@@ -1116,14 +1116,14 @@
   position: relative;
 }
 
-.group_container_LVGMC h2 {
+.group-container-LVGMC h2 {
   color: rgb(240, 240, 250);
   font-size: 2rem;
   font-weight: 700;
   text-align: center;
 }
 
-.noverojumu_karte {
+.observation-map {
   border-radius: 4px;
   width: 80%;
   height: 800px;
@@ -1133,7 +1133,7 @@
 }
 
 @media (max-width: 767px) {
-  .noverojumu_karte {
+  .observation-map {
     height: 700px;
     width: 140%;
     /* Set width to 100% to make it responsive */
@@ -1144,7 +1144,7 @@
   }
 }
 
-.noverojumu_grafiks {
+.observation-chart {
   max-width: 100%;
   border: none;
   border: 1px solid #ccc;
@@ -1158,18 +1158,18 @@
 }
 
 @media (max-width: 767px) {
-  .noverojumu_grafiks {
+  .observation-chart {
     margin-left: 0%;
   }
 }
 
-.noverojumu_datu_izvelne_konteineris {
+.observation-data-menu-container {
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
-.noverojumu_datu_izvelne_poga {
+.observation-data-menu-button {
   background-color: rgb(55, 55, 55);
   color: white;
   padding: 18px;
@@ -1183,7 +1183,7 @@
   text-decoration: none;
 }
 
-.noverojumu_datu_izvelne_saturs {
+.observation-data-menu-content {
   display: none;
   position: absolute;
   background-color: rgb(35, 35, 35);
@@ -1200,7 +1200,7 @@
   text-decoration: none;
 }
 
-.noverojumu_datu_izvelne_saturs a {
+.observation-data-menu-content a {
   color: white;
   padding: 12px;
   text-decoration: none;
@@ -1210,12 +1210,12 @@
   transition: background-color 0.3s ease;
 }
 
-.noverojumu_datu_izvelne_saturs a:hover {
+.observation-data-menu-content a:hover {
   background-color: rgb(85, 85, 85);
   border-radius: 4px;
 }
 
-.noverojumu_datu_izvelne_konteineris:hover .noverojumu_datu_izvelne_saturs {
+.observation-data-menu-container:hover .observation-data-menu-content {
   display: block;
 }
 
@@ -1237,7 +1237,384 @@
 
 
 /*METEO_KOSMOSAAPSTAKLI*/
-/* Ziemelblazmas ovals un intensitate */
+/* KP-index and OVATION */
+.group-container-OVATION {
+  background-color: rgb(43, 43, 51);
+  padding: 2%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  margin: 2% 5%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.group-container-OVATION h2 {
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: rgb(250, 252, 255);
+  padding: 1%;
+  text-align: center;
+  width: 100%;
+}
+
+.title-separator-OVATION {
+  border: none;
+  border-top: 1px solid #ccc;
+  width: 80%;
+  margin: 50px auto;
+}
+
+.OVATION-chart {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.OVATION-chart iframe {
+  width: 100%;
+  height: 320px;
+  border: none;
+}
+
+.OVATION-chart img {
+  max-width: 100%;
+  height: auto;
+}
+
+.OVATION-chart-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  margin-left: 250px;
+  margin-right: 250px;
+}
+
+.OVATION-chart-container .OVATION-chart {
+  flex: 1;
+}
+
+.OVATION-chart-container img {
+  max-width: 60%;
+  height: auto;
+  transform: rotate(90deg);
+  clip-path: inset(10% 0 17% 0);
+}
+
+.highcharts-container {
+  width: 100% !important;
+}
+
+@media screen and (max-width: 768px) {
+  .OVATION-chart-container {
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .OVATION-chart-container img {
+    max-width: 100%;
+    clip-path: none;
+    transform: rotate(0deg);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/* Solar wind and magnetic field (DSCOVR) */
+.group-container-DSCOVR {
+  background-color: rgb(43, 43, 51);
+  padding: 2%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  margin: 2% 5%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.group-container-DSCOVR h2 {
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: rgb(250, 252, 255);
+  padding: 1%;
+  text-align: center;
+  width: 100%;
+}
+
+.title-separator-DSCOVR {
+  border: none;
+  border-top: 1px solid #ccc;
+  width: 80%;
+  margin: 50px auto;
+}
+
+.DSCOVR-chart {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 200px;
+}
+
+.DSCOVR-chart iframe {
+  width: 100%;
+  height: 500px;
+  border: none;
+  margin-bottom: 20px;
+  /* Add margin between iframes */
+}
+
+.highcharts-container {
+  width: 100% !important;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+  .DSCOVR-chart iframe {
+    width: 100%;
+    /* Reduce width of charts on smaller screens */
+    max-width: 100%;
+    /* Ensure charts don't exceed the screen width */
+  }
+
+  .DSCOVR-chart {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/* Solar flares */
+.group-container-flares {
+  background-color: rgb(43, 43, 51);
+  padding: 2%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  margin: 2% 5%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.group-container-flares h2 {
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: rgb(250, 252, 255);
+  padding: 1%;
+  text-align: center;
+  width: 100%;
+}
+
+.title-separator-flares {
+  border: none;
+  border-top: 1px solid #ccc;
+  width: 80%;
+  margin: 50px auto;
+}
+
+.flares-chart {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 200px;
+}
+
+.flares-chart iframe {
+  /* Corrected class name */
+  width: 100%;
+  height: 500px;
+  border: none;
+  margin-bottom: 20px;
+  /* Add margin between iframes */
+}
+
+.highcharts-container {
+  width: 100% !important;
+}
+
+/* Define columns for side-by-side images */
+.column {
+  float: left;
+  width: 50%;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  margin-left: -55px;
+}
+
+/* Clear floats after the columns */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+  .column {
+    width: 100%;
+    /* Make each column take up full width on smaller screens */
+    float: none;
+    /* Remove the float so columns stack vertically */
+    margin-left: 0px;
+  }
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+  .flares-chart iframe {
+    width: 100%;
+    /* Reduce width of charts on smaller screens */
+    max-width: 100%;
+    /* Ensure charts don't exceed the screen width */
+  }
+
+  .flares-chart {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .group_container_OVATION {
   background-color: rgb(43, 43, 51);
   padding: 2%;
@@ -1746,7 +2123,7 @@
 
 .iframe_ACE {
   max-width: 100%;
-  height: 420px;
+  height: 500px;
 }
 
 .dscovr_legend_green {
@@ -2463,8 +2840,8 @@ img {
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   background-color: rgb(43, 43, 51);
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 0px solid #ccc;
+  border-radius: 20px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   margin: 2% 5%;
   padding-right: 2%;

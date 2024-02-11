@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Kp Index Gauge</title>
+    <!-- Load jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Load Highcharts from CDN -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <!-- Load dark theme for Highcharts -->
+    <script src="https://code.highcharts.com/themes/dark-unica.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <style>
+        #container {
+            width: 400px;
+            /* Adjust width as needed */
+            height: 300px;
+            /* Adjust height as needed */
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 0px;
+            position: relative;
+        }
+
+        .chart-button-container {
+            margin-top: 20px;
+        }
+
+        @media screen and (max-width: 768px) {
+            #container {
+                width: 290px;
+                height: 250px;
+                border-radius: 10px;
+                overflow: hidden;
+                margin-bottom: 20px;
+                position: relative;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container"></div>
+
+    <script>
+        $(document).ready(function () {
+            // Function to fetch latest data and plot gauge chart
+            function fetchAndPlotGauge() {
+                // Fetch data from JSON URL
+                $.getJSON("https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json", function (data) {
+                    // Get the latest data point
+                    var latestData = data[data.length - 1];
+                    // Extract Kp value
+                    var kpValue = parseFloat(latestData[1]);
+
+                    // Define color based on Kp value
+                    var gaugeColor;
+                    if (kpValue < 0) {
+                        gaugeColor = 'rgb(146, 208, 80)';
+                    } else if (kpValue < 1) {
+                        gaugeColor = 'rgb(146, 208, 80)';
+                    } else if (kpValue < 2) {
+                        gaugeColor = 'rgb(146, 208, 80)';
+                    } else if (kpValue < 3) {
+                        gaugeColor = 'rgb(146, 208, 80)';
+                    } else if (kpValue < 4) {
+                        gaugeColor = 'rgb(146, 208, 80)';
+                    } else if (kpValue < 5) {
+                        gaugeColor = 'rgb(146, 208, 80)';
+                    } else if (kpValue < 6) {
+                        gaugeColor = 'rgb(246, 235, 20)';
+                    } else if (kpValue < 7) {
+                        gaugeColor = 'rgb(255, 200, 0)';
+                    } else if (kpValue < 8) {
+                        gaugeColor = 'rgb(255, 150, 0)';
+                    } else if (kpValue < 9) {
+                        gaugeColor = 'rgb(255, 0, 0)';
+                    } else {
+                        gaugeColor = 'rgb(200, 0, 0)';
+                    }
+
+                    // Create Highcharts gauge chart
+                    Highcharts.chart('container', {
+                        chart: {
+                            type: 'solidgauge',
+                            backgroundColor: 'rgba(57, 57, 77, 1.0)'
+                        },
+                        title: {
+                            text: 'Kp indekss',
+                            style: {
+                                color: 'rgba(250, 252, 255, 1.0)',
+                                fontSize: '24px'
+                            }
+                        },
+                        tooltip: {
+                            enabled: false
+                        },
+                        pane: {
+                            center: ['50%', '85%'],
+                            size: '140%',
+                            startAngle: -90,
+                            endAngle: 90,
+                            background: {
+                                backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+                                innerRadius: '60%',
+                                outerRadius: '100%',
+                                shape: 'arc'
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            max: 9,
+                            lineWidth: 0,
+                            tickAmount: 10, // Adjust tickAmount as needed
+                            title: {
+                                text: null
+                            },
+                            labels: {
+                                y: 0
+                            }
+                        },
+                        plotOptions: {
+                            solidgauge: {
+                                dataLabels: {
+                                    y: 35,
+                                    borderWidth: 0,
+                                    useHTML: true
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'Kp',
+                            data: [{
+                                y: kpValue,
+                                color: gaugeColor
+                            }],
+                            dataLabels: {
+                                format: '<div style="text-align:center"><span style="font-size:35px;color:' +
+                                    ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'white') + '">{y}</span><br/>' +
+                                    '<span style="font-size:12px;color:silver;">KP</span></div>'
+                            },
+                            tooltip: {
+                                valueSuffix: ' Kp'
+                            }
+                        }]
+                    });
+                });
+            }
+
+            // Fetch and plot gauge initially
+            fetchAndPlotGauge();
+        });
+    </script>
+
+</body>
+
+</html>
