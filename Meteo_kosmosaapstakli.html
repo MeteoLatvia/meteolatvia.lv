@@ -19,6 +19,275 @@
   <script src="path-to-fancybox/jquery.fancybox.min.js"></script>
 
   <style>
+    /*METEO_KOSMOSAAPSTAKLI*/
+    /* KP-index and OVATION */
+    .group-container-OVATION {
+      background-color: rgb(43, 43, 51);
+      padding: 2%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      margin: 2% 5%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .group-container-OVATION h2 {
+      margin-top: 1rem;
+      font-size: 2rem;
+      font-weight: 700;
+      color: rgb(250, 252, 255);
+      padding: 1%;
+      text-align: center;
+      width: 100%;
+    }
+
+    .title-separator-OVATION {
+      border: none;
+      border-top: 1px solid #ccc;
+      width: 80%;
+      margin: 50px auto;
+    }
+
+    .OVATION-chart {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .OVATION-chart iframe {
+      width: 100%;
+      height: 320px;
+      border: none;
+    }
+
+    .OVATION-chart img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .OVATION-chart-container {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      width: 100%;
+      margin-left: 250px;
+      margin-right: 250px;
+    }
+
+    .OVATION-chart-container .OVATION-chart {
+      flex: 1;
+    }
+
+    .OVATION-chart-container img {
+      max-width: 60%;
+      height: auto;
+      transform: rotate(90deg);
+      clip-path: inset(10% 0 17% 0);
+    }
+
+    .highcharts-container {
+      width: 100% !important;
+    }
+
+    @media screen and (max-width: 768px) {
+      .OVATION-chart-container {
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0px;
+        margin-right: 0px;
+      }
+
+      .OVATION-chart-container img {
+        max-width: 100%;
+        clip-path: none;
+        transform: rotate(0deg);
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+    /* Solar wind and magnetic field (DSCOVR) */
+    .group-container-DSCOVR {
+      background-color: rgb(43, 43, 51);
+      padding: 2%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      margin: 2% 5%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .group-container-DSCOVR h2 {
+      margin-top: 1rem;
+      font-size: 2rem;
+      font-weight: 700;
+      color: rgb(250, 252, 255);
+      padding: 1%;
+      text-align: center;
+      width: 100%;
+    }
+
+    .title-separator-DSCOVR {
+      border: none;
+      border-top: 1px solid #ccc;
+      width: 80%;
+      margin: 50px auto;
+    }
+
+    .DSCOVR-chart {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: 200px;
+    }
+
+    .DSCOVR-chart iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      margin-bottom: 20px;
+      /* Add margin between iframes */
+    }
+
+    .highcharts-container {
+      width: 100% !important;
+    }
+
+    /* Media query for smaller screens */
+    @media screen and (max-width: 768px) {
+      .DSCOVR-chart iframe {
+        width: 100%;
+        /* Reduce width of charts on smaller screens */
+        max-width: 100%;
+        /* Ensure charts don't exceed the screen width */
+      }
+
+      .DSCOVR-chart {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0px;
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+    /* Solar flares */
+    .group-container-flares {
+      background-color: rgb(43, 43, 51);
+      padding: 2%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      margin: 2% 5%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .group-container-flares h2 {
+      margin-top: 1rem;
+      font-size: 2rem;
+      font-weight: 700;
+      color: rgb(250, 252, 255);
+      padding: 1%;
+      text-align: center;
+      width: 100%;
+    }
+
+    .title-separator-flares {
+      border: none;
+      border-top: 1px solid #ccc;
+      width: 80%;
+      margin: 50px auto;
+    }
+
+    .flares-chart {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: 200px;
+    }
+
+    .flares-chart iframe {
+      /* Corrected class name */
+      width: 100%;
+      height: 500px;
+      border: none;
+      margin-bottom: 20px;
+      /* Add margin between iframes */
+    }
+
+    .highcharts-container {
+      width: 100% !important;
+    }
+
+    /* Define columns for side-by-side images */
+    .column {
+      float: left;
+      width: 50%;
+      padding: 5px;
+      display: flex;
+      justify-content: center;
+      margin-left: -55px;
+    }
+
+    /* Clear floats after the columns */
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    /* Media query for smaller screens */
+    @media screen and (max-width: 768px) {
+      .column {
+        width: 100%;
+        /* Make each column take up full width on smaller screens */
+        float: none;
+        /* Remove the float so columns stack vertically */
+        margin-left: 0px;
+      }
+    }
+
+    /* Media query for smaller screens */
+    @media screen and (max-width: 768px) {
+      .flares-chart iframe {
+        width: 100%;
+        /* Reduce width of charts on smaller screens */
+        max-width: 100%;
+        /* Ensure charts don't exceed the screen width */
+      }
+
+      .flares-chart {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0px;
+      }
+    }
   </style>
 </head>
 
