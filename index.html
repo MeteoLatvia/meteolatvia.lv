@@ -2,6 +2,10 @@
 <html lang="en">
 
 <head>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="https://fv9-7.failiem.lv/down.php?i=p2kgbydxw&view" />
+  
   <!-- Meta tags -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,12 +23,1085 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
 
-  <!-- Favicon -->
-  <link rel="shortcut icon" href="https://fv9-7.failiem.lv/down.php?i=p2kgbydxw&view" />
-
   <!-- Additional Styles (if any) -->
   <style>
-    /* Add your additional styles here */
+    /* METEOLATVIA MAJASLAPA */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Kumbh Sans", sans-serif;
+    }
+
+
+
+
+
+
+
+
+
+
+    /* NAVBAR */
+    .navbar {
+      background: rgb(43, 43, 51);
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      font-weight: 500;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .navbar__container {
+      display: flex;
+      justify-content: space-between;
+      height: 80px;
+      z-index: 1;
+      width: 100%;
+      max-width: 1300px;
+      margin-right: auto;
+      margin-left: auto;
+      padding-right: 50px;
+      padding-left: 50px;
+    }
+
+    #navbar__logo {
+      background-image: linear-gradient(to top,
+          rgb(0, 40, 255) 0%,
+          rgb(64, 92, 255) 100%);
+      background-size: 100%;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -moz-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    #navbar__logo img {
+      width: 12%;
+    }
+
+    .fa-gem {
+      margin-right: 0.5rem;
+    }
+
+    .navbar__menu {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      text-align: center;
+    }
+
+    .navbar__item {
+      height: 80px;
+    }
+
+    .navbar__links {
+      color: rgb(250, 252, 255);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      padding: 0 1rem;
+      height: 100%;
+    }
+
+    .navbar__btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 1rem;
+      width: 100%;
+    }
+
+    .button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      padding: 10px 20px;
+      height: 100%;
+      width: 100%;
+      border: none;
+      outline: none;
+      border-radius: 4px;
+      background: rgb(128, 147, 255);
+      color: #fff;
+    }
+
+    .button:hover {
+      background: rgb(0, 40, 255);
+      transition: all 0.3s ease;
+    }
+
+    .navbar__links:hover {
+      color: rgb(128, 147, 255);
+      transition: all 0.3s ease;
+    }
+
+    .navbar__dropdown:hover .navbar__submenu {
+      display: block;
+    }
+
+    .navbar__submenu {
+      display: none;
+      position: absolute;
+      background-color: rgba(250, 252, 255, 0.95);
+      /* Add transparency for a subtle effect */
+      border: 1px solid rgb(196, 200, 204);
+      z-index: 1;
+      padding: 20px;
+      border-radius: 4px;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .navbar__submenu-item {
+      padding: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .navbar__submenu-item:hover {
+      background-color: rgba(128, 147, 255, 0.2);
+      /* Add a subtle background color on hover */
+    }
+
+    .navbar__submenu-item a {
+      text-decoration: none;
+      color: rgb(23, 25, 26);
+    }
+
+    .navbar__submenu {
+      text-align: left;
+      list-style: none;
+      padding: 0;
+    }
+
+    @media screen and (max-width: 960px) {
+      .navbar__container {
+        display: flex;
+        justify-content: space-between;
+        height: 80px;
+        z-index: 1;
+        width: 100%;
+        max-width: 1300px;
+        padding: 0;
+      }
+
+      .navbar__menu {
+        display: grid;
+        grid-template-columns: auto;
+        margin: 0;
+        width: 100%;
+        position: absolute;
+        top: -1000px;
+        opacity: 1;
+        transition: all 0.5s ease;
+        height: 50vh;
+        z-index: -1;
+      }
+
+      .navbar__submenu {
+        display: none;
+        position: absolute;
+        background-color: rgba(250, 252, 255, 0.95);
+        /* Add transparency for a subtle effect */
+        border: 1px solid rgb(196, 200, 204);
+        z-index: 1;
+        padding: 20px;
+        border-radius: 4px;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        width: 100%;
+      }
+
+      .navbar__menu.active {
+        background: #131313;
+        top: 100%;
+        opacity: 1;
+        transition: all 0.5s ease;
+        z-index: 99;
+        height: 60vh;
+        font-size: 1.6rem;
+      }
+
+      #navbar__logo {
+        padding-left: 25px;
+      }
+
+      .navbar__toggle .bar {
+        width: 25px;
+        height: 3px;
+        margin: 5px auto;
+        transition: all 0.3s ease-in-out;
+        background: #fff;
+      }
+
+      .navbar__item {
+        width: 100%;
+      }
+
+      .navbar__links {
+        text-align: center;
+        padding: 2rem;
+        width: 100%;
+        display: table;
+      }
+
+      .navbar__btn {
+        padding-bottom: 2rem;
+      }
+
+      .button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+        height: 80px;
+        margin: 0;
+      }
+
+      #mobile-menu {
+        position: absolute;
+        top: 20%;
+        right: 5%;
+        transform: translate(5%, 20%);
+      }
+
+      .navbar__toggle .bar {
+        display: block;
+        cursor: pointer;
+      }
+
+      #mobile-menu.is-active .bar:nth-child(2) {
+        opacity: 0;
+      }
+
+      #mobile-menu.is-active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+
+      #mobile-menu.is-active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+    /* Main banner section */
+    .main {
+      background-image: linear-gradient(rgba(0, 4, 26, 0.6), rgba(0, 4, 26, 0.8)),
+        url(https://fv9-3.failiem.lv/down.php?i=twqq54ua5&view);
+    }
+
+    .main-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      justify-self: center;
+      margin: 0 auto;
+      height: 95vh;
+
+      z-index: 1;
+      width: 100%;
+      max-width: 1300px;
+      padding-right: 50px;
+      padding-left: 50px;
+    }
+
+    .main-content {
+      color: rgb(255, 255, 255);
+      width: 100%;
+    }
+
+    .main-content h1 {
+      font-size: 4rem;
+      background-color: #ff8177;
+      background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
+      background-size: 100%;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -moz-text-fill-color: transparent;
+    }
+
+    .main-content h2 {
+      font-size: 4rem;
+      margin-top: 10px;
+      background-color: #ff8177;
+      background-image: linear-gradient(-20deg,
+          rgb(0, 40, 255) 0%,
+          rgb(64, 92, 255) 100%);
+      background-size: 100%;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -moz-text-fill-color: transparent;
+    }
+
+    .main-content p {
+      margin-top: 1rem;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .main-btn {
+      font-size: 1rem;
+      background-image: linear-gradient(to top,
+          rgb(66, 94, 255) 0%,
+          rgb(0, 40, 255) 100%);
+      padding: 14px 32px;
+      border: none;
+      border-radius: 4px;
+      color: rgb(255, 255, 255);
+      margin-top: 2rem;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.35s;
+      outline: none;
+    }
+
+    .main-btn a {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .main-btn:after {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: #1500ff;
+      transition: all 0.35s;
+      border-radius: 4px;
+    }
+
+    .main-btn:hover {
+      color: #fff;
+    }
+
+    .main-btn:hover:after {
+      width: 100%;
+    }
+
+    .main-img--container {
+      text-align: center;
+    }
+
+    #main-img {
+      height: 100%;
+      width: 100%;
+      border-radius: 15px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .main-container {
+        display: grid;
+        grid-template-columns: auto;
+        align-items: center;
+        justify-self: center;
+        width: 100%;
+        margin: 0 auto;
+        height: 50vh;
+      }
+
+      .main-content {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .main-content h1 {
+        font-size: 2.5rem;
+        margin-top: 2rem;
+      }
+
+      .main-content h2 {
+        font-size: 3rem;
+      }
+
+      .main-content p {
+        margin-top: 1rem;
+        font-size: 1.5rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .main-content h1 {
+        font-size: 2rem;
+        margin-top: 3rem;
+      }
+
+      .main-content h2 {
+        font-size: 2rem;
+      }
+
+      .main-content p {
+        margin-top: 2rem;
+        font-size: 1.5rem;
+      }
+
+      .main-btn {
+        padding: 12px 36px;
+        margin: 2.5rem 0;
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+    /*SAKUMLAPA*/
+    /* Observations Section */
+    .jaunumi {
+      background: rgb(23, 25, 26);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .jaunumi h1 {
+      color: rgb(250, 252, 255);
+      margin-bottom: 5rem;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+
+    .jaunumi-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .jaunumi-card {
+      margin: 1rem;
+      height: 525px;
+      width: 400px;
+      border-radius: 4px;
+      background: url("/images/pic3.jpg");
+      background-size: cover;
+      position: relative;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .jaunumi-card:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(23, 25, 26, 1), rgba(23, 25, 26, 0));
+      opacity: 0.8;
+    }
+
+    .jaunumi-card h2 {
+      position: absolute;
+      top: 350px;
+      left: 30px;
+    }
+
+    .jaunumi-card p {
+      position: absolute;
+      top: 400px;
+      left: 30px;
+    }
+
+    .jaunumi-card button {
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      outline: none;
+      border-radius: 4px;
+      background: rgb(0, 40, 255);
+      position: absolute;
+      top: 440px;
+      left: 30px;
+      font-size: 1rem;
+    }
+
+    .jaunumi-card button:hover {
+      cursor: pointer;
+    }
+
+    .jaunumi-card:hover {
+      transform: scale(1.075);
+      transition: 0.2s ease-in;
+      cursor: pointer;
+      box-shadow: 0 0 25px 5px rgba(0, 40, 255, 0.2);
+    }
+
+    .jaunumi-card_img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    @media screen and (max-width: 960px) {
+      .jaunumi {
+        height: 1600px;
+      }
+
+      .jaunumi h1 {
+        font-size: 2rem;
+        margin-top: 12rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .jaunumi {
+        height: 1400px;
+      }
+
+      .jaunumi h1 {
+        font-size: 1.2rem;
+      }
+
+      .jaunumi-card {
+        width: 300px;
+      }
+    }
+
+
+
+
+
+    /* Observations Section */
+    .observations {
+      background: rgb(23, 25, 26);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .observations h1 {
+      color: rgb(250, 252, 255);
+      margin-bottom: 5rem;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+
+    .observations-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .observations-card {
+      margin: 1rem;
+      height: 525px;
+      width: 400px;
+      border-radius: 4px;
+      background: url("/images/pic3.jpg");
+      background-size: cover;
+      position: relative;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .observations-card:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(23, 25, 26, 1), rgba(23, 25, 26, 0));
+      opacity: 0.8;
+    }
+
+    .observations-card h2 {
+      position: absolute;
+      top: 350px;
+      left: 30px;
+    }
+
+    .observations-card p {
+      position: absolute;
+      top: 400px;
+      left: 30px;
+    }
+
+    .observations-card button {
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      outline: none;
+      border-radius: 4px;
+      background: rgb(0, 40, 255);
+      position: absolute;
+      top: 440px;
+      left: 30px;
+      font-size: 1rem;
+    }
+
+    .observations-card button:hover {
+      cursor: pointer;
+    }
+
+    .observations-card:hover {
+      transform: scale(1.075);
+      transition: 0.2s ease-in;
+      cursor: pointer;
+      box-shadow: 0 0 25px 5px rgba(0, 40, 255, 0.2);
+    }
+
+    .observations-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    @media screen and (max-width: 960px) {
+      .observations {
+        height: 1600px;
+      }
+
+      .observations h1 {
+        font-size: 2rem;
+        margin-top: 12rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .observations {
+        height: 1400px;
+      }
+
+      .observations h1 {
+        font-size: 1.2rem;
+      }
+
+      .observations-card {
+        width: 300px;
+      }
+    }
+
+
+
+
+
+    /* Forecasts Section */
+    .forecasts {
+      background: rgb(23, 25, 26);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .forecasts h1 {
+      color: rgb(250, 252, 255);
+      margin-bottom: 5rem;
+      font-size: 2.5rem;
+    }
+
+    .forecasts-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .forecasts-card {
+      margin: 1rem;
+      height: 525px;
+      width: 400px;
+      border-radius: 4px;
+      background-image: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(23, 25, 26, 0.6) 100%),
+        url("/images/pic3.jpg");
+      background-size: cover;
+      position: relative;
+      color: rgb(255, 255, 255);
+    }
+
+    .forecasts-card:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(23, 25, 26, 1), rgba(23, 25, 26, 0));
+      opacity: 0.8;
+    }
+
+    .forecasts-card:nth-child(2) {
+      background-image: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(23, 25, 26, 0.6) 100%),
+        url("/images/pic4.jpg");
+    }
+
+    .forecasts-card h2 {
+      position: absolute;
+      top: 350px;
+      left: 30px;
+    }
+
+    .forecasts-card p {
+      position: absolute;
+      top: 400px;
+      left: 30px;
+    }
+
+    .forecasts-card button {
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      outline: none;
+      border-radius: 4px;
+      background: rgb(0, 40, 255);
+      position: absolute;
+      top: 440px;
+      left: 30px;
+      font-size: 1rem;
+    }
+
+    .forecasts-card button:hover {
+      cursor: pointer;
+    }
+
+    .forecasts-card:hover {
+      transform: scale(1.075);
+      transition: 0.2s ease-in;
+      cursor: pointer;
+      box-shadow: 0 0 25px 5px rgba(0, 40, 255, 0.2);
+    }
+
+    .forecasts-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+
+    @media screen and (max-width: 960px) {
+      .forecasts {
+        height: 1600px;
+      }
+
+      .forecasts h1 {
+        font-size: 2rem;
+        margin-top: 12rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .forecasts {
+        height: 1400px;
+      }
+
+      .forecasts h1 {
+        font-size: 1.2rem;
+      }
+
+      .forecasts-card {
+        width: 300px;
+      }
+    }
+
+
+
+
+
+    /* Space weather Section */
+    .spaceweather {
+      background: rgb(23, 25, 26);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .spaceweather h1 {
+      color: rgb(250, 252, 255);
+      margin-bottom: 5rem;
+      font-size: 2.5rem;
+    }
+
+    .spaceweather-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .spaceweather-card {
+      margin: 1rem;
+      height: 525px;
+      width: 400px;
+      border-radius: 4px;
+      background-image: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(23, 25, 26, 0.6) 100%),
+        url("/images/pic3.jpg");
+      background-size: cover;
+      position: relative;
+      color: rgb(255, 255, 255);
+    }
+
+    .spaceweather-card:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(23, 25, 26, 1), rgba(23, 25, 26, 0));
+      opacity: 0.8;
+    }
+
+    .spaceweather-card:nth-child(2) {
+      background-image: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(23, 25, 26, 0.6) 100%),
+        url("/images/pic4.jpg");
+    }
+
+    .spaceweather-card h2 {
+      position: absolute;
+      top: 350px;
+      left: 30px;
+    }
+
+    .spaceweather-card p {
+      position: absolute;
+      top: 400px;
+      left: 30px;
+    }
+
+    .spaceweather-card button {
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      outline: none;
+      border-radius: 4px;
+      background: rgb(0, 40, 255);
+      position: absolute;
+      top: 440px;
+      left: 30px;
+      font-size: 1rem;
+    }
+
+    .spaceweather-card button:hover {
+      cursor: pointer;
+    }
+
+    .spaceweather-card:hover {
+      transform: scale(1.075);
+      transition: 0.2s ease-in;
+      cursor: pointer;
+      box-shadow: 0 0 25px 5px rgba(0, 40, 255, 0.2);
+    }
+
+    .spaceweather-card_img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+
+    @media screen and (max-width: 960px) {
+      .spaceweather {
+        height: 1600px;
+      }
+
+      .spaceweather h1 {
+        font-size: 2rem;
+        margin-top: 12rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .spaceweather {
+        height: 1400px;
+      }
+
+      .spaceweather h1 {
+        font-size: 1.2rem;
+      }
+
+      .spaceweather-card {
+        width: 300px;
+      }
+    }
+
+
+
+
+
+    /* Footer section */
+    .footer-container {
+      background-color: rgb(43, 43, 51);
+      padding: 5rem 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #footer-logo {
+      color: #fff;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 2rem;
+    }
+
+    .footer-links {
+      width: 100%;
+      max-width: 1200px;
+      /* Adjusted maximum width */
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      /* Added gap between link items */
+      flex-wrap: wrap;
+      /* Allow links to wrap on smaller screens */
+    }
+
+    .footer-link--wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      /* Allow link items to wrap */
+    }
+
+    .footer-link--items {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin: 16px;
+      text-align: left;
+      width: 160px;
+      box-sizing: border-box;
+    }
+
+    .footer-link--items h2 {
+      margin-bottom: 12px;
+      /* Adjusted margin */
+    }
+
+    .footer-link--items>h2 {
+      color: #fff;
+      font-size: 1.2rem;
+      /* Adjusted font size */
+    }
+
+    .footer-link--items a {
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 0.3rem;
+      /* Adjusted margin */
+      font-size: 0.9rem;
+      /* Adjusted font size */
+    }
+
+    .footer-link--items a:hover {
+      color: #e9e9e9;
+      transition: 0.3s ease-out;
+    }
+
+    .social-media {
+      max-width: 1200px;
+      /* Adjusted maximum width */
+      width: 100%;
+    }
+
+    .social-media--wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 90%;
+      max-width: 1200px;
+      /* Adjusted maximum width */
+      margin: 40px auto 0 auto;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      /* Added gap between social icons */
+    }
+
+    .social-icon--link {
+      color: #fff;
+      font-size: 24px;
+      transition: color 0.3s ease-out;
+      /* Added transition effect */
+    }
+
+    .social-icon--link:hover {
+      color: #e9e9e9;
+    }
+
+    .website__rights {
+      color: #fff;
+      margin-top: 10px;
+      /* Added margin for better separation */
+    }
+
+    @media screen and (max-width: 820px) {
+      .footer-links {
+        padding-top: 2rem;
+      }
+
+      #footer-logo {
+        margin-bottom: 2rem;
+      }
+
+      .website-rights {
+        margin-bottom: 2rem;
+      }
+
+      .footer-link--wrapper {
+        flex-direction: column;
+      }
+
+      .social-media--wrap {
+        flex-direction: column;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .footer-link--items {
+        margin: 0;
+        padding: 10px;
+        width: 100%;
+      }
+    }
   </style>
 </head>
 
