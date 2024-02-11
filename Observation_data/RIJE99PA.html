@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sniega segas biezuma grafiks</title>
+  <title>Temperatūras grafiks</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -42,107 +42,106 @@
   <script>
     let seriesVisible = true;
     const colorScale = [
-    "rgb(255,255,255)",
-        "rgb(127,127,127)",
-        "rgb(121,219,255)",
-        "rgb(65,214,255)",
-        "rgb(0,190,255)",
-        "rgb(0,155,255)",
-        "rgb(0,115,255)",
-        "rgb(0,67,255)",
-        "rgb(0,0,255)",
-        "rgb(0,0,167)",
-        "rgb(0,0,127)",
-        "rgb(20,0,120)",
-        "rgb(35,0,115)",
-        "rgb(47,0,117)",
-        "rgb(60,0,123)",
-        "rgb(70,0,130)",
-        "rgb(76,0,142)",
-        "rgb(80,0,159)",
-        "rgb(85,0,177)",
-        "rgb(92,0,191)",
-        "rgb(101,0,201)",
-        "rgb(109,0,205)",
-        "rgb(119,0,210)",
-        "rgb(130,0,210)",
-        "rgb(141,10,210)",
-        "rgb(155,15,210)",
-        "rgb(165,15,199)",
-        "rgb(178,15,200)",
-        "rgb(188,10,198)",
-        "rgb(198,0,198)",
-        "rgb(206,0,203)",
-        "rgb(214,0,210)",
-        "rgb(220,0,215)",
-        "rgb(228,0,228)",
-        "rgb(232,0,232)",
-        "rgb(240,0,240)",
-        "rgb(245,0,246)",
-        "rgb(251,0,251)",
-        "rgb(255,0,255)",
-        "rgb(255,0,250)",
-        "rgb(255,0,245)",
-        "rgb(255,0,235)",
-        "rgb(255,0,222)",
-        "rgb(255,5,207)",
-        "rgb(255,10,192)",
-        "rgb(255,15,176)",
-        "rgb(255,15,160)",
-        "rgb(255,10,144)",
-        "rgb(255,5,130)",
-        "rgb(255,0,120)",
-        "rgb(255,0,110)",
-        "rgb(255,0,100)",
-        "rgb(255,0,90)",
-        "rgb(255,0,77)",
-        "rgb(255,0,66)",
-        "rgb(255,0,52)",
-        "rgb(255,0,41)",
-        "rgb(255,0,25)",
-        "rgb(255,0,0)",
-        "rgb(237,0,0)",
-        "rgb(225,0,0)",
-        "rgb(212,0,0)",
-        "rgb(197,0,0)",
-        "rgb(181,0,0)",
-        "rgb(167,0,0)",
-        "rgb(153,0,0)",
-        "rgb(141,0,0)",
-        "rgb(131,0,0)",
-        "rgb(122,0,0)",
-        "rgb(113,0,0)",
-        "rgb(106,0,0)",
-        "rgb(99,0,0)",
-        "rgb(87,0,0)",
-        "rgb(82,0,0)",
-        "rgb(77,0,0)",
-        "rgb(72,0,0)",
-        "rgb(67,0,0)",
-        "rgb(63,0,0)",
-        "rgb(60,0,0)",
-        "rgb(56,0,0)",
-        "rgb(53,0,0)",
-        "rgb(50,0,0)",
-        "rgb(47,0,0)",
-        "rgb(45,0,0)",
-        "rgb(42,0,0)",
-        "rgb(39,0,0)",
-        "rgb(37,0,0)",
-        "rgb(34,0,0)",
-        "rgb(31,0,0)",
-        "rgb(28,0,0)",
-        "rgb(26,0,0)",
-        "rgb(24,0,0)",
-        "rgb(22,0,0)",
-        "rgb(19,0,0)",
-        "rgb(17,0,0)",
-        "rgb(14,0,0)",
-        "rgb(10,0,0)",
-        "rgb(8,0,0)",
-        "rgb(6,0,0)",
-        "rgb(4,0,0)",
-        "rgb(2,0,0)",
+      "rgb(255,255,255)",
+      "rgb(255,245,255)",
+      "rgb(255,230,255)",
+      "rgb(255,220,255)",
+      "rgb(255,205,255)",
+      "rgb(255,190,255)",
+      "rgb(255,175,255)",
+      "rgb(255,160,255)",
+      "rgb(255,145,255)",
+      "rgb(255,135,255)",
+      "rgb(255,120,255)",
+      "rgb(255,110,255)",
+      "rgb(255,100,255)",
+      "rgb(255,90,255)",
+      "rgb(255,80,255)",
+      "rgb(255,70,255)",
+      "rgb(255,60,255)",
+      "rgb(255,50,255)",
+      "rgb(255,35,255)",
+      "rgb(255,15,255)",
+      "rgb(255,0,255)",
+      "rgb(240,0,240)",
+      "rgb(230,0,230)",
+      "rgb(220,0,220)",
+      "rgb(200,0,200)",
+      "rgb(190,0,180)",
+      "rgb(175,0,165)",
+      "rgb(160,0,150)",
+      "rgb(145,0,140)",
+      "rgb(135,0,130)",
+      "rgb(115,0,125)",
+      "rgb(90,0,115)",
+      "rgb(65,0,115)",
+      "rgb(35,0,115)",
+      "rgb(10,0,120)",
+      "rgb(0,0,128)",
+      "rgb(0,0,160)",
+      "rgb(0,0,190)",
+      "rgb(0,0,225)",
+      "rgb(0,0,255)",
+      "rgb(0,35,255)",
+      "rgb(0,65,255)",
+      "rgb(0,85,255)",
+      "rgb(0,110,255)",
+      "rgb(0,128,255)",
+      "rgb(0,145,255)",
+      "rgb(0,170,255)",
+      "rgb(0,195,255)",
+      "rgb(0,215,255)",
+      "rgb(0,230,255)",
+      "rgb(0,255,255)",
+      "rgb(0,255,128)",
+      "rgb(0,255,95)",
+      "rgb(0,255,70)",
+      "rgb(0,255,40)",
+      "rgb(0,255,0)",
+      "rgb(70,255,0)",
+      "rgb(110,255,0)",
+      "rgb(140,255,0)",
+      "rgb(165,255,0)",
+      "rgb(185,255,0)",
+      "rgb(205,255,0)",
+      "rgb(220,255,0)",
+      "rgb(235,255,0)",
+      "rgb(255,255,0)",
+      "rgb(255,240,0)",
+      "rgb(255,220,0)",
+      "rgb(255,195,0)",
+      "rgb(255,165,0)",
+      "rgb(255,140,0)",
+      "rgb(255,120,0)",
+      "rgb(255,100,0)",
+      "rgb(255,80,0)",
+      "rgb(255,60,0)",
+      "rgb(255,30,0)",
+      "rgb(255,0,0)",
+      "rgb(245,0,0)",
+      "rgb(235,0,0)",
+      "rgb(220,0,0)",
+      "rgb(205,0,0)",
+      "rgb(195,0,0)",
+      "rgb(180,0,0)",
+      "rgb(165,0,0)",
+      "rgb(150,0,0)",
+      "rgb(135,0,0)",
+      "rgb(120,0,0)",
+      "rgb(110,0,0)",
+      "rgb(100,0,0)",
+      "rgb(90,0,0)",
+      "rgb(75,0,0)",
+      "rgb(60,0,0)",
+      "rgb(60,20,20)",
+      "rgb(60,40,40)",
+      "rgb(60,60,60)",
+      "rgb(80,80,80)",
+      "rgb(100,100,100)",
+      "rgb(120,120,120)",
+      "rgb(140,140,140)",
+      "rgb(160,160,160)",
+      "rgb(180,180,180)",
       // ... (add other colors as needed)
     ];
 
@@ -164,50 +163,18 @@
 
     function processData(data) {
       const stationNameMapping = {
-        "DAUGAVGR": "Daugavgrīva",
-        "KALNCIEM": "Kalnciems",
-        "KULDIGA": "Kuldīga",
-        "LIELPECI": "Lielpeči",
-        "PIEDRUJA": "Piedruja",
-        "RIAI99PA": "Ainaži",
-        "RIAL99MS": "Alūksne",
-        "RIBA99PA": "Bauska",
-        "RIDAGDA": "Dagda",
-        "RIDM99MS": "Daugavpils",
-        "RIDO99MS": "Dobele",
-        "RIGASLU": "Rīga (LU)",
-        "RIGU99MS": "Gulbene",
         "RIJE99PA": "Jelgava",
-        "RIKO99PA": "Kolka",
-        "RILP99PA": "Liepāja",
-        "RIMADONA": "Madona",
-        "RIME99MS": "Mērsrags",
-        "RIPA99PA": "Pāvilosta",
-        "RIPR99PA": "Priekuļi",
-        "RIREZEKN": "Rēzekne",
-        "RIRU99PA": "Rūjiena",
-        "RISA99PA": "Saldus",
-        "RISE99MS": "Skulte",
-        "RISI99PA": "Skrīveri",
-        "RIST99PA": "Stende",
-        "RIVE99PA": "Ventspils",
-        "RIZI99PA": "Zīlāni",
-        "RIZO99MS": "Zosēni",
-        "RUCAVA": "Rucava",
-        "SIGULDA": "Sigulda",
-        "SILI": "Sīļi",
-        "VICAKI": "Vičaki",
         // Add more mappings as needed
       };
 
-      const stationNames = [...new Set(data.map((entry) => entry.stacijas_kods))];
+      const targetStation = "RIJE99PA"; // Set the target station code here
 
-      const seriesData = stationNames.map((station) => ({
-        name: stationNameMapping[station] || station,
+      const seriesData = [{
+        name: stationNameMapping[targetStation] || targetStation,
         data: data
-          .filter((entry) => entry.stacijas_kods === station)
-          .map((entry) => [new Date(entry.laiks).getTime(), parseFloat(entry.sniega_segas_biezums)]),
-      }));
+          .filter((entry) => entry.stacijas_kods === targetStation)
+          .map((entry) => [new Date(entry.laiks).getTime(), parseFloat(entry.temperatura)]),
+      }];
 
       initializeChart(seriesData);
     }
@@ -251,7 +218,7 @@
           },
         },
         title: {
-          text: "Sniega segas biezums",
+          text: "Gaisa temperatūra",
           style: {
             color: 'rgb(250, 252, 255)',
           }
@@ -260,8 +227,7 @@
           line: {
             marker: {
               enabled: false,
-            },
-            lineWidth: 5, // Set the desired line width here
+            }
           }
         },
         xAxis: {
@@ -278,41 +244,62 @@
         },
         yAxis: {
           title: {
-            text: "Sniega segas biezums (cm)",
+            text: "Temperatūra (°C)",
             style: {
               color: 'rgb(250, 252, 255)',
             }
           },
           ...axisStyles,
-          plotLines: [{
-            value: 0,
-            color: 'rgba(255, 255, 255, 1.0)',
-            width: 3,
-            zIndex: 1,
-          }],
+          plotLines: [
+            {
+              value: 0,
+              color: 'rgba(255, 255, 255, 1.0)',
+              width: 3,
+              zIndex: 1,
+            },
+            {
+              value: -30,
+              color: 'rgba(255, 0, 0, 1.0)', // Customize the color for the second plot line
+              width: 3,
+              zIndex: 2,
+            },
+            {
+              value: -25,
+              color: 'rgba(255, 128, 0, 1.0)', // Customize the color for the second plot line
+              width: 3,
+              zIndex: 2,
+            },
+            {
+              value: -20,
+              color: 'rgba(255, 255, 0, 1.0)', // Customize the color for the second plot line
+              width: 3,
+              zIndex: 2,
+            },
+            {
+              value: 27,
+              color: 'rgba(255, 255, 0, 1.0)', // Customize the color for the second plot line
+              width: 3,
+              zIndex: 2,
+            },
+            {
+              value: 31,
+              color: 'rgba(255, 128, 0, 1.0)', // Customize the color for the second plot line
+              width: 3,
+              zIndex: 2,
+            },
+            {
+              value: 35,
+              color: 'rgba(255, 0, 0, 1.0)', // Customize the color for the second plot line
+              width: 3,
+              zIndex: 2,
+            },
+            // Add more plot lines as needed
+          ],
         },
         series: seriesData.map((entry, index) => ({
           ...entry,
           zones: generateColorZones(colorScale, index),
         })),
-        navigator: {
-          enabled: true,
-          adaptToUpdatedData: true,
-          xAxis: {
-            lineColor: 'rgb(250, 252, 255)',
-            gridLineWidth: 1,  // Width of the grid lines
-            gridLineColor: 'rgba(255, 255, 255, 0.2)',  // Color of the grid lines,
-          },
-          maskFill: 'rgba(255, 255, 255, 0.1)',
-          series: {
-            color: 'rgba(255, 255, 255, 0.5)',
-          },
-          handles: {
-            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-            borderColor: 'rgb(250, 252, 255)',
-          },
-          outlineColor: 'rgb(250, 252, 255)',
-        },
         legend: {
           layout: "horizontal",
           align: "center",
@@ -326,7 +313,7 @@
           formatter: function () {
             const date = new Date(this.x);
             const formattedDate = `${padZero(date.getDate())}.${padZero(date.getMonth() + 1)}.${date.getFullYear()} ${padZero(date.getHours())}:${padZero(date.getMinutes())}`;
-            return `<b>${formattedDate}</b><br/>${this.series.name}: ${this.y} cm`;
+            return `<b>${formattedDate}</b><br/>${this.series.name}: ${this.y}°C`;
           }
         }
       });
@@ -335,306 +322,308 @@
     function generateColorZones(colorScale, index) {
       // Sample color zones, replace with your logic
       return [{
-        value: 0,
+        value: -50,
+        color: colorScale[0],
+      }, {
+        value: -49,
         color: colorScale[1],
       }, {
-        value: 1,
+        value: -48,
         color: colorScale[2],
       }, {
-        value: 2,
+        value: -47,
         color: colorScale[3],
       }, {
-        value: 3,
+        value: -46,
         color: colorScale[4],
       }, {
-        value: 4,
+        value: -45,
         color: colorScale[5],
       }, {
-        value: 5,
+        value: -44,
         color: colorScale[6],
       }, {
-        value: 6,
+        value: -43,
         color: colorScale[7],
       }, {
-        value: 7,
+        value: -42,
         color: colorScale[8],
       }, {
-        value: 8,
+        value: -41,
         color: colorScale[9],
       }, {
-        value: 9,
+        value: -40,
         color: colorScale[10],
       }, {
-        value: 10,
+        value: -39,
         color: colorScale[11],
       }, {
-        value: 11,
+        value: -38,
         color: colorScale[12],
       }, {
-        value: 12,
+        value: -37,
         color: colorScale[13],
       }, {
-        value: 13,
+        value: -36,
         color: colorScale[14],
       }, {
-        value: 14,
+        value: -35,
         color: colorScale[15],
       }, {
-        value: 15,
+        value: -34,
         color: colorScale[16],
       }, {
-        value: 16,
+        value: -33,
         color: colorScale[17],
       }, {
-        value: 17,
+        value: -32,
         color: colorScale[18],
       }, {
-        value: 18,
+        value: -31,
         color: colorScale[19],
       }, {
-        value: 19,
+        value: -30,
         color: colorScale[20],
       }, {
-        value: 20,
+        value: -29,
         color: colorScale[21],
       }, {
-        value: 21,
+        value: -28,
         color: colorScale[22],
       }, {
-        value: 22,
+        value: -27,
         color: colorScale[23],
       }, {
-        value: 23,
+        value: -26,
         color: colorScale[24],
       }, {
-        value: 24,
+        value: -25,
         color: colorScale[25],
       }, {
-        value: 25,
+        value: -24,
         color: colorScale[26],
       }, {
-        value: 26,
+        value: -23,
         color: colorScale[27],
       }, {
-        value: 27,
+        value: -22,
         color: colorScale[28],
       }, {
-        value: 28,
+        value: -21,
         color: colorScale[29],
       }, {
-        value: 29,
+        value: -20,
         color: colorScale[30],
       }, {
-        value: 30,
+        value: -19,
         color: colorScale[31],
       }, {
-        value: 31,
+        value: -18,
         color: colorScale[32],
       }, {
-        value: 32,
+        value: -17,
         color: colorScale[33],
       }, {
-        value: 33,
+        value: -16,
         color: colorScale[34],
       }, {
-        value: 34,
+        value: -15,
         color: colorScale[35],
       }, {
-        value: 35,
+        value: -14,
         color: colorScale[36],
       }, {
-        value: 36,
+        value: -13,
         color: colorScale[37],
       }, {
-        value: 37,
+        value: -12,
         color: colorScale[38],
       }, {
-        value: 38,
+        value: -11,
         color: colorScale[39],
       }, {
-        value: 39,
+        value: -10,
         color: colorScale[40],
       }, {
-        value: 40,
+        value: -9,
         color: colorScale[41],
       }, {
-        value: 41,
+        value: -8,
         color: colorScale[42],
       }, {
-        value: 42,
+        value: -7,
         color: colorScale[43],
       }, {
-        value: 43,
+        value: -6,
         color: colorScale[44],
       }, {
-        value: 44,
+        value: -5,
         color: colorScale[45],
       }, {
-        value: 45,
+        value: -4,
         color: colorScale[46],
       }, {
-        value: 46,
+        value: -3,
         color: colorScale[47],
       }, {
-        value: 47,
+        value: -2,
         color: colorScale[48],
       }, {
-        value: 48,
+        value: -1,
         color: colorScale[49],
       }, {
-        value: 49,
+        value: 0,
         color: colorScale[50],
       }, {
-        value: 50,
+        value: 1,
         color: colorScale[51],
       }, {
-        value: 51,
+        value: 2,
         color: colorScale[52],
       }, {
-        value: 52,
+        value: 3,
         color: colorScale[53],
       }, {
-        value: 53,
+        value: 4,
         color: colorScale[54],
       }, {
-        value: 54,
+        value: 5,
         color: colorScale[55],
       }, {
-        value: 55,
+        value: 6,
         color: colorScale[56],
       }, {
-        value: 56,
+        value: 7,
         color: colorScale[57],
       }, {
-        value: 57,
+        value: 8,
         color: colorScale[58],
       }, {
-        value: 58,
+        value: 9,
         color: colorScale[59],
       }, {
-        value: 59,
+        value: 10,
         color: colorScale[60],
       }, {
-        value: 60,
+        value: 11,
         color: colorScale[61],
       }, {
-        value: 61,
+        value: 12,
         color: colorScale[62],
       }, {
-        value: 62,
+        value: 13,
         color: colorScale[63],
       }, {
-        value: 63,
+        value: 14,
         color: colorScale[64],
       }, {
-        value: 64,
+        value: 15,
         color: colorScale[65],
       }, {
-        value: 65,
+        value: 16,
         color: colorScale[66],
       }, {
-        value: 66,
+        value: 17,
         color: colorScale[67],
       }, {
-        value: 67,
+        value: 18,
         color: colorScale[68],
       }, {
-        value: 68,
+        value: 19,
         color: colorScale[69],
       }, {
-        value: 69,
+        value: 20,
         color: colorScale[70],
       }, {
-        value: 70,
+        value: 21,
         color: colorScale[71],
       }, {
-        value: 71,
+        value: 22,
         color: colorScale[72],
       }, {
-        value: 72,
+        value: 23,
         color: colorScale[73],
       }, {
-        value: 73,
+        value: 24,
         color: colorScale[74],
       }, {
-        value: 74,
+        value: 25,
         color: colorScale[75],
       }, {
-        value: 75,
+        value: 26,
         color: colorScale[76],
       }, {
-        value: 76,
+        value: 27,
         color: colorScale[77],
       }, {
-        value: 77,
+        value: 28,
         color: colorScale[78],
       }, {
-        value: 78,
+        value: 29,
         color: colorScale[79],
       }, {
-        value: 79,
+        value: 30,
         color: colorScale[80],
       }, {
-        value: 80,
+        value: 31,
         color: colorScale[81],
       }, {
-        value: 81,
+        value: 32,
         color: colorScale[82],
       }, {
-        value: 82,
+        value: 33,
         color: colorScale[83],
       }, {
-        value: 83,
+        value: 34,
         color: colorScale[84],
       }, {
-        value: 84,
+        value: 35,
         color: colorScale[85],
       }, {
-        value: 85,
+        value: 36,
         color: colorScale[86],
       }, {
-        value: 86,
+        value: 37,
         color: colorScale[87],
       }, {
-        value: 87,
+        value: 38,
         color: colorScale[88],
       }, {
-        value: 88,
+        value: 39,
         color: colorScale[89],
       }, {
-        value: 89,
+        value: 40,
         color: colorScale[90],
       }, {
-        value: 90,
+        value: 41,
         color: colorScale[91],
       }, {
-        value: 91,
+        value: 42,
         color: colorScale[92],
       }, {
-        value: 92,
+        value: 43,
         color: colorScale[93],
       }, {
-        value: 93,
+        value: 44,
         color: colorScale[94],
       }, {
-        value: 94,
+        value: 45,
         color: colorScale[95],
       }, {
-        value: 95,
+        value: 46,
         color: colorScale[96],
       }, {
-        value: 96,
+        value: 47,
         color: colorScale[97],
       }, {
-        value: 97,
+        value: 48,
         color: colorScale[98],
       }, {
-        value: 98,
+        value: 49,
         color: colorScale[99],
       }, {
-        value: 99,
+        value: 50,
         color: colorScale[100],
-      }, {
       }];
     }
     function toggleSeriesVisibility() {
