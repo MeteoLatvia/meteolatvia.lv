@@ -4,7 +4,7 @@
 <head>
   <!-- Favicon -->
   <link rel="shortcut icon" href="https://fv9-7.failiem.lv/down.php?i=p2kgbydxw&view" />
-  
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kosmosa apstākļi</title>
@@ -234,53 +234,49 @@
     }
 
     .flares-chart iframe {
-      /* Corrected class name */
       width: 100%;
       height: 500px;
       border: none;
       margin-bottom: 20px;
-      /* Add margin between iframes */
     }
 
     .highcharts-container {
       width: 100% !important;
     }
 
-    /* Define columns for side-by-side images */
-    .column {
-      float: left;
-      width: 50%;
-      padding: 5px;
-      display: flex;
-      justify-content: center;
-      margin-left: -55px;
+    .row {
+      margin-left: 0px;
+      margin-right: 0px;
     }
 
-    /* Clear floats after the columns */
+    .column {
+      float: left;
+      width: calc(50% - 5px);
+      padding: 50px;
+      box-sizing: border-box;
+      margin-right: 10px;
+    }
+
     .row::after {
       content: "";
       clear: both;
       display: table;
     }
 
-    /* Media query for smaller screens */
     @media screen and (max-width: 768px) {
       .column {
         width: 100%;
-        /* Make each column take up full width on smaller screens */
         float: none;
-        /* Remove the float so columns stack vertically */
-        margin-left: 0px;
+        margin-left: 0;
+        margin-right: 0;
+        box-sizing: border-box;
       }
     }
 
-    /* Media query for smaller screens */
     @media screen and (max-width: 768px) {
       .flares-chart iframe {
         width: 100%;
-        /* Reduce width of charts on smaller screens */
         max-width: 100%;
-        /* Ensure charts don't exceed the screen width */
       }
 
       .flares-chart {
@@ -289,6 +285,211 @@
         flex-direction: column;
         align-items: center;
         margin-left: 0px;
+      }
+    }
+
+
+
+
+
+
+
+
+    /* SDO images/video */
+    .group-container-sdo {
+      background-color: rgb(43, 43, 51);
+      padding: 2%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      margin: 2% 5%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .group-container-sdo h2 {
+      margin-top: 1rem;
+      font-size: 2rem;
+      font-weight: 700;
+      color: rgb(250, 252, 255);
+      padding: 1%;
+      text-align: center;
+      width: 100%;
+    }
+
+    .title-separator-sdo {
+      border: none;
+      border-top: 1px solid #ccc;
+      width: 80%;
+      margin: 50px auto;
+    }
+
+    .sdo-images {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    .sdo-image,
+    .sdo-video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .row-SDO {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 10px;
+      margin: 0 -5px;
+    }
+
+    .column-SDO,
+    .column {
+      padding: 0 5px;
+      box-sizing: border-box;
+    }
+
+    .column-SDO video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Media query for smaller screens */
+    @media screen and (max-width: 768px) {
+      .column-SDO {
+        flex: 0 0 calc(50% - 30px);
+        max-width: calc(50% - 30px);
+      }
+    }
+
+    /* Specific styling for videos */
+    .sdo-video-container .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 10px;
+      margin: 0 -5px;
+    }
+
+    .sdo-video-container .column {
+      padding: 0 5px;
+      box-sizing: border-box;
+    }
+
+    /* Buttons styling */
+    .toggle-button {
+      background-color: #4CAF50;
+      /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .toggle-button:hover {
+      background-color: #45a049;
+    }
+
+    /* Specific styling for videos */
+    .sdo-video-container .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      /* Adjusted width for videos */
+      gap: 10px;
+      margin: 0 -5px;
+    }
+
+    .sdo-video-container .column {
+      padding: 0 5px;
+      box-sizing: border-box;
+    }
+
+    .sdo-video-container .column video {
+      width: 100%;
+      /* Ensuring videos take full width of their container */
+      height: auto;
+      display: block;
+    }
+
+
+
+
+
+
+
+
+    /* Style the tab */
+    .tab {
+      overflow: hidden;
+      background-color: transparent;
+      /* Change to transparent background */
+    }
+
+    /* Style the buttons inside the tab */
+    .tab button {
+      background-color: transparent;
+      /* Change to transparent background */
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      transition: 0.3s;
+      font-size: 17px;
+      color: rgb(255, 255, 255);
+      /* Change button color */
+      border-bottom: 2px solid transparent;
+      /* Add bottom border */
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      /* Add a subtle hover effect */
+    }
+
+    /* Create an active/current tablink class */
+    .tab button.active {
+      color: rgb(100, 100, 200);
+      /* Change active button color */
+      border-bottom: 2px solid rgb(100, 100, 200);
+      /* Highlight active button with bottom border */
+    }
+
+    /* Position buttons closer to the center */
+    .tab {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      /* Add margin bottom for spacing */
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+      display: none;
+      padding: 20px;
+      /* Increase padding */
+      border: none;
+      /* Remove border */
+    }
+
+    /* Media query for smaller screens */
+    @media screen and (max-width: 768px) {
+      .row-SDO {
+        margin-left: 265px;
+      }
+
+      /* Position buttons closer to the center */
+      .tab {
+        margin-left: 65px;
       }
     }
   </style>
@@ -409,6 +610,225 @@
       <iframe src="SpaceWeatherNEW/GOES_SolarFlux_table.html" style="border: none"></iframe>
     </div>
   </div>
+
+
+
+
+
+
+
+
+
+
+  <!-- CME (SOHO) -->
+  <div class="group-container-flares">
+    <h2>Saules izvirdumi</h2>
+    <hr class="title-separator-flares">
+    <div class="flares-chart">
+      <div class="row">
+        <div class="column">
+          <img class="flare-image" src="https://soho.nascom.nasa.gov/data/realtime/c2/1024/latest.jpg"
+            alt="SDO-flare-image">
+        </div>
+        <div class="column">
+          <img class="flare-image" src="https://soho.nascom.nasa.gov/data/realtime/c3/1024/latest.jpg"
+            alt="SDO-flare-image">
+        </div>
+      </div>
+      <iframe src="SpaceWeatherNEW/SWPC_CME.html" style="border: none"></iframe>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <!-- Sunspots -->
+  <div class="group-container-flares">
+    <h2>Saules plankumi</h2>
+    <hr class="title-separator-flares">
+    <div class="flares-chart">
+      <div class="row">
+        <div class="column">
+          <img class="flare-image" src="https://soho.nascom.nasa.gov/data/synoptic/sunspots_earth/mdi_sunspots_1024.jpg"
+            alt="SDO-flare-image">
+        </div>
+        <div class="column">
+          <img class="flare-image" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_HMIBC.jpg"
+            alt="SDO-flare-image">
+        </div>
+      </div>
+      <iframe src="SpaceWeatherNEW/SWPC_sunspots.html" style="border: none"></iframe>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <!-- SDO images/video -->
+
+  <div id="London" class="tabcontent">
+    <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+    <div id="group-container-sdo-photos" class="group-container-sdo">
+      <h2>Saules attēli un video (SDO)</h2>
+      <hr class="title-separator-sdo">
+      <div class="tab">
+        <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">Attēli</button>
+        <button class="tablinks" onclick="openCity(event, 'Paris')">Video</button>
+      </div>
+      <div class="sdo-images">
+        <div class="row-SDO">
+          <div class="column-SDO">
+            <img class="sdo-image" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0094.jpg"
+              alt="SDO-image">
+          </div>
+          <div class="column-SDO">
+            <img class="sdo-image" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0131.jpg"
+              alt="SDO-flare-image">
+          </div>
+          <div class="column-SDO">
+            <img class="sdo-image" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0171.jpg"
+              alt="SDO-flare-image">
+          </div>
+          <div class="column-SDO">
+            <img class="sdo-image" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0193.jpg"
+              alt="SDO-flare-image">
+          </div>
+          <div class="column-SDO">
+            <img class="sdo-image" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0211.jpg"
+              alt="SDO-flare-image">
+          </div>
+          <div class="column-SDO">
+            <img class="sdo-image" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0304.jpg"
+              alt="SDO-flare-image">
+          </div>
+          <div class="column-SDO">
+            <img class="sdo-image" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0335.jpg"
+              alt="SDO-flare-image">
+          </div>
+          <div class="column-SDO">
+            <img class="sdo-image" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_1600.jpg"
+              alt="SDO-flare-image">
+          </div>
+          <div class="column-SDO">
+            <img class="sdo-image" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_1700.jpg"
+              alt="SDO-flare-image">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="Paris" class="tabcontent">
+    <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+    <div id="group-container-sdo-photos" class="group-container-sdo">
+      <h2>Saules attēli un video (SDO)</h2>
+      <hr class="title-separator-sdo">
+      <div class="tab">
+        <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">Attēli</button>
+        <button class="tablinks" onclick="openCity(event, 'Paris')">Video</button>
+      </div>
+      <div class="sdo-images">
+        <div class="row-SDO">
+          <div class="column-SDO">
+            <video width="320" height="240" controls>
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0094.mp4" type="video/mp4">
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0094.mp4" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="column-SDO">
+            <video width="320" height="240" controls>
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0131.mp4" type="video/mp4">
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0131.mp4" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="column-SDO">
+            <video width="320" height="240" controls>
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0171.mp4" type="video/mp4">
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0171.mp4" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="column-SDO">
+            <video width="320" height="240" controls>
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0193.mp4" type="video/mp4">
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0193.mp4" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="column-SDO">
+            <video width="320" height="240" controls>
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0211.mp4" type="video/mp4">
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0211.mp4" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="column-SDO">
+            <video width="320" height="240" controls>
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0094.mp4" type="video/mp4">
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0094.mp4" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="column-SDO">
+            <video width="320" height="240" controls>
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0094.mp4" type="video/mp4">
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0094.mp4" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="column-SDO">
+            <video width="320" height="240" controls>
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0304.mp4" type="video/mp4">
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0304.mp4" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="column-SDO">
+            <video width="320" height="240" controls>
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0335.mp4" type="video/mp4">
+              <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0335.mp4" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openCity(evt, cityName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+  </script>
+
+
 
 
 
