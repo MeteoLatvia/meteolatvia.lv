@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CME Data Table</title>
+    <style>
+        body {
+            color: #ffffff;
+            font-family: Kumbh Sans, sans-serif;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            height: 100%;
+            margin-left: -100px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #333;
+            /* Table border color */
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #333;
+            /* Cell border color */
+        }
+
+        th:nth-child(10),
+        td:nth-child(10) {
+            font-weight: bold;
+        }
+
+        thead {
+            background-color: #333;
+            color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: rgb(57, 57, 77);
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: rgb(67, 67, 87);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        tbody td:last-child {
+            font-weight: 900;
+        }
+
+        /* Media query for smaller screens */
+        @media screen and (max-width: 768px) {
+
+            th,
+            td {
+                padding: 3px;
+                font-size: 10px;
+            }
+
+            body {
+                color: #ffffff;
+                font-family: Kumbh Sans, sans-serif;
+                box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+                width: 100%;
+                height: 100%;
+                margin-left: 0px;
+            }
+        }
+
+        /* Media query for smaller screens */
+        @media screen and (max-width: 768px) {
+
+            th:nth-child(3),
+            td:nth-child(3),
+            th:nth-child(4),
+            td:nth-child(4),
+            th:nth-child(5),
+            td:nth-child(5),
+            th:nth-child(6),
+            td:nth-child(6),
+            th:nth-child(7),
+            td:nth-child(7),
+            th:nth-child(8),
+            td:nth-child(8),
+            th:nth-child(9),
+            td:nth-child(9) {
+                display: none;
+            }
+
+            th,
+            td {
+                padding: 3px;
+                font-size: 10px;
+            }
+        }
+
+        .row-halo-I {
+            background-color: rgba(182, 246, 20, 0.8) !important;
+        }
+
+        .row-halo-II {
+            background-color: rgba(182, 246, 20, 0.8) !important;
+        }
+
+        .row-halo-III {
+            background-color: rgba(246, 235, 20, 0.8) !important;
+        }
+
+        .row-halo-IV {
+            background-color: rgba(255, 0, 0, 0.8) !important;
+        }
+
+        .row-halo-V {
+            background-color: rgba(255, 0, 0, 0.8) !important;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button {
+            background-color: rgb(0, 128, 255);
+            /* Blue color for buttons */
+            color: #ffffff;
+            /* Text color for buttons */
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: rgb(64, 159, 255);
+            /* Darker blue color on hover */
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+    <h1></h1>
+
+    <table id="cmeDataTable">
+        <thead>
+            <tr>
+                <th>Numurs</th>
+                <th>Sākuma laiks</th>
+                <th>Ilgums</th>
+                <th>Leņķis</th>
+                <th>Leņķiskais platums</th>
+                <th>Vidējais ātrums</th>
+                <th>Amplitūda</th>
+                <th>Minimālais ātrums</th>
+                <th>Maksimālais ātrums</th>
+                <th>Halo</th>
+                <th>Foto / video</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be populated here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Function to set row background color based on "Halo?" value
+        function setHaloColor(row, value) {
+            row.classList.add(`row-halo-${value}`);
+        }
+
+        // Function to create buttons and set their click event handlers
+        function createButtons(cme, row) {
+            const buttonContainer = document.createElement('div');
+            buttonContainer.classList.add('button-container');
+
+            const photoButton = document.createElement('button');
+            photoButton.innerHTML = '<i class="fas fa-camera"></i>'; // Font Awesome camera icon
+            photoButton.classList.add('button');
+            photoButton.addEventListener('click', () => {
+                window.open(`https://www.sidc.be/cactus/out/CME${cme}/CME.jpeg`);
+            });
+
+            const videoButton = document.createElement('button');
+            videoButton.innerHTML = '<i class="fas fa-video"></i>'; // Font Awesome video camera icon
+            videoButton.classList.add('button');
+            videoButton.addEventListener('click', () => {
+                window.open(`https://www.sidc.be/cactus/out/CME${cme}/CME.mp4`);
+            });
+
+            buttonContainer.appendChild(photoButton);
+            buttonContainer.appendChild(videoButton);
+
+            const actionsCell = row.cells[10];
+            actionsCell.appendChild(buttonContainer);
+        }
+
+        // Function to modify text content in specified columns
+        function modifyColumnText(row) {
+            // Column indices start from 0
+            const thirdColumnIndex = 2;  // Index of the 3rd column
+            const fourthColumnIndex = 3; // Index of the 4th column
+            const fifthColumnIndex = 4;  // Index of the 5th column
+
+            // Add "h" after all text elements in the 3rd column
+            row.cells[thirdColumnIndex].textContent += "h";
+
+            // Add "°" after all text elements in the 4th and 5th columns
+            row.cells[fourthColumnIndex].textContent += "°";
+            row.cells[fifthColumnIndex].textContent += "°";
+        }
+
+
+        // Fetch the data from the source link
+        fetch('https://www.sidc.be/cactus/out/cmecat.txt')
+            .then(response => response.text())
+            .then(data => {
+                const cmeData = data.split('\n').filter(line => line.startsWith(' '));
+
+                // Remove the first 4 rows
+                const dataWithoutFirst4Rows = cmeData.slice(4);
+
+                const tableBody = document.querySelector('#cmeDataTable tbody');
+
+                // Populate the table with data
+                dataWithoutFirst4Rows.forEach(line => {
+                    const [cme, t0, dt0, pa, da, v, dv, minv, maxv, halo] = line.trim().split('|').map(item => item.trim());
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${cme}</td><td>${t0}</td><td>${dt0}</td><td>${pa}</td><td>${da}</td><td>${v}</td><td>${dv}</td><td>${minv}</td><td>${maxv}</td><td>${halo}</td><td></td>`;
+                    tableBody.appendChild(row);
+
+                    // Set row background color based on the "Halo?" value
+                    setHaloColor(row, halo);
+
+                    // Create photo and video buttons with Font Awesome icons
+                    createButtons(cme, row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    </script>
+</body>
+
+</html>
