@@ -94,6 +94,46 @@
       width: 100% !important;
     }
 
+    .collapsible-KP {
+      background-color: rgb(57, 57, 77);
+      color: white;
+      cursor: pointer;
+      padding: 18px;
+      width: 30%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+      border-radius: 4px;
+    }
+
+    .active,
+    .collapsible-KP:hover {
+      background-color: #555;
+    }
+
+    .collapsible-KP:after {
+      content: '\002B';
+      color: white;
+      font-weight: bold;
+      float: right;
+      margin-left: 5px;
+    }
+
+    .active:after {
+      content: "\2212";
+    }
+
+    .content-KP {
+      padding: 0 0px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+      background-color: rgb(43, 43, 51);
+      width: 650px;
+      height: 800px;
+    }
+
     @media screen and (max-width: 768px) {
       .OVATION-chart-container {
         flex-direction: column;
@@ -106,6 +146,20 @@
         max-width: 100%;
         clip-path: none;
         transform: rotate(0deg);
+      }
+
+      .OVATION-chart {
+        margin-left: 140px;
+      }
+
+      .content-KP {
+        padding: 0 0px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        background-color: transparent;
+        width: 450px;
+        height: 1000px;
       }
     }
 
@@ -555,11 +609,32 @@
     <div class="OVATION-chart-container">
       <div class="OVATION-chart">
         <iframe src="SpaceWeatherNEW/SWPC_KP.html" style="border: none"></iframe>
+        <button class="collapsible-KP">KP prognoze</button>
+        <div class="content-KP">
+          <iframe src="SpaceWeatherNEW/SWPC_KP_forecast.html" style="border: none; width: 100%; height: 400px"></iframe>
+        </div>
         <iframe src="SpaceWeatherNEW/SWPC_HMPI.html" style="border: none"></iframe>
       </div>
       <img src="https://services.swpc.noaa.gov/images/animations/ovation/north/latest.jpg" alt="OVATION Image">
     </div>
   </div>
+
+  <script>
+    var coll = document.getElementsByClassName("collapsible-KP");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
+    }
+  </script>
 
 
 

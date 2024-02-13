@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geomagnetic Forecast</title>
+    <style>
+        body {
+            color: #ffffff;
+            font-family: Kumbh Sans, sans-serif;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            width: 60%;
+            height: 100%;
+            background-color: transparent;
+            /* Dark background color */
+        }
+
+        h2 {
+            color: rgb(255, 255, 255);
+            /* White text color */
+        }
+
+        .content {
+            padding: 20px;
+            /* Adjust padding as needed */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid rgb(51, 51, 51);
+            font-size: 16px;
+            /* Adjust the font size as needed */
+        }
+
+        th,
+        td {
+            padding: 10px;
+            /* Adjust padding as needed */
+            text-align: center;
+            border: 1px solid rgb(51, 51, 51);
+        }
+
+        th {
+            background-color: rgb(51, 51, 51);
+            color: rgb(255, 255, 255);
+        }
+
+        tr:nth-child(odd) {
+            background-color: rgb(57, 57, 77);
+        }
+
+        tr:nth-child(even) {
+            background-color: rgb(67, 67, 87);
+        }
+
+        /* Conditional styling based on numeric value */
+        td {
+            color: #ffffff;
+            /* Default text color */
+        }
+
+        td.green {
+            color: #00ff00;
+            /* Green */
+        }
+
+        td.yellow {
+            color: #ffff00;
+            /* Yellow */
+        }
+
+        td.orange {
+            color: #ffa500;
+            /* Orange */
+        }
+
+        td.red {
+            color: #ff0000;
+            /* Red */
+        }
+
+        td.dark-red {
+            color: #8b0000;
+            /* Dark Red */
+        }
+
+        td.violet {
+            color: #9400d3;
+            /* Violet */
+        }
+    </style>
+</head>
+
+<body>
+    <h2></h2>
+    <table id="forecastTable">
+        <tr>
+            <!-- Empty cell added before the date cells -->
+        </tr>
+    </table>
+
+    <script>
+        fetch('https://services.swpc.noaa.gov/text/3-day-geomag-forecast.txt')
+            .then(response => response.text())
+            .then(data => {
+                const table = document.getElementById('forecastTable');
+                const rows = data.split('\n');
+                const startIndex = rows.indexOf("NOAA Kp index forecast 13 Feb - 15 Feb") + 2; // Move one row up
+                const endIndex = startIndex + 8;
+
+                // Extract dates from the first line after the "NOAA Kp index forecast" line
+                const datesRow = document.createElement('tr');
+                const dateColumns = rows[startIndex - 1].trim().split(/\s+/);
+
+                dateColumns.forEach((date, index) => {
+                    if (date !== "Feb") {
+                        const dateHeader = document.createElement('th');
+                        dateHeader.textContent = date;
+                        datesRow.appendChild(dateHeader);
+                    }
+                });
+
+                // Add an empty cell to shift the date row by one column to the right
+                const emptyCell = document.createElement('th');
+                datesRow.insertBefore(emptyCell, datesRow.firstChild);
+
+                table.appendChild(datesRow);
+
+                for (let i = startIndex; i < endIndex; i++) {
+                    const columns = rows[i].trim().split(/\s+/);
+                    const time = columns.shift();
+
+                    let newRow = document.createElement('tr');
+                    let timeCell = document.createElement('td');
+                    timeCell.textContent = time;
+                    newRow.appendChild(timeCell);
+
+                    columns.forEach(value => {
+                        let valueCell = document.createElement('td');
+                        valueCell.textContent = value;
+
+                        // Apply conditional styling based on the numeric value
+                        if (parseInt(value) >= 0 && parseInt(value) <= 4) {
+                            valueCell.style.color = 'rgb(146, 208, 80)';
+                            valueCell.style.fontWeight = 'bold'; // Make the text bold
+                        } else if (parseInt(value) === 5) {
+                            valueCell.style.color = 'rgb(246, 235, 20)';
+                            valueCell.style.fontWeight = 'bold'; // Make the text bold
+                        } else if (parseInt(value) === 6) {
+                            valueCell.style.color = 'rgb(255, 200, 0)';
+                            valueCell.style.fontWeight = 'bold'; // Make the text bold
+                        } else if (parseInt(value) === 7) {
+                            valueCell.style.color = 'rgb(255, 150, 0)';
+                            valueCell.style.fontWeight = 'bold'; // Make the text bold
+                        } else if (parseInt(value) === 8) {
+                            valueCell.style.color = 'rgb(255, 0, 0)';
+                            valueCell.style.fontWeight = 'bold'; // Make the text bold
+                        } else if (parseInt(value) === 9) {
+                            valueCell.style.color = 'rgb(200, 0, 0)';
+                            valueCell.style.fontWeight = 'bold'; // Make the text bold
+                        }
+
+                        newRow.appendChild(valueCell);
+                    });
+
+                    table.appendChild(newRow);
+                }
+            });
+    </script>
+</body>
+
+</html>

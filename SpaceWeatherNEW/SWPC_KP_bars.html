@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>NOAA Planetary K-index</title>
+    <!-- Load jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Load Highcharts from CDN -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!-- Load dark theme for Highcharts -->
+    <script src="https://code.highcharts.com/themes/dark-unica.js"></script>
+    <style>
+        #container {
+            width: 1200px;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        @media screen and (max-width: 768px) {
+            #container {
+                width: 315px;
+                height: 400px;
+                border-radius: 10px;
+                overflow: hidden;
+                margin-bottom: 20px;
+                position: relative;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container"></div>
+
+    <script>
+        $(document).ready(function () {
+            // Function to fetch and plot data
+            function fetchDataAndPlot() {
+                // Fetch data from JSON URL
+                $.getJSON("https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json", function (data) {
+                    // Parse the JSON data
+                    var kpData = data.slice(1).map(function(entry) {
+                        return [new Date(entry[0]).getTime(), parseFloat(entry[1])];
+                    });
+
+                    // Create a function to determine bar color based on KP index value
+                    const getBarColor = (kpIndex) => {
+                        if (kpIndex < 0) {
+                            return 'rgb(146, 208, 80)';
+                        } else if (kpIndex < 1) {
+                            return 'rgb(146, 208, 80)';
+                        } else if (kpIndex < 2) {
+                            return 'rgb(146, 208, 80)';
+                        } else if (kpIndex < 3) {
+                            return 'rgb(146, 208, 80)';
+                        } else if (kpIndex < 4) {
+                            return 'rgb(146, 208, 80)';
+                        } else if (kpIndex < 5) {
+                            return 'rgb(246, 235, 20)';
+                        } else if (kpIndex < 6) {
+                            return 'rgb(255, 200, 0)';
+                        } else if (kpIndex < 7) {
+                            return 'rgb(255, 150, 0)';
+                        } else if (kpIndex < 8) {
+                            return 'rgb(255, 0, 0)';
+                        } else if (kpIndex < 9) {
+                            return 'rgb(200, 0, 0)';
+                        } else {
+                            return 'rgb(200, 0, 0)';
+                        }
+                    };
+
+                    // Create an array of bar colors based on KP index values
+                    const barColors = kpData.map(data => getBarColor(data[1]));
+
+                    // Create Highcharts bar chart
+                    Highcharts.chart('container', {
+                        chart: {
+                            type: 'column',
+                            backgroundColor: 'rgba(57, 57, 77, 1.0)', // Background color for the chart
+                        },
+                        title: {
+                            text: 'NOAA Planetary K-index',
+                            style: {
+                                color: 'rgba(250, 252, 255, 1.0)' // Color for the title
+                            }
+                        },
+                        xAxis: {
+                            type: 'datetime',
+                            title: {
+                                text: 'Time',
+                                style: {
+                                    color: 'rgba(250, 252, 255, 1.0)' // Color for the axis title
+                                }
+                            },
+                            labels: {
+                                style: {
+                                    color: 'rgba(250, 252, 255, 1.0)' // Color for the axis labels
+                                },
+                                formatter: function () {
+                                    return Highcharts.dateFormat('%Y-%m-%d<br>%H:%M:%S', this.value);
+                                }
+                            },
+                            gridLineWidth: 1, // Add gridlines for X-axis
+                            gridLineDashStyle: 'shortdash'
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Kp',
+                                style: {
+                                    color: 'rgba(250, 252, 255, 1.0)' // Color for the axis title
+                                }
+                            },
+                            labels: {
+                                style: {
+                                    color: 'rgba(250, 252, 255, 1.0)' // Color for the axis labels
+                                }
+                            },
+                            gridLineWidth: 1, // Add gridlines for Y-axis
+                            max: 9, // Set maximum value for Y-axis
+                            tickInterval: 1 // Set tick interval for Y-axis
+                        },
+                        plotOptions: {
+                            column: {
+                                pointPadding: 0.2,
+                                borderWidth: 0
+                            }
+                        },
+                        tooltip: {
+                            formatter: function () {
+                                return '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', new Date(this.x)) + '</b><br>' +
+                                    'Kp: ' + this.y;
+                            }
+                        },
+                        series: [{
+                            name: 'Kp',
+                            data: kpData,
+                            colorByPoint: true,
+                            colors: barColors // Assign bar colors based on the array
+                        }]
+                    });
+
+                    // Draw a rectangle behind the chart title to create a brighter strip effect
+                    var chart = $('#container').highcharts();
+                    var renderer = chart.renderer;
+                    var titleBox = chart.title.getBBox();
+                    var chartBox = chart.container.getBoundingClientRect(); // Get chart container bounding box
+                    renderer.rect(chartBox.left - 10, chartBox.top - titleBox.height - 10, chartBox.width + 20, titleBox.height + 38)
+                        .attr({
+                            'fill': 'rgba(82, 82, 102, 1.0)',
+                            'stroke-width': 0
+                        })
+                        .add();
+                });
+            }
+
+            // Fetch and plot data
+            fetchDataAndPlot();
+        });
+    </script>
+
+</body>
+
+</html>
