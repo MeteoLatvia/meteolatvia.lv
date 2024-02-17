@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="lv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabula Taciņa</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .tabula-tacina {
+            border-collapse: collapse;
+        }
+
+        .tabula-tacina td {
+            width: 100px;
+            height: 100px;
+            border: 2px dashed black;
+            text-align: center;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+
+        .cell-1 {
+            border-bottom: 2px dashed rgb(255, 255, 255) !important;
+        }
+
+        .cell-2 {
+            border-right: 2px dashed rgb(255, 255, 255) !important;
+        }
+
+        .cell-3 {
+            border-top: 2px dashed rgb(255, 255, 255) !important;
+        }
+    </style>
+</head>
+
+<body>
+    <table class="tabula-tacina">
+        <tr>
+            <td class="cell-1"></td>
+            <td rowspan="4" class="cell-3"> </td>
+            <td class="cell-1 cell-2"></td>
+            <td class="cell-2"></td>
+            <td class="cell-1"></td>
+        </tr>
+        <tr>
+            <td class="cell-1"></td>
+            <td class="cell-1"></td>
+            <td rowspan="4" class="cell-1"></td>
+            <td class="cell-1"></td>
+
+
+        </tr>
+        <tr>
+            <td class="cell-1"></td>
+            <td class="cell-1"></td>
+            <td class="cell-1"></td>
+        </tr>
+        <tr>
+            <td class="cell-1"></td>
+            <td class="cell-1"></td>
+            <td class="cell-1"></td>
+
+
+
+
+        </tr>
+        <tr>
+            <td class="cell-2"></td>
+            <td class="cell-2"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+        </tr>
+
+
+    </table>
+</body>
+
+</html>
