@@ -690,15 +690,6 @@
               );
               marker.addTo(map);
             }
-            // Create a unique pop-up for each marker
-            var popupContent = `<strong>${stationName}</strong><br>Temperatūra: ${temp}°C`;
-            marker.bindPopup(popupContent, {
-              className: 'custom-popup',
-              closeButton: false,
-              closeOnClick: false,
-            });
-
-            marker.addTo(map);
           });
         },
       });
