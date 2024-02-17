@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kp Index Color and Text</title>
+    <style>
+        #kpDiv {
+            width: 400px;
+            height: 245px;
+            border: solid;
+            text-align: center;
+            line-height: 1.5;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Kumbh Sans", sans-serif;
+            border-radius: 10px;
+        }
+
+        .green {
+            background-color: rgb(146, 208, 80);
+            border-color: rgb(146, 208, 80);
+            color: rgb(37, 37, 37);
+        }
+
+        .yellow {
+            background-color: rgb(246, 235, 20);
+            border-color: rgb(246, 235, 20);
+        }
+
+        .orange {
+            background-color: rgb(255, 200, 0);
+            border-color: rgb(255, 200, 0);
+        }
+
+        .red {
+            background-color: rgb(255, 150, 0);
+            border-color: rgb(255, 150, 0);
+        }
+
+        .dark-red {
+            background-color: rgb(255, 0, 0);
+            border-color: rgb(255, 0, 0);
+        }
+
+        .purple {
+            background-color: rgb(200, 0, 200);
+            border-color: rgb(200, 0, 200);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="kpDiv">Loading...</div>
+
+    <script>
+        // Function to fetch data from the provided URL
+        function fetchData() {
+            fetch('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json')
+                .then(response => response.json())
+                .then(data => {
+                    // Get the latest KP value from the fetched data
+                    const latestKp = parseFloat(data[1][1]);
+                    // Determine the color class based on the KP value
+                    let colorClass;
+                    let kpText;
+                    if (latestKp >= 0 && latestKp <= 3) {
+                        colorClass = 'green';
+                        kpText = '(Nav ģeomagnētiskās aktivitātes)';
+                    } else if (latestKp === 4) {
+                        colorClass = 'green';
+                        kpText = '(Neliela ģeomagnētiskā aktivitāte)';
+                    } else if (latestKp === 5) {
+                        colorClass = 'yellow';
+                        kpText = '(Neliela ģeomagnētiskā vētra)';
+                    } else if (latestKp === 6) {
+                        colorClass = 'orange';
+                        kpText = '(Mērena ģeomagnētiskā vētra)';
+                    } else if (latestKp === 7) {
+                        colorClass = 'red';
+                        kpText = '(Spēcīga ģeomagnētiskā vētra)';
+                    } else if (latestKp === 8) {
+                        colorClass = 'dark-red';
+                        kpText = '(Ļoti spēcīga ģeomagnētiskā vētra)';
+                    } else if (latestKp >= 9) {
+                        colorClass = 'purple';
+                        kpText = '(Ekstremāli spēcīga ģeomagnētiskā vētra)';
+                    }
+
+                    // Apply the color class to the div element
+                    document.getElementById('kpDiv').classList.add(colorClass);
+                    // Set the border color based on the color class
+                    document.getElementById('kpDiv').style.borderColor = getComputedStyle(document.getElementById('kpDiv')).getPropertyValue('background-color');
+
+                    // Update the text content of the div element with the latest KP value and text
+                    document.getElementById('kpDiv').textContent = `KP ${latestKp}\n${kpText}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    document.getElementById('kpDiv').textContent = 'Error fetching data';
+                });
+        }
+
+        // Call the fetchData function when the page loads
+        fetchData();
+    </script>
+</body>
+
+</html>

@@ -84,10 +84,11 @@
     }
 
     .OVATION-chart-container img {
-      max-width: 60%;
+      max-width: 57%;
       height: auto;
       transform: rotate(90deg);
-      clip-path: inset(10% 0 17% 0);
+      clip-path: inset(0% 0 0% 0);
+      margin-left: -280px;
     }
 
     .highcharts-container {
@@ -99,12 +100,14 @@
       color: white;
       cursor: pointer;
       padding: 18px;
-      width: 30%;
+      width: 39%;
       border: none;
       text-align: left;
       outline: none;
       font-size: 15px;
       border-radius: 4px;
+      margin-top: -60px;
+      margin-left: 10px;
     }
 
     .active,
@@ -130,9 +133,15 @@
       overflow: hidden;
       transition: max-height 0.2s ease-out;
       background-color: rgb(43, 43, 51);
-      width: 650px;
-      height: 800px;
+      width: 750px;
+      height: 450px;
     }
+
+    .content-KP iframe {
+      width: 103%;
+      height: 450px;
+    }
+
 
     @media screen and (max-width: 768px) {
       .OVATION-chart-container {
@@ -159,7 +168,7 @@
         transition: max-height 0.2s ease-out;
         background-color: transparent;
         width: 450px;
-        height: 1000px;
+        height: 250px;
       }
     }
 
@@ -611,7 +620,7 @@
         <iframe src="SpaceWeatherNEW/SWPC_KP.html" style="border: none"></iframe>
         <button class="collapsible-KP">KP prognoze</button>
         <div class="content-KP">
-          <iframe src="SpaceWeatherNEW/SWPC_KP_forecast.html" style="border: none; width: 100%; height: 400px"></iframe>
+          <iframe src="SpaceWeatherNEW/SWPC_KP_forecast.html" class="OVATION-KP"></iframe>
         </div>
         <iframe src="SpaceWeatherNEW/SWPC_HMPI.html" style="border: none"></iframe>
       </div>
