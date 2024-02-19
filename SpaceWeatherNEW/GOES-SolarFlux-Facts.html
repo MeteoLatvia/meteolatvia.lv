@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Observed Flux</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .value {
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 150px;
+        }
+
+        .value h2 {
+            margin-top: 0;
+        }
+
+        .value p {
+            margin: 5px 0;
+        }
+
+        .value span {
+            font-size: 28px;
+            /* Customize the font size here */
+            font-weight: bold;
+            /* Make the text bold */
+        }
+
+        /* Media Query for smaller screens */
+        @media screen and (max-width: 768px) {
+            .container {
+                grid-template-columns: repeat(1, 1fr);
+                /* Change to 1 column for smaller screens */
+            }
+
+            .value {
+                margin: 0 5px;
+                /* Reduce horizontal margin */
+                margin-bottom: 20px;
+                /* Add some vertical margin */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!--<h1>Observed Flux</h1>-->
+    <div class="container">
+        <div class="value" id="latest">
+            <!--<h2>Latest</h2>-->
+            <!--<p><strong>Time:</strong> <span id="currentTime"></span></p>-->
+            <p>Jaunākie dati: <span id="currentObservedFlux"></span></p>
+        </div>
+
+        <div class="value" id="sixHours">
+            <!--<h2>Past 6 Hours</h2>-->
+            <p>6 stundu MAX: <span id="maxObservedFlux6"></span></p>
+        </div>
+
+        <div class="value" id="twentyFourHours">
+            <!--<h2>Past 24 Hours</h2>-->
+            <p>24 stundu MAX: <span id="maxObservedFlux24"></span></p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Function to format observed flux value
+        function formatObservedFlux(observedFlux) {
+            var classification;
+            var numericValue;
+
+            if (observedFlux < 1e-7) {
+                classification = 'A';
+                numericValue = (observedFlux * 1e8).toFixed(2); // Convert to nanowatts and fix to 2 decimal places
+            } else if (observedFlux < 1e-6) {
+                classification = 'B';
+                numericValue = (observedFlux * 1e7).toFixed(2); // Convert to nanowatts and fix to 2 decimal places
+            } else if (observedFlux < 1e-5) {
+                classification = 'C';
+                numericValue = (observedFlux * 1e6).toFixed(2); // Convert to nanowatts and fix to 2 decimal places
+            } else if (observedFlux < 1e-4) {
+                classification = 'M';
+                numericValue = (observedFlux * 1e5).toFixed(2); // Convert to nanowatts and fix to 2 decimal places
+            } else {
+                classification = 'X';
+                numericValue = (observedFlux * 1e4).toFixed(2); // Convert to nanowatts and fix to 2 decimal places
+            }
+
+            return classification + numericValue;
+        }
+
+        // Function to set color based on the observed flux value
+        function setColor(value, element) {
+            var color;
+
+            if (value < 1e-7) {
+                color = 'rgb(64,255,64)';
+            } else if (value < 1e-6) {
+                color = 'rgb(255,255,64)';
+            } else if (value < 1e-5) {
+                color = 'rgb(255,159,64)';
+            } else if (value < 1e-4) {
+                color = 'rgb(255,64,64)';
+            } else {
+                color = 'rgb(255,64,255)';
+            }
+
+            element.css('background-color', color);
+        }
+
+        $(document).ready(function () {
+            // Fetch data from JSON URL
+            $.getJSON("https://services.swpc.noaa.gov/json/goes/secondary/xrays-1-day.json", function (data) {
+                var currentTime = new Date();
+                var twentyFourHoursAgo = new Date(currentTime.getTime() - 24 * 60 * 60 * 1000);
+                var sixHoursAgo = new Date(currentTime.getTime() - 6 * 60 * 60 * 1000);
+
+                // Get the latest observed flux value
+                var latestData = data[data.length - 1];
+                var latestObservedFlux = parseFloat(latestData.observed_flux);
+
+                // Filter data for the past 6 hours
+                var pastSixHoursData = data.filter(function (value) {
+                    var observationTime = new Date(value.time_tag);
+                    return observationTime >= sixHoursAgo && observationTime <= currentTime;
+                });
+
+                // Get the maximum observed flux value in the past 6 hours
+                var maxObservedFlux6 = Math.max(...pastSixHoursData.map(obj => parseFloat(obj.observed_flux)));
+
+                // Filter data for the past 24 hours
+                var pastTwentyFourHoursData = data.filter(function (value) {
+                    var observationTime = new Date(value.time_tag);
+                    return observationTime >= twentyFourHoursAgo && observationTime <= currentTime;
+                });
+
+                // Get the maximum observed flux value in the past 24 hours
+                var maxObservedFlux24 = Math.max(...pastTwentyFourHoursData.map(obj => parseFloat(obj.observed_flux)));
+
+                // Display the current observed flux value
+                $("#currentTime").text(currentTime.toLocaleString());
+                $("#currentObservedFlux").text(formatObservedFlux(latestObservedFlux));
+                setColor(latestObservedFlux, $("#latest"));
+
+                // Display the maximum observed flux value in the past 6 hours
+                $("#maxObservedFlux6").text(formatObservedFlux(maxObservedFlux6));
+                setColor(maxObservedFlux6, $("#sixHours"));
+
+                // Display the maximum observed flux value in the past 24 hours
+                $("#maxObservedFlux24").text(formatObservedFlux(maxObservedFlux24));
+                setColor(maxObservedFlux24, $("#twentyFourHours"));
+            });
+        });
+    </script>
+
+</body>
+
+</html>

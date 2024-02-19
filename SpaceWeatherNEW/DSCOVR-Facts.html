@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DSCOVR Speed, Density, bT, and bZ</title>
+    <!-- Load jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .value {
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 50px;
+            width: calc(25% - 20px);
+            /* Set the width to 25% minus the horizontal margin */
+        }
+
+        .value h2 {
+            margin-top: 0;
+            font-weight: normal;
+            /* Make the title normal (not bold) */
+            font-size: 16px;
+        }
+
+        .value p {
+            margin: 5px 0;
+            font-size: 8px;
+        }
+
+        .value span {
+            font-size: 8px;
+            /* Customize the font size here */
+            font-weight: bold;
+            /* Make the text bold */
+        }
+
+        .value .value-text {
+            font-weight: bold;
+            font-size: 28px;
+            /* Make the value text bold */
+        }
+
+        /* Media Query for smaller screens */
+        @media screen and (max-width: 768px) {
+            .container {
+                grid-template-columns: repeat(1, 1fr);
+                /* Change to 1 column for smaller screens */
+            }
+
+            .value {
+                margin: 0 5px;
+                /* Reduce horizontal margin */
+                margin-bottom: 20px;
+                /* Add some vertical margin */
+            }
+
+            .value h2 {
+                margin-top: 0;
+                font-weight: normal;
+                /* Make the title normal (not bold) */
+                font-size: 8px;
+            }
+
+            .value .value-text {
+                font-weight: bold;
+                font-size: 18px;
+                /* Make the value text bold */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="value" id="latestSpeed">
+            <h2>Saules vēja ātrums:</h2>
+            <p class="value-text">Fetching latest speed...</p>
+        </div>
+        <div class="value" id="latestDensity">
+            <h2>Saules vēja blīvums:</h2>
+            <p class="value-text">Fetching latest density...</p>
+        </div>
+        <div class="value" id="latestBt">
+            <h2>Magnētiskā lauka spēks:</h2>
+            <p class="value-text">Fetching latest bT...</p>
+        </div>
+        <div class="value" id="latestBz">
+            <h2>Magnētiskā lauka orientācija:</h2>
+            <p class="value-text">Fetching latest bZ...</p>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Function to fetch the latest values
+            function fetchLatestValues() {
+                // Fetch data from JSON URL for plasma
+                $.getJSON("https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json", function (data) {
+                    // Parse the JSON data
+                    var plasmaData = data.slice(1); // Exclude the header row
+                    var latestSpeed = plasmaData[plasmaData.length - 1][2]; // Extract the latest speed
+                    var latestDensity = plasmaData[plasmaData.length - 1][1]; // Extract the latest density
+                    // Update the HTML element with the latest values
+                    $("#latestSpeed .value-text").text(latestSpeed + " km/s");
+                    $("#latestDensity .value-text").text(latestDensity + " p/cm³");
+                    // Apply conditional coloring for speed
+                    setColor(latestSpeed, $("#latestSpeed .value-text"));
+                    // Apply conditional coloring for density
+                    setColor(latestDensity, $("#latestDensity .value-text"));
+                });
+
+                // Fetch data from JSON URL for magnetic bT
+                $.getJSON("https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json", function (magData) {
+                    // Parse the JSON data for magnetic bT
+                    var magArray = magData.slice(1); // Exclude the header row
+                    var latestBt = magArray[magArray.length - 1][6]; // Extract the latest bT
+                    // Update the HTML element with the latest value
+                    $("#latestBt .value-text").text(latestBt + " nT");
+                    // Apply conditional coloring for bT
+                    setColor(latestBt, $("#latestBt .value-text"));
+                });
+
+                // Fetch data from JSON URL for magnetic bZ
+                $.getJSON("https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json", function (magData) {
+                    // Parse the JSON data for magnetic bZ
+                    var magArray = magData.slice(1); // Exclude the header row
+                    var latestBz = magArray[magArray.length - 1][3]; // Extract the latest bZ
+                    // Update the HTML element with the latest value
+                    $("#latestBz .value-text").text(latestBz + " nT");
+                    // Apply conditional coloring for bZ
+                    setColor(latestBz, $("#latestBz .value-text"));
+                });
+            }
+
+            // Fetch the latest values initially
+            fetchLatestValues();
+
+            // Refresh the latest values every 5 minutes
+            setInterval(fetchLatestValues, 5 * 60 * 1000); // 5 minutes in milliseconds
+
+            // Function to set color based on the parameter value
+            function setColor(value, element) {
+                var color;
+
+                if (element.parent().attr('id') === 'latestSpeed') {
+                    if (value < 400) {
+                        color = 'rgb(64,255,64)';
+                    } else if (value < 500) {
+                        color = 'rgb(255,255,64)';
+                    } else if (value < 600) {
+                        color = 'rgb(255,159,64)';
+                    } else if (value < 700) {
+                        color = 'rgb(255,64,64)';
+                    } else {
+                        color = 'rgb(255,64,255)';
+                    }
+                } else if (element.parent().attr('id') === 'latestDensity') {
+                    if (value < 10) {
+                        color = 'rgb(64,255,64)';
+                    } else if (value < 20) {
+                        color = 'rgb(255,255,64)';
+                    } else if (value < 30) {
+                        color = 'rgb(255,159,64)';
+                    } else if (value < 40) {
+                        color = 'rgb(255,64,64)';
+                    } else {
+                        color = 'rgb(255,64,255)';
+                    }
+                } else if (element.parent().attr('id') === 'latestBt') {
+                    if (value < 10) {
+                        color = 'rgb(64,255,64)';
+                    } else if (value < 20) {
+                        color = 'rgb(255,255,64)';
+                    } else if (value < 30) {
+                        color = 'rgb(255,159,64)';
+                    } else if (value < 40) {
+                        color = 'rgb(255,64,64)';
+                    } else {
+                        color = 'rgb(255,64,255)';
+                    }
+                } else if (element.parent().attr('id') === 'latestBz') {
+                    if (value < -10) {
+                        color = 'rgb(255,64,64)';
+                    } else if (value < -5) {
+                        color = 'rgb(255,159,64)';
+                    } else if (value < -1) {
+                        color = 'rgb(255,255,64)';
+                    } else if (value < 0) {
+                        color = 'rgb(64,255,64)';
+                    } else if (value < 100) {
+                        color = 'rgb(64,255,64)';
+                    } else {
+                        color = 'rgb(255,64,255)';
+                    }
+                }
+
+                element.parent().css('background-color', color);
+                element.css('color', 'black');
+            }
+        });
+    </script>
+
+</body>
+
+</html>

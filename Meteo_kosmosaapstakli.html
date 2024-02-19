@@ -154,7 +154,8 @@
       .OVATION-chart-container img {
         max-width: 100%;
         clip-path: none;
-        transform: rotate(0deg);
+        transform: rotate(90deg);
+        margin-left: 0px;
       }
 
       .OVATION-chart {
@@ -324,6 +325,68 @@
       content: "";
       clear: both;
       display: table;
+    }
+
+    .SolarFluxFacts {
+      margin-right: 200px;
+    }
+
+    .collapsible-SolarFluxTable {
+      background-color: rgb(57, 57, 77);
+      color: white;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+      border-radius: 4px;
+      margin-top: -350px;
+      margin-right: 150px;
+    }
+
+    .content-SolarFluxTable {
+      padding: 0 18px;
+      display: none;
+      overflow: hidden;
+      background-color: transparent;
+      width: 1400px;
+    }
+
+    .SolarFluxTable {
+      width: 1400px;
+      height: 800px;
+    }
+
+    /* Optional styling to make it look nicer */
+    .collapsible-SolarFluxTable:hover {
+      background-color: #ccc;
+    }
+
+    @media screen and (max-width: 768px) {
+      .SolarFluxFacts {
+        margin-right: 0px;
+      }
+
+      .collapsible-SolarFluxTable {
+        margin-right: 0px;
+      }
+
+      .content-SolarFluxTable {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: transparent;
+        width: 400px;
+        margin-left: 40px;
+      }
+
+      .SolarFluxTable {
+        width: 400px;
+        height: 800px;
+      }
+
     }
 
     @media screen and (max-width: 768px) {
@@ -663,6 +726,11 @@
       <iframe src="SpaceWeatherNEW/DSCOVR_density.html" style="border: none"></iframe>
       <iframe src="SpaceWeatherNEW/DSCOVR_magnetic_bT.html" style="border: none"></iframe>
       <iframe src="SpaceWeatherNEW/DSCOVR_magnetic_bZ.html" style="border: none"></iframe>
+      <iframe src="SpaceWeatherNEW/DSCOVR-Facts.html" style="border: none" class="SolarFluxFacts"></iframe>
+      <button class="collapsible-SolarFluxTable">Saules vēja un magnētiskā lauka (tabula)</button>
+      <div class="content-SolarFluxTable">
+        <iframe src="SpaceWeatherNEW/DSCOVR-Table.html" class="SolarFluxTable"></iframe>
+      </div>
     </div>
   </div>
 
@@ -691,9 +759,30 @@
         </div>
       </div>
       <iframe src="SpaceWeatherNEW/GOES_SolarFlux.html" style="border: none"></iframe>
-      <iframe src="SpaceWeatherNEW/GOES_SolarFlux_table.html" style="border: none"></iframe>
+      <iframe src="SpaceWeatherNEW/GOES-SolarFlux-Facts.html" style="border: none" class="SolarFluxFacts"></iframe>
+      <button class="collapsible-SolarFluxTable">Saules uzliesmojumu reģistrs (tabula)</button>
+      <div class="content-SolarFluxTable">
+        <iframe src="SpaceWeatherNEW/GOES_SolarFlux_table.html" class="SolarFluxTable"></iframe>
+      </div>
     </div>
   </div>
+
+  <script>
+    var coll = document.getElementsByClassName("collapsible-SolarFluxTable");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
+    }
+  </script>
 
 
 
