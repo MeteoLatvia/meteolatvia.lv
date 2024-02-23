@@ -151,22 +151,23 @@
 
         function getColorForKp(kpValue) {
             switch (true) {
-                case kpValue >= 0 && kpValue <= 4:
+                case kpValue >= 0 && kpValue < 4:
                     return 'rgb(146, 208, 80)'; // green
-                case kpValue == 5:
+                case kpValue >= 4 && kpValue < 5:
                     return 'rgb(246, 235, 20)'; // yellow
-                case kpValue == 6:
+                case kpValue >= 5 && kpValue < 6:
                     return 'rgb(255, 200, 0)'; // orange
-                case kpValue == 7:
+                case kpValue >= 6 && kpValue < 7:
                     return 'rgb(255, 150, 0)'; // red
-                case kpValue == 8:
+                case kpValue >= 7 && kpValue < 8:
                     return 'rgb(255, 0, 0)'; // dark red
-                case kpValue == 9:
+                case kpValue >= 8 && kpValue < 9:
                     return 'rgb(200, 0, 0)'; // purple
                 default:
                     return '#ffffff'; // white
             }
         }
+
     </script>
 
 </body>
