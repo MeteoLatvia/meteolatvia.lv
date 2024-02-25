@@ -3,122 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Image Slider Animation</title>
+<title>Image Slider</title>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-  }
-
-  #slider-container {
-    width: 80%;
-    margin: 50px auto;
-    text-align: center;
-  }
-
-  #slider {
-    width: 80%;
-    margin: 20px auto;
-  }
-
-  #slider input[type="range"] {
-    width: 100%;
-    height: 10px;
-    -webkit-appearance: none;
-    background: #ddd;
-    border-radius: 5px;
-    outline: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  #slider input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #007bff;
-    cursor: pointer;
-  }
-
-  #slider input[type="range"]::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #007bff;
-    cursor: pointer;
-  }
-
-  #image-container {
-    width: 80%;
-    margin: 0 auto;
-  }
-
-  #image {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        margin: 20px auto;
+        width: 50%;
+        border: none;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: rgb(51, 51, 51);
+    }
+    #image-container {
+        margin-bottom: 20px;
+    }
+    #image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    .slider-container {
+        width: 100%;
+    }
+    .slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 15px;
+        border-radius: 10px;
+        background: #d3d3d3;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: .2s;
+        transition: opacity .2s;
+    }
+    .slider:hover {
+        opacity: 1;
+    }
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: rgb(0, 40, 255);
+        cursor: pointer;
+    }
+    .slider::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: rgb(0, 40, 255);
+        cursor: pointer;
+    }
 </style>
 </head>
 <body>
-<div id="slider-container">
-  <input type="range" min="0" max="0" value="0" id="sliderRange">
-</div>
-<div id="image-container">
-  <img id="image" src="" alt="Image">
-</div>
-<script>
-  const slider = document.getElementById('sliderRange');
-  const image = document.getElementById('image');
-  let imageUrls = [];
 
-  // Fetch image URLs from the source URL
-  fetch('https://services.swpc.noaa.gov/images/animations/lasco-c2/')
+<div class="container">
+    <div id="image-container">
+        <img id="image" src="" alt="Image">
+    </div>
+
+    <div class="slider-container">
+        <input type="range" min="0" max="110" value="110" class="slider" id="slider">
+    </div>
+</div>
+
+<script>
+    const slider = document.getElementById('slider');
+const image = document.getElementById('image');
+
+// Source URL for the images
+const sourceUrl = 'https://services.swpc.noaa.gov/images/animations/lasco-c2/';
+
+// Function to preload the next image in sequence
+function preloadNextImage(index) {
+    const imageUrl = imageUrls[index];
+    const img = new Image();
+    img.src = imageUrl;
+}
+
+// Fetching the directory listing
+fetch(sourceUrl)
     .then(response => response.text())
     .then(data => {
-      // Extract image filenames from the HTML response
-      const regex = /href="(.*?)"/g;
-      let match;
-      while (match = regex.exec(data)) {
-        const imageUrl = match[1];
-        if (imageUrl.endsWith('.jpg')) {
-          imageUrls.push('https://services.swpc.noaa.gov/images/animations/lasco-c2/' + imageUrl);
+        // Extracting image URLs from the directory listing
+        const regex = /<a href="([^"]+\.(jpg))"/g;
+        const imageUrls = [];
+        let match;
+        while ((match = regex.exec(data)) !== null) {
+            imageUrls.push(sourceUrl + match[1]);
         }
-      }
-      // Set max value for the slider based on the number of images
-      slider.max = imageUrls.length - 1;
 
-      // Preload images
-      const imagePromises = imageUrls.map(url => {
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-          img.src = url;
-          img.onload = resolve;
-          img.onerror = reject;
-        });
-      });
+        // Set max value for the slider based on the number of images
+        slider.max = imageUrls.length - 1;
 
-      // Wait for all images to be preloaded before setting up slider
-      Promise.all(imagePromises)
-        .then(() => {
-          // Update image source when slider value changes
-          slider.addEventListener('input', function() {
-            const value = this.value;
+        // Update image source when slider value changes
+        slider.addEventListener('input', function() {
+            const value = parseInt(this.value);
             const imageUrl = imageUrls[value];
             image.src = imageUrl;
-          });
 
-          // Initialize image source with the first image
-          image.src = imageUrls[0];
-        })
-        .catch(error => console.error('Error preloading images:', error));
+            // Preload the next image in sequence
+            const nextIndex = value < imageUrls.length - 1 ? value + 1 : 0;
+            preloadNextImage(nextIndex);
+        });
+
+        // Initialize image source with the first image
+        image.src = imageUrls[slider.value];
+        
+        // Preload the second image
+        preloadNextImage(parseInt(slider.value) + 1);
     })
-    .catch(error => console.error('Error fetching image URLs:', error));
+    .catch(error => console.error('Error fetching directory listing:', error));
 </script>
+
 </body>
 </html>

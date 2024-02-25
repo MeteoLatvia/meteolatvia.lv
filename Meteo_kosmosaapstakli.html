@@ -420,6 +420,58 @@
 
 
 
+    /*CME (SOHO)*/
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* 2 columns */
+      grid-gap: 396px;
+      /* Gap between iframes */
+      padding: 20px;
+      margin-left: -140px;
+    }
+
+    .iframe-container-lasco {
+      width: 400%;
+      height: 80vh;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      /* Remove iframe border */
+    }
+
+    /* Media query for smaller screens */
+    @media screen and (max-width: 768px) {
+      .grid-container {
+        grid-template-columns: repeat(1, 1fr);
+        /* Change to single column layout */
+        margin-left: 0;
+        /* Reset left margin */
+        margin-left: -142px;
+      }
+
+      .iframe-container-lasco {
+        width: 190%;
+        height: 55vh;
+      }
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        /* Remove iframe border */
+      }
+    }
+
+
+
+
+
+
+
 
     /* SDO images/video */
     .group-container-sdo {
@@ -797,17 +849,15 @@
   <div class="group-container-flares">
     <h2>Saules izvirdumi</h2>
     <hr class="title-separator-flares">
-    <div class="flares-chart">
-      <div class="row">
-        <div class="column">
-          <img class="flare-image" src="https://soho.nascom.nasa.gov/data/realtime/c2/1024/latest.jpg"
-            alt="SDO-flare-image">
-        </div>
-        <div class="column">
-          <img class="flare-image" src="https://soho.nascom.nasa.gov/data/realtime/c3/1024/latest.jpg"
-            alt="SDO-flare-image">
-        </div>
+    <div class="grid-container">
+      <div class="iframe-container-lasco">
+        <iframe src="SpaceWeatherNEW/test1.html"></iframe>
       </div>
+      <div class="iframe-container-lasco">
+        <iframe src="SpaceWeatherNEW/test2.html"></iframe>
+      </div>
+    </div>
+    <div class="flares-chart">
       <iframe src="SpaceWeatherNEW/SWPC_CME.html" style="border: none"></iframe>
     </div>
   </div>
