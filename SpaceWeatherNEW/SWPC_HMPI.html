@@ -64,19 +64,17 @@
 
                     // Define color based on North-Hemispheric-Power-Index value
                     var gaugeColor;
-                    if (northPowerIndex < 2) {
+                    if (northPowerIndex < 1) {
                         gaugeColor = 'rgb(146, 208, 80)';
-                    } else if (northPowerIndex < 4) {
-                        gaugeColor = 'rgb(146, 208, 80)';
-                    } else if (northPowerIndex < 6) {
-                        gaugeColor = 'rgb(146, 208, 80)';
-                    } else if (northPowerIndex < 8) {
+                    } else if (northPowerIndex < 5) {
                         gaugeColor = 'rgb(146, 208, 80)';
                     } else if (northPowerIndex < 10) {
                         gaugeColor = 'rgb(146, 208, 80)';
                     } else if (northPowerIndex < 15) {
                         gaugeColor = 'rgb(146, 208, 80)';
                     } else if (northPowerIndex < 20) {
+                        gaugeColor = 'rgb(146, 208, 80)';
+                    } else if (northPowerIndex < 30) {
                         gaugeColor = 'rgb(246, 235, 20)';
                     } else if (northPowerIndex < 50) {
                         gaugeColor = 'rgb(255, 200, 0)';
@@ -84,6 +82,8 @@
                         gaugeColor = 'rgb(255, 150, 0)';
                     } else if (northPowerIndex < 100) {
                         gaugeColor = 'rgb(255, 0, 0)';
+                    } else if (northPowerIndex < 150) {
+                        gaugeColor = 'rgb(200, 0, 0)';
                     } else {
                         gaugeColor = 'rgb(200, 0, 0)';
                     }
