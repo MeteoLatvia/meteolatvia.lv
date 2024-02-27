@@ -112,7 +112,7 @@
 
     .active,
     .collapsible-KP:hover {
-      background-color: #555;
+      background-color: rgb(85, 85, 85);
     }
 
     .collapsible-KP:after {
@@ -143,6 +143,73 @@
     }
 
 
+    .KIRUNA-chart {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: -150px !important;
+    }
+
+    .KIRUNA-chart iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      margin-bottom: 20px;
+      margin-left: -150px !important;
+    }
+
+    .highcharts-container {
+      width: 100% !important;
+    }
+
+    /* Media query for smaller screens */
+    @media screen and (max-width: 768px) {
+      .KIRUNA-chart iframe {
+        width: 100%;
+        /* Reduce width of charts on smaller screens */
+        max-width: 100%;
+        /* Ensure charts don't exceed the screen width */
+      }
+
+      .KIRUNA-chart {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0px;
+      }
+    }
+
+    .collapsible-ovation {
+      background-color: rgb(57, 57, 77);
+      color: white;
+      cursor: pointer;
+      padding: 18px;
+      width: 80%;
+      border: none;
+      text-align: left;
+      outline: none;
+      margin: auto;
+      font-size: 15px;
+      border-radius: 4px;
+    }
+
+    .active,
+    .collapsible-ovation:hover {
+      background-color: #555;
+    }
+
+    .content-ovation {
+      padding: 0 18px;
+      display: none;
+      width: 80%;
+      margin: auto;
+      background-color: transparent;
+      margin-left: -30px;
+    }
+
+
     @media screen and (max-width: 768px) {
       .OVATION-chart-container {
         flex-direction: column;
@@ -160,6 +227,29 @@
 
       .OVATION-chart {
         margin-left: 140px;
+      }
+
+      .collapsible-ovation {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 80%;
+        border: none;
+        text-align: left;
+        outline: none;
+        margin: auto;
+        margin-top: 35px;
+        font-size: 15px;
+      }
+
+      .content-ovation {
+        padding: 0 18px;
+        display: none;
+        width: 120%;
+        margin: auto;
+        background-color: transparent;
+        margin-left: -15px;
       }
 
       .content-KP {
@@ -742,6 +832,35 @@
       </div>
       <img src="https://services.swpc.noaa.gov/images/animations/ovation/north/latest.jpg" alt="OVATION Image">
     </div>
+    <button type="button-ovation" class="collapsible-ovation">Dati grafiskā formātā</button>
+    <div class="content-ovation">
+      <div class="DSCOVR-chart">
+        <iframe src="SpaceWeatherNEW/KIRUNA-magnetometer.html" style="border: none"></iframe>
+      </div>
+      <div class="DSCOVR-chart">
+        <iframe src="SpaceWeatherNEW/SWPC_KP_bars.html" style="border: none"></iframe>
+      </div>
+      <div class="DSCOVR-chart">
+        <iframe src="SpaceWeather/chart_HMPI_line.html" style="border: none"></iframe>
+      </div>
+    </div>
+
+    <script>
+      var coll = document.getElementsByClassName("collapsible-ovation");
+      var i;
+
+      for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          var content = this.nextElementSibling;
+          if (content.style.display === "block") {
+            content.style.display = "none";
+          } else {
+            content.style.display = "block";
+          }
+        });
+      }
+    </script>
   </div>
 
   <script>
