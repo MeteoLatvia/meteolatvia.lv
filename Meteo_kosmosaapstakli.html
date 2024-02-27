@@ -23,6 +23,123 @@
 
   <style>
     /*METEO_KOSMOSAAPSTAKLI*/
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted rgb(250, 250, 255);
+      width: 1%;
+      color: rgb(250, 250, 255);
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 280px;
+      background-color: rgb(85, 85, 85);
+      color: #fff;
+      text-align: left;
+      border-radius: 6px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 20%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 12px;
+      padding-left: 15px;
+    }
+
+    .tooltip .tooltiptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 20%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
+      padding-left: 5px;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .highlight-word-0 {
+      color: rgb(146, 208, 80);
+      font-weight: bold;
+    }
+
+    .highlight-word-1 {
+      color: rgb(246, 235, 20);
+      font-weight: bold;
+    }
+
+
+    .highlight-word-2 {
+      color: rgb(255, 200, 0);
+      font-weight: bold;
+    }
+
+
+    .highlight-word-3 {
+      color: rgb(255, 150, 0);
+      font-weight: bold;
+    }
+
+    .highlight-word-4 {
+      color: rgb(255, 0, 0);
+      font-weight: bold;
+    }
+
+    .highlight-word-5 {
+      color: rgb(200, 0, 0);
+      font-weight: bold;
+    }
+
+    .highlight-word-00 {
+      color: rgb(64,255,64);
+      font-weight: bold;
+    }
+
+    .highlight-word-11 {
+      color: rgb(255,255,64);
+      font-weight: bold;
+    }
+
+
+    .highlight-word-22 {
+      color: rgb(255,159,64);
+      font-weight: bold;
+    }
+
+
+    .highlight-word-33 {
+      color: rgb(255,64,64);
+      font-weight: bold;
+    }
+
+    .highlight-word-44 {
+      color: rgb(255,64,255);
+      font-weight: bold;
+    }
+
+    .highlight-word-55 {
+      color: rgb();
+      font-weight: bold;
+    }
+
+
+
+
+
+
+
+
+
+
     /* KP-index and OVATION */
     .group-container-OVATION {
       background-color: rgb(43, 43, 51);
@@ -823,10 +940,30 @@
     <hr class="title-separator-OVATION">
     <div class="OVATION-chart-container">
       <div class="OVATION-chart">
+        <div class="tooltip">?
+          <span class="tooltiptext">
+            <span class="highlight-word-0">KP4</span> - Ģeomagnētiskā aktivitāte<br>
+            <span class="highlight-word-1">KP5</span> - Neliela ģeomagnētiskā vētra<br>
+            <span class="highlight-word-2">KP6</span> - Mērena ģeomagnētiskā vētra<br>
+            <span class="highlight-word-3">KP7</span> - Spēcīga ģeomagnētiskā vētra<br>
+            <span class="highlight-word-4">KP8</span> - Ļoti spēcīga ģeomagnētiskā vētra<br>
+            <span class="highlight-word-5">KP9</span> - Ekstremāli spēcīga ģeomagnētiskā vētra<br>
+          </span>
+        </div>
         <iframe src="SpaceWeatherNEW/SWPC_KP.html" style="border: none"></iframe>
         <button class="collapsible-KP">KP prognoze</button>
         <div class="content-KP">
           <iframe src="SpaceWeatherNEW/SWPC_KP_forecast.html" class="OVATION-KP"></iframe>
+        </div>
+        <div class="tooltip">?
+          <span class="tooltiptext">
+            <span class="highlight-word-0">20</span> - Ļoti neliels spēks<br>
+            <span class="highlight-word-1">30</span> - Neliels spēks<br>
+            <span class="highlight-word-2">50</span> - Mērens spēks<br>
+            <span class="highlight-word-3">75</span> - Liels spēks<br>
+            <span class="highlight-word-4">100</span> - Ļoti liels spēks<br>
+            <span class="highlight-word-5">>155</span> - Ekstremāli liels spēks<br>
+          </span>
         </div>
         <iframe src="SpaceWeatherNEW/SWPC_HMPI.html" style="border: none"></iframe>
       </div>
@@ -841,7 +978,7 @@
         <iframe src="SpaceWeatherNEW/SWPC_KP_bars.html" style="border: none"></iframe>
       </div>
       <div class="DSCOVR-chart">
-        <iframe src="SpaceWeather/chart_HMPI_line.html" style="border: none"></iframe>
+        <iframe src="SpaceWeatherNEW/SWPC-HMPI-line.html" style="border: none"></iframe>
       </div>
     </div>
 
@@ -894,9 +1031,45 @@
     <h2>Saules vējš un magnētiskais lauks</h2>
     <hr class="title-separator-DSCOVR">
     <div class="DSCOVR-chart">
+      <div class="tooltip">?
+        <span class="tooltiptext">
+          <span class="highlight-word-00">300</span> - Neliels ātrums<br>
+          <span class="highlight-word-11">400</span> - Mērens ātrums<br>
+          <span class="highlight-word-22">500</span> - Liels ātrums<br>
+          <span class="highlight-word-33">600</span> - Ļoti liels ātrums<br>
+          <span class="highlight-word-44">>700</span> - Ekstremāli liels ātrums<br>
+        </span>
+      </div>
       <iframe src="SpaceWeatherNEW/DSCOVR_speed.html" style="border: none"></iframe>
+      <div class="tooltip">?
+        <span class="tooltiptext">
+          <span class="highlight-word-00">10</span> - Neliels blīvums<br>
+          <span class="highlight-word-11">20</span> - Mērens blīvums<br>
+          <span class="highlight-word-22">30</span> - Liels blīvums<br>
+          <span class="highlight-word-33">40</span> - Ļoti liels blīvums<br>
+          <span class="highlight-word-44">>50</span> - Ekstremāli liels blīvums<br>
+        </span>
+      </div>
       <iframe src="SpaceWeatherNEW/DSCOVR_density.html" style="border: none"></iframe>
+      <div class="tooltip">?
+        <span class="tooltiptext">
+          <span class="highlight-word-00">10</span> - Neliels spēks<br>
+          <span class="highlight-word-11">20</span> - Mērens spēks<br>
+          <span class="highlight-word-22">30</span> - Liels spēks<br>
+          <span class="highlight-word-33">40</span> - Ļoti liels spēks<br>
+          <span class="highlight-word-44">>50</span> - Ekstremāli liels spēks<br>
+        </span>
+      </div>
       <iframe src="SpaceWeatherNEW/DSCOVR_magnetic_bT.html" style="border: none"></iframe>
+      <div class="tooltip">?
+        <span class="tooltiptext">
+          <span class="highlight-word-00">>0</span> - Neitrāla orientācija<br>
+          <span class="highlight-word-11">-5</span> - Neliela dienvidu komponente<br>
+          <span class="highlight-word-22">-10</span> - Mērena dienvidu komponente<br>
+          <span class="highlight-word-33">-15</span> - Spēcīga dienvidu komponente<br>
+          <span class="highlight-word-44">-20</span> - Ļoti spēcīga dienvidu komponente<br>
+        </span>
+      </div>
       <iframe src="SpaceWeatherNEW/DSCOVR_magnetic_bZ.html" style="border: none"></iframe>
       <iframe src="SpaceWeatherNEW/DSCOVR-Facts.html" style="border: none" class="SolarFluxFacts"></iframe>
       <button class="collapsible-SolarFluxTable">Saules vēja un magnētiskā lauka (tabula)</button>
