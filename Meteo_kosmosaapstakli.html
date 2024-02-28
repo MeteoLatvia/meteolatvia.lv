@@ -23,15 +23,16 @@
 
   <style>
     /*METEO_KOSMOSAAPSTAKLI*/
-    .tooltip {
+    .tooltip-ovation {
       position: relative;
       display: inline-block;
       border-bottom: 1px dotted rgb(250, 250, 255);
       width: 1%;
       color: rgb(250, 250, 255);
+      margin-left: 150px;
     }
 
-    .tooltip .tooltiptext {
+    .tooltip-ovation .tooltiptext-ovation {
       visibility: hidden;
       width: 280px;
       background-color: rgb(85, 85, 85);
@@ -50,7 +51,7 @@
       padding-left: 15px;
     }
 
-    .tooltip .tooltiptext::after {
+    .tooltip-ovation .tooltiptext-ovation::after {
       content: "";
       position: absolute;
       top: 100%;
@@ -62,7 +63,7 @@
       padding-left: 5px;
     }
 
-    .tooltip:hover .tooltiptext {
+    .tooltip-ovation:hover .tooltiptext-ovation {
       visibility: visible;
       opacity: 1;
     }
@@ -390,6 +391,51 @@
 
 
     /* Solar wind and magnetic field (DSCOVR) */
+    .tooltip-dscovr {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted rgb(250, 250, 255);
+      width: 1%;
+      color: rgb(250, 250, 255);
+      margin-right: 220px;
+    }
+
+    .tooltip-dscovr .tooltiptext-dscovr {
+      visibility: hidden;
+      width: 280px;
+      background-color: rgb(85, 85, 85);
+      color: #fff;
+      text-align: left;
+      border-radius: 6px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 20%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 12px;
+      padding-left: 15px;
+    }
+
+    .tooltip-dscovr .tooltiptext-dscovr::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 20%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
+      padding-left: 5px;
+    }
+
+    .tooltip-dscovr:hover .tooltiptext-dscovr {
+      visibility: visible;
+      opacity: 1;
+    }
+
     .group-container-DSCOVR {
       background-color: rgb(43, 43, 51);
       padding: 2%;
@@ -940,8 +986,8 @@
     <hr class="title-separator-OVATION">
     <div class="OVATION-chart-container">
       <div class="OVATION-chart">
-        <div class="tooltip">?
-          <span class="tooltiptext">
+        <div class="tooltip-ovation">?
+          <span class="tooltiptext-ovation">
             <span class="highlight-word-0">KP4</span> - Ģeomagnētiskā aktivitāte<br>
             <span class="highlight-word-1">KP5</span> - Neliela ģeomagnētiskā vētra<br>
             <span class="highlight-word-2">KP6</span> - Mērena ģeomagnētiskā vētra<br>
@@ -955,8 +1001,8 @@
         <div class="content-KP">
           <iframe src="SpaceWeatherNEW/SWPC_KP_forecast.html" class="OVATION-KP"></iframe>
         </div>
-        <div class="tooltip">?
-          <span class="tooltiptext">
+        <div class="tooltip-ovation">?
+          <span class="tooltiptext-ovation">
             <span class="highlight-word-0">20</span> - Ļoti neliels spēks<br>
             <span class="highlight-word-1">30</span> - Neliels spēks<br>
             <span class="highlight-word-2">50</span> - Mērens spēks<br>
@@ -1031,8 +1077,8 @@
     <h2>Saules vējš un magnētiskais lauks</h2>
     <hr class="title-separator-DSCOVR">
     <div class="DSCOVR-chart">
-      <div class="tooltip">?
-        <span class="tooltiptext">
+      <div class="tooltip-dscovr">?
+        <span class="tooltiptext-dscovr">
           <span class="highlight-word-00">300</span> - Neliels ātrums<br>
           <span class="highlight-word-11">400</span> - Mērens ātrums<br>
           <span class="highlight-word-22">500</span> - Liels ātrums<br>
@@ -1041,8 +1087,8 @@
         </span>
       </div>
       <iframe src="SpaceWeatherNEW/DSCOVR_speed.html" style="border: none"></iframe>
-      <div class="tooltip">?
-        <span class="tooltiptext">
+      <div class="tooltip-dscovr">?
+        <span class="tooltiptext-dscovr">
           <span class="highlight-word-00">10</span> - Neliels blīvums<br>
           <span class="highlight-word-11">20</span> - Mērens blīvums<br>
           <span class="highlight-word-22">30</span> - Liels blīvums<br>
@@ -1051,8 +1097,8 @@
         </span>
       </div>
       <iframe src="SpaceWeatherNEW/DSCOVR_density.html" style="border: none"></iframe>
-      <div class="tooltip">?
-        <span class="tooltiptext">
+      <div class="tooltip-dscovr">?
+        <span class="tooltiptext-dscovr">
           <span class="highlight-word-00">10</span> - Neliels spēks<br>
           <span class="highlight-word-11">20</span> - Mērens spēks<br>
           <span class="highlight-word-22">30</span> - Liels spēks<br>
@@ -1061,8 +1107,8 @@
         </span>
       </div>
       <iframe src="SpaceWeatherNEW/DSCOVR_magnetic_bT.html" style="border: none"></iframe>
-      <div class="tooltip">?
-        <span class="tooltiptext">
+      <div class="tooltip-dscovr">?
+        <span class="tooltiptext-dscovr">
           <span class="highlight-word-00">>0</span> - Neitrāla orientācija<br>
           <span class="highlight-word-11">-5</span> - Neliela dienvidu komponente<br>
           <span class="highlight-word-22">-10</span> - Mērena dienvidu komponente<br>
