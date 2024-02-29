@@ -155,7 +155,7 @@
                         series: [{
                             name: 'Blīvums',
                             data: densityData,
-                            type: 'line',
+                            type: 'area',
                             // Define zones for coloring the line
                             zones: [{
                                 value: 10,
@@ -171,7 +171,8 @@
                                 color: 'rgb(255,64,64)'
                             }, {
                                 color: 'rgb(255,64,255)'
-                            }]
+                            }],
+                            fillOpacity: 0.2 // Adjust opacity of the area fill
                         }]
                     });
 

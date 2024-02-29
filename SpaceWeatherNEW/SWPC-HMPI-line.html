@@ -123,6 +123,7 @@
                     series: [{
                         name: 'Power Index',
                         data: values,
+                        type: 'area',
                         // Define zones for coloring the line
                         zones: [{
                             value: 1,
@@ -156,7 +157,8 @@
                             color: 'rgb(200, 0, 0)'
                         }, {
                             color: 'rgb(200, 0, 0)'
-                        }]
+                        }],
+                        fillOpacity: 0.2 // Adjust opacity of the area fill
                     }],
                     plotOptions: {
                         series: {

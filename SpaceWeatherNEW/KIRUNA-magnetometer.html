@@ -144,7 +144,7 @@
                         series: [{
                             name: 'Deflection',
                             data: xData,
-                            type: 'line',
+                            type: 'area',
                             // Define zones for coloring the line
                             zones: [{
                                 value: -1500,
@@ -166,7 +166,8 @@
                                 color: 'rgb(146, 208, 80)'
                             }, {
                                 color: 'rgb(146, 208, 80)'
-                            }]
+                            }],
+                            fillOpacity: 0.2 // Adjust opacity of the area fill
                         }]
                     });
                 })

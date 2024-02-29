@@ -155,7 +155,7 @@
                         series: [{
                             name: 'Ātrums',
                             data: speedData,
-                            type: 'line',
+                            type: 'area', // Change type to 'area' for area fill
                             // Define zones for coloring the line
                             zones: [{
                                 value: 400,
@@ -171,7 +171,8 @@
                                 color: 'rgb(255,64,64)'
                             }, {
                                 color: 'rgb(255,64,255)'
-                            }]
+                            }],
+                            fillOpacity: 0.2 // Adjust opacity of the area fill
                         }]
                     });
 

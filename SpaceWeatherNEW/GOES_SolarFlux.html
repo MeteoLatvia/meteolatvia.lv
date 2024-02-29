@@ -205,7 +205,7 @@
                         series: [{
                             name: 'Intensitāte',
                             data: fluxData,
-                            type: 'line',
+                            type: 'area',
                             zones: [{
                                 value: 1e-7,
                                 color: 'rgb(64,255,64)'
@@ -220,7 +220,8 @@
                                 color: 'rgb(255,64,64)'
                             }, {
                                 color: 'rgb(255,64,255)'
-                            }]
+                            }],
+                            fillOpacity: 0.2 // Adjust opacity of the area fill
                         }]
                     });
 
