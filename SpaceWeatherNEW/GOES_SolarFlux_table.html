@@ -16,7 +16,8 @@
             width: 100%;
             border-collapse: collapse;
             border: 1px solid #333;
-            overflow-x: hidden; /* Hide horizontal scrollbar */
+            overflow-x: hidden;
+            /* Hide horizontal scrollbar */
         }
 
         th,
@@ -55,6 +56,7 @@
 
         tbody td:last-child {
             font-weight: 900;
+            color: rgb(47, 47, 47);
         }
 
         /* Media query for smaller screens */
@@ -105,17 +107,19 @@
 
         // Function to apply conditional styling based on the intensity value
         function applyConditionalStyling(intensityValue, cell) {
-            if (intensityValue.startsWith('A') || intensityValue.startsWith('B')) {
-                cell.style.color = 'rgb(246, 235, 20)';
+            if (intensityValue.startsWith('A')) {
+                cell.style.backgroundColor = 'rgb(64,255,64)';
+            } else if (intensityValue.startsWith('B')) {
+                cell.style.backgroundColor = 'rgb(255,255,64)';
             } else if (intensityValue.startsWith('C')) {
-                cell.style.color = 'rgb(255, 200, 0)';
+                cell.style.backgroundColor = 'rgb(255,159,64)';
             } else if (intensityValue.startsWith('M')) {
-                cell.style.color = 'rgb(255, 0, 0)';
+                cell.style.backgroundColor = 'rgb(255,64,64)';
             } else if (intensityValue.startsWith('X')) {
                 if (intensityValue === 'Xx.x') {
-                    cell.style.color = 'rgb(127, 0, 0)';
+                    cell.style.backgroundColor = 'rgb(255,64,255)';
                 } else {
-                    cell.style.color = 'rgb(127, 0, 0)';
+                    cell.style.backgroundColor = 'rgb(127, 0, 0)';
                 }
             }
         }
