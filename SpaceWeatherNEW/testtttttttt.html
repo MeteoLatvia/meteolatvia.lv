@@ -1,88 +1,81 @@
 <!DOCTYPE html>
-<html lang="lv">
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabula Taciņa</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .tabula-tacina {
-            border-collapse: collapse;
-        }
-
-        .tabula-tacina td {
-            width: 100px;
-            height: 100px;
-            border: 2px dashed black;
-            text-align: center;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-
-        .cell-1 {
-            border-bottom: 2px dashed rgb(255, 255, 255) !important;
-        }
-
-        .cell-2 {
-            border-right: 2px dashed rgb(255, 255, 255) !important;
-        }
-
-        .cell-3 {
-            border-top: 2px dashed rgb(255, 255, 255) !important;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Highcharts Background Image</title>
+  <!-- Include Highcharts library -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
-
 <body>
-    <table class="tabula-tacina">
-        <tr>
-            <td class="cell-1"></td>
-            <td rowspan="4" class="cell-3"> </td>
-            <td class="cell-1 cell-2"></td>
-            <td class="cell-2"></td>
-            <td class="cell-1"></td>
-        </tr>
-        <tr>
-            <td class="cell-1"></td>
-            <td class="cell-1"></td>
-            <td rowspan="4" class="cell-1"></td>
-            <td class="cell-1"></td>
 
+<div id="container" style="height: 400px"></div>
 
-        </tr>
-        <tr>
-            <td class="cell-1"></td>
-            <td class="cell-1"></td>
-            <td class="cell-1"></td>
-        </tr>
-        <tr>
-            <td class="cell-1"></td>
-            <td class="cell-1"></td>
-            <td class="cell-1"></td>
+<script>
+// Sample data
+var data = [
+  [0, 10],
+  [1, 20],
+  [2, 30],
+  [3, 40],
+  [4, 50],
+  [5, 60],
+  [6, 70],
+  [7, 80],
+  [8, 90],
+  [9, 100]
+];
 
+// Create the chart
+var chart = Highcharts.chart('container', {
+  chart: {
+    type: 'line',
+    events: {
+      load: function () {
+        var yAxis = this.yAxis[0];
+        var chart = this;
 
+        // Set initial background image
+        setBackgroundImage(yAxis.getExtremes().dataMin);
+        
+        // Listen to redraw event to update background image
+        chart.redraw(function () {
+          setBackgroundImage(yAxis.getExtremes().dataMin);
+        });
+      }
+    }
+  },
+  title: {
+    text: 'Chart with Background Image'
+  },
+  xAxis: {
+    title: {
+      text: 'X-axis'
+    }
+  },
+  yAxis: {
+    title: {
+      text: 'Y-axis'
+    }
+  },
+  series: [{
+    data: data,
+    name: 'Sample Data'
+  }]
+});
 
+// Function to set background image based on Y-axis value
+function setBackgroundImage(value) {
+  if (value < 50) {
+    chart.chartBackground.css({
+      'background-image': 'url("https://fv9-7.failiem.lv/down.php?i=fnyxwaa9b&view")'
+    });
+  } else {
+    chart.chartBackground.css({
+      'background-image': 'url("https://fv9-7.failiem.lv/down.php?i=fnyxwaa9b&view")'
+    });
+  }
+}
+</script>
 
-        </tr>
-        <tr>
-            <td class="cell-2"></td>
-            <td class="cell-2"></td>
-            <td class="cell"></td>
-            <td class="cell"></td>
-        </tr>
-
-
-    </table>
 </body>
-
 </html>

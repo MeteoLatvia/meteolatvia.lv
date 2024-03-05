@@ -82,7 +82,7 @@ function formatTimestamp(timestamp) {
   return timestamp.split('.')[0]; // Remove milliseconds
 }
 
-// Function to determine color based on value
+// Function to determine background color based on value
 function getColor(value, parameter) {
     let color;
     if (parameter === 'Speed') {
@@ -95,7 +95,7 @@ function getColor(value, parameter) {
         } else if (value < 700) {
             color = 'rgb(255,64,64)';
         } else {
-            color = 'rgb(255,64,255)';
+            color = 'rgb(57, 57, 77)';
         }
     } else if (parameter === 'Density' || parameter === 'Bt') {
         if (value < 10) {
@@ -107,7 +107,7 @@ function getColor(value, parameter) {
         } else if (value < 40) {
             color = 'rgb(255,64,64)';
         } else {
-            color = 'rgb(255,64,255)';
+            color = 'rgb(57, 57, 77)';
         }
     } else if (parameter === 'Bz_gsm') {
         if (value < -10) {
@@ -121,7 +121,7 @@ function getColor(value, parameter) {
         } else if (value < 100) {
             color = 'rgb(64,255,64)';
         } else {
-            color = 'rgb(255,64,255)';
+            color = 'rgb(57, 57, 77)';
         }
     }
     return color;
@@ -139,18 +139,34 @@ fetch('https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json')
       timeCell.textContent = formatTimestamp(entry[0]); // Time Tag in 1st column
       const speedCell = row.insertCell();
       speedCell.textContent = entry[2]; // Speed in 2nd column
-      speedCell.style.color = getColor(parseFloat(entry[2]), 'Speed');
+      const speedColor = getColor(parseFloat(entry[2]), 'Speed');
+      speedCell.style.backgroundColor = speedColor;
+      if (speedColor !== 'rgb(255, 255, 255)') {
+        speedCell.style.color = '#000000'; // Set font color to black if background color is not white
+      }
       const densityCell = row.insertCell();
       densityCell.textContent = entry[1]; // Density in 3rd column
-      densityCell.style.color = getColor(parseFloat(entry[1]), 'Density');
+      const densityColor = getColor(parseFloat(entry[1]), 'Density');
+      densityCell.style.backgroundColor = densityColor;
+      if (densityColor !== 'rgb(255, 255, 255)') {
+        densityCell.style.color = '#000000'; // Set font color to black if background color is not white
+      }
       // Placeholder for Bt
       const btCell = row.insertCell();
       btCell.textContent = '-';
-      btCell.style.color = getColor(parseFloat(entry[6]), 'Bt');
+      const btColor = getColor(parseFloat(entry[6]), 'Bt');
+      btCell.style.backgroundColor = btColor;
+      if (btColor !== 'rgb(255, 255, 255)') {
+        btCell.style.color = '#000000'; // Set font color to black if background color is not white
+      }
       // Placeholder for Bz_gsm
       const bzGsmCell = row.insertCell();
       bzGsmCell.textContent = '-';
-      bzGsmCell.style.color = getColor(parseFloat(entry[3]), 'Bz_gsm');
+      const bzGsmColor = getColor(parseFloat(entry[3]), 'Bz_gsm');
+      bzGsmCell.style.backgroundColor = bzGsmColor;
+      if (bzGsmColor !== 'rgb(255, 255, 255)') {
+        bzGsmCell.style.color = '#000000'; // Set font color to black if background color is not white
+      }
     });
   })
   .catch(error => console.error('Error fetching solar wind data:', error));
@@ -169,10 +185,18 @@ fetch('https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json')
       if (row) {
         // Update Bt cell
         row.cells[3].textContent = btValue;
-        row.cells[3].style.color = getColor(parseFloat(btValue), 'Bt');
+        const btColor = getColor(parseFloat(btValue), 'Bt');
+        row.cells[3].style.backgroundColor = btColor;
+        if (btColor !== 'rgb(255, 255, 255)') {
+          row.cells[3].style.color = '#000000'; // Set font color to black if background color is not white
+        }
         // Update Bz_gsm cell
         row.cells[4].textContent = bzGsmValue;
-        row.cells[4].style.color = getColor(parseFloat(bzGsmValue), 'Bz_gsm');
+        const bzGsmColor = getColor(parseFloat(bzGsmValue), 'Bz_gsm');
+        row.cells[4].style.backgroundColor = bzGsmColor;
+        if (bzGsmColor !== 'rgb(255, 255, 255)') {
+          row.cells[4].style.color = '#000000'; // Set font color to black if background color is not white
+        }
       }
     });
   })

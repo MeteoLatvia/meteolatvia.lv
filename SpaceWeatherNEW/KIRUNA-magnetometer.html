@@ -14,7 +14,7 @@
             overflow: hidden;
             margin-bottom: 20px;
             position: relative;
-            background-color: rgba(57, 57, 77, 1.0); /* Background color for the chart */
+            background-color: rgba(43, 43, 51, 1.0); /* Background color for the chart */
         }
 
         .chart-button-container {
@@ -54,147 +54,132 @@
     <div id="chart-container"></div>
 
     <script>
-        // Function to fetch data from URL and parse it
-        function fetchDataAndPlot(timespan) {
-            // Get the current time
-            const currentTime = new Date();
-            // Calculate the start time based on the selected timespan
-            const startTime = new Date(currentTime.getTime() - timespan * 60 * 60 * 1000);
-            // Format start time as YYYYMMDDHHMM
-            const startTimeString = startTime.toISOString().slice(0, 16).replace(/[-T]/g, '').replace(/:/g, '').replace(' ', '');
-            // Construct URL with start time
-            const url = `https://www2.irf.se/maggraphs/rt_secondary.txt?starttime=${startTimeString}`;
+// Function to fetch data from URL and parse it
+function fetchDataAndPlot() {
+    // Get the current time
+    const currentTime = new Date();
+    // Calculate the start time 6 hours ago
+    const startTime = new Date(currentTime.getTime() - 6 * 60 * 60 * 1000);
+    // Format start time as YYYYMMDDHHMM
+    const startTimeString = startTime.toISOString().slice(0, 16).replace(/[-T]/g, '').replace(/:/g, '').replace(' ', '');
+    // Construct URL with start time
+    const url = `https://www2.irf.se/maggraphs/rt_secondary.txt?starttime=${startTimeString}`;
 
-            // Fetch data from URL
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    // Split data by lines
-                    const lines = data.trim().split('\n');
+    // Fetch data from URL
+    fetch(url)
+        .then(response => response.text())
+        .then(data => {
+            // Split data by lines
+            const lines = data.trim().split('\n');
 
-                    // Extract X component data and calculate deflection
-                    const xData = lines.map(line => {
-                        const columns = line.split(/\s+/);
-                        // Parse date and X component
-                        const year = parseInt(columns[0].substring(0, 4));
-                        const month = parseInt(columns[0].substring(4, 6)) - 1; // Month is zero-based
-                        const day = parseInt(columns[0].substring(6, 8));
-                        const hour = parseInt(columns[0].substring(8, 10));
-                        const minute = parseInt(columns[0].substring(10, 12));
-                        const date = Date.UTC(year, month, day, hour, minute);
-                        const xComponent = parseFloat(columns[1]);
-                        // Calculate deflection
-                        const deflection = (xComponent - (-640)).toFixed(2); // Subtract normal baseline value and format to 2 decimal places
-                        return [date, parseFloat(deflection)];
-                    });
+            // Extract X component data and calculate deflection
+            const xData = lines.map(line => {
+                const columns = line.split(/\s+/);
+                // Parse date and X component
+                const year = parseInt(columns[0].substring(0, 4));
+                const month = parseInt(columns[0].substring(4, 6)) - 1; // Month is zero-based
+                const day = parseInt(columns[0].substring(6, 8));
+                const hour = parseInt(columns[0].substring(8, 10));
+                const minute = parseInt(columns[0].substring(10, 12));
+                const date = Date.UTC(year, month, day, hour, minute);
+                const xComponent = parseFloat(columns[1]);
+                // Calculate deflection
+                const deflection = (xComponent - (-640)).toFixed(2); // Subtract normal baseline value and format to 2 decimal places
+                return [date, parseFloat(deflection)];
+            });
 
-                    // Plot the data using Highcharts
-                    Highcharts.chart('chart-container', {
-                        chart: {
-                            backgroundColor: 'rgba(57, 57, 77, 1.0)', // Background color for the chart
-                        },
-                        title: {
-                            text: 'Kirunas magnetometra X komponentes nobīde',
-                            style: {
-                                color: 'rgba(250, 252, 255, 1.0)' // Color for the title
-                            }
-                        },
-                        xAxis: {
-                            type: 'datetime',
-                            title: {
-                                text: 'Laiks',
-                                style: {
-                                    color: 'rgba(250, 252, 255, 1.0)' // Color for the axis title
-                                }
-                            },
-                            labels: {
-                                style: {
-                                    color: 'rgba(250, 252, 255, 1.0)' // Color for the axis labels
-                                }
-                            },
-                            gridLineWidth: 1, // Add gridlines for X-axis
-                            gridLineDashStyle: 'shortdash'
-                        },
-                        yAxis: {
-                            title: {
-                                text: 'Nobīde (nT)',
-                                style: {
-                                    color: 'rgba(250, 252, 255, 1.0)' // Color for the axis title
-                                }
-                            },
-                            labels: {
-                                style: {
-                                    color: 'rgba(250, 252, 255, 1.0)' // Color for the axis labels
-                                }
-                            },
-                            gridLineWidth: 1, // Add gridlines for Y-axis
-                        },
-                        plotOptions: {
-                            series: {
-                                connectNulls: true, // Connect null points for colored zones
-                                lineWidth: 3 // Adjust plot line width here
-                            }
-                        },
-                        tooltip: {
-                            formatter: function () {
-                                return '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '</b><br>' +
-                                    'Deflection: ' + this.y + ' nT';
-                            }
-                        },
-                        series: [{
-                            name: 'Deflection',
-                            data: xData,
-                            type: 'area',
-                            // Define zones for coloring the line
-                            zones: [{
-                                value: -1500,
-                                color: 'rgb(200, 0, 0)'
-                            }, {
-                                value: -1000,
-                                color: 'rgb(255, 0, 0)'
-                            }, {
-                                value: -600,
-                                color: 'rgb(255, 150, 0)'
-                            }, {
-                                value: -350,
-                                color: 'rgb(255, 200, 0)'
-                            }, {
-                                value: -200,
-                                color: 'rgb(246, 235, 20)'
-                            }, {
-                                value: 0,
-                                color: 'rgb(146, 208, 80)'
-                            }, {
-                                color: 'rgb(146, 208, 80)'
-                            }],
-                            fillOpacity: 0.2 // Adjust opacity of the area fill
-                        }]
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                });
-        }
-
-        // Call the function to fetch data and plot the chart initially
-        fetchDataAndPlot(6);
-
-        // Button click events to change timespan
-        document.getElementById("btn24").addEventListener("click", function () {
-            fetchDataAndPlot(24);
+            // Plot the data using Highcharts
+            Highcharts.chart('chart-container', {
+                chart: {
+                    backgroundColor: 'rgba(57, 57, 77, 1.0)', // Background color for the chart
+                },
+                title: {
+                    text: 'Kirunas magnetometra X komponentes nobīde',
+                    style: {
+                        color: 'rgba(250, 252, 255, 1.0)' // Color for the title
+                    }
+                },
+                xAxis: {
+                    type: 'datetime',
+                    title: {
+                        text: 'Laiks',
+                        style: {
+                            color: 'rgba(250, 252, 255, 1.0)' // Color for the axis title
+                        }
+                    },
+                    labels: {
+                        style: {
+                            color: 'rgba(250, 252, 255, 1.0)' // Color for the axis labels
+                        }
+                    },
+                    gridLineWidth: 1, // Add gridlines for X-axis
+                    gridLineDashStyle: 'shortdash',
+                    min: startTime.getTime(), // Set minimum value to start time
+                    max: currentTime.getTime() // Set maximum value to current time
+                },
+                yAxis: {
+                    title: {
+                        text: 'Nobīde (nT)',
+                        style: {
+                            color: 'rgba(250, 252, 255, 1.0)' // Color for the axis title
+                        }
+                    },
+                    labels: {
+                        style: {
+                            color: 'rgba(250, 252, 255, 1.0)' // Color for the axis labels
+                        }
+                    },
+                    gridLineWidth: 1, // Add gridlines for Y-axis
+                },
+                plotOptions: {
+                    series: {
+                        connectNulls: true, // Connect null points for colored zones
+                        lineWidth: 3 // Adjust plot line width here
+                    }
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '</b><br>' +
+                            'Deflection: ' + this.y + ' nT';
+                    }
+                },
+                series: [{
+                    name: 'Deflection',
+                    data: xData,
+                    type: 'area',
+                    // Define zones for coloring the line
+                    zones: [{
+                        value: -1500,
+                        color: 'rgb(200, 0, 0)'
+                    }, {
+                        value: -1000,
+                        color: 'rgb(255, 0, 0)'
+                    }, {
+                        value: -600,
+                        color: 'rgb(255, 150, 0)'
+                    }, {
+                        value: -350,
+                        color: 'rgb(255, 200, 0)'
+                    }, {
+                        value: -200,
+                        color: 'rgb(246, 235, 20)'
+                    }, {
+                        value: 0,
+                        color: 'rgb(146, 208, 80)'
+                    }, {
+                        color: 'rgb(146, 208, 80)'
+                    }],
+                    fillOpacity: 0.2 // Adjust opacity of the area fill
+                }]
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
         });
+}
 
-        document.getElementById("btn12").addEventListener("click", function () {
-            fetchDataAndPlot(6);
-        });
-
-        document.getElementById("btn6").addEventListener("click", function () {
-            fetchDataAndPlot(3);
-        });
-
-        document.getElementById("btn3").addEventListener("click", function () {
-            fetchDataAndPlot(1);
-        });
+// Call the function to fetch data and plot the chart initially
+fetchDataAndPlot();
     </script>
 
 </body>
