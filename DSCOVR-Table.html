@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solar Wind and Magnetometer Data</title>
+<style>
+    body {
+        color: #ffffff;
+        font-family: Kumbh Sans, sans-serif;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        width: 85%;
+        height: 100%;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #333;
+        overflow-x: hidden; /* Hide horizontal scrollbar */
+    }
+
+    th,
+    td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #333; /* Cell border color */
+    }
+
+    th:nth-child(10),
+    td:nth-child(10) {
+        font-weight: bold;
+    }
+
+    thead {
+        background-color: #333;
+        color: #ffffff;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    tbody tr:nth-child(odd) {
+        background-color: rgb(57, 57, 77);
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: rgb(67, 67, 87);
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* Media query for smaller screens */
+    @media screen and (max-width: 768px) {
+
+        th,
+        td {
+            padding: 5px;
+            font-size: 10px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<table id="combinedDataTable">
+  <tr>
+    <th>Laiks</th>
+    <th>Saules vēja ātrums</th>
+    <th>Saules vēja blīvums</th>
+    <th>Magnētiskā lauka spēks</th>
+    <th>Magnētiskā lauka orientācija</th>
+  </tr>
+</table>
+
+<script>
+// Function to format timestamp
+function formatTimestamp(timestamp) {
+  return timestamp.split('.')[0]; // Remove milliseconds
+}
+
+// Function to determine background color based on value
+function getColor(value, parameter) {
+    let color;
+    if (parameter === 'Speed') {
+        if (value < 400) {
+            color = 'rgb(64,255,64)';
+        } else if (value < 500) {
+            color = 'rgb(255,255,64)';
+        } else if (value < 600) {
+            color = 'rgb(255,159,64)';
+        } else if (value < 700) {
+            color = 'rgb(255,64,64)';
+        } else {
+            color = 'rgb(57, 57, 77)';
+        }
+    } else if (parameter === 'Density' || parameter === 'Bt') {
+        if (value < 10) {
+            color = 'rgb(64,255,64)';
+        } else if (value < 20) {
+            color = 'rgb(255,255,64)';
+        } else if (value < 30) {
+            color = 'rgb(255,159,64)';
+        } else if (value < 40) {
+            color = 'rgb(255,64,64)';
+        } else {
+            color = 'rgb(57, 57, 77)';
+        }
+    } else if (parameter === 'Bz_gsm') {
+        if (value < -10) {
+            color = 'rgb(255,64,64)';
+        } else if (value < -5) {
+            color = 'rgb(255,159,64)';
+        } else if (value < -1) {
+            color = 'rgb(255,255,64)';
+        } else if (value < 0) {
+            color = 'rgb(64,255,64)';
+        } else if (value < 100) {
+            color = 'rgb(64,255,64)';
+        } else {
+            color = 'rgb(57, 57, 77)';
+        }
+    }
+    return color;
+}
+
+// Fetching Solar Wind Data
+fetch('https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json')
+  .then(response => response.json())
+  .then(data => {
+    const table = document.getElementById('combinedDataTable');
+    data.reverse(); // Reverse the order of data
+    data.forEach(entry => {
+      const row = table.insertRow();
+      const timeCell = row.insertCell();
+      timeCell.textContent = formatTimestamp(entry[0]); // Time Tag in 1st column
+      const speedCell = row.insertCell();
+      speedCell.textContent = entry[2]; // Speed in 2nd column
+      const speedColor = getColor(parseFloat(entry[2]), 'Speed');
+      speedCell.style.backgroundColor = speedColor;
+      if (speedColor !== 'rgb(255, 255, 255)') {
+        speedCell.style.color = '#000000'; // Set font color to black if background color is not white
+      }
+      const densityCell = row.insertCell();
+      densityCell.textContent = entry[1]; // Density in 3rd column
+      const densityColor = getColor(parseFloat(entry[1]), 'Density');
+      densityCell.style.backgroundColor = densityColor;
+      if (densityColor !== 'rgb(255, 255, 255)') {
+        densityCell.style.color = '#000000'; // Set font color to black if background color is not white
+      }
+      // Placeholder for Bt
+      const btCell = row.insertCell();
+      btCell.textContent = '-';
+      const btColor = getColor(parseFloat(entry[6]), 'Bt');
+      btCell.style.backgroundColor = btColor;
+      if (btColor !== 'rgb(255, 255, 255)') {
+        btCell.style.color = '#000000'; // Set font color to black if background color is not white
+      }
+      // Placeholder for Bz_gsm
+      const bzGsmCell = row.insertCell();
+      bzGsmCell.textContent = '-';
+      const bzGsmColor = getColor(parseFloat(entry[3]), 'Bz_gsm');
+      bzGsmCell.style.backgroundColor = bzGsmColor;
+      if (bzGsmColor !== 'rgb(255, 255, 255)') {
+        bzGsmCell.style.color = '#000000'; // Set font color to black if background color is not white
+      }
+    });
+  })
+  .catch(error => console.error('Error fetching solar wind data:', error));
+
+// Fetching Magnetometer Data
+fetch('https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json')
+  .then(response => response.json())
+  .then(data => {
+    const table = document.getElementById('combinedDataTable');
+    data.forEach(entry => {
+      const timestamp = formatTimestamp(entry[0]);
+      const btValue = entry[6];
+      const bzGsmValue = entry[3];
+      // Finding the row with matching timestamp
+      const row = Array.from(table.rows).find(row => row.cells[0].textContent === timestamp);
+      if (row) {
+        // Update Bt cell
+        row.cells[3].textContent = btValue;
+        const btColor = getColor(parseFloat(btValue), 'Bt');
+        row.cells[3].style.backgroundColor = btColor;
+        if (btColor !== 'rgb(255, 255, 255)') {
+          row.cells[3].style.color = '#000000'; // Set font color to black if background color is not white
+        }
+        // Update Bz_gsm cell
+        row.cells[4].textContent = bzGsmValue;
+        const bzGsmColor = getColor(parseFloat(bzGsmValue), 'Bz_gsm');
+        row.cells[4].style.backgroundColor = bzGsmColor;
+        if (bzGsmColor !== 'rgb(255, 255, 255)') {
+          row.cells[4].style.color = '#000000'; // Set font color to black if background color is not white
+        }
+      }
+    });
+  })
+  .catch(error => console.error('Error fetching magnetometer data:', error));
+</script>
+
+</body>
+</html>
